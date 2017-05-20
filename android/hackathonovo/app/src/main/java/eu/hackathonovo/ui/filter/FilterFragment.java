@@ -17,12 +17,12 @@ import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 
 public class FilterFragment extends BaseFragment implements FilterView {
+
     @BindView(R.id.et_name_surname)
     TextView et_name_surname;
 
     @BindView(R.id.et_radius)
     TextView et_radius;
-
 
     @Inject
     FilterPresenter presenter;
@@ -57,8 +57,6 @@ public class FilterFragment extends BaseFragment implements FilterView {
     public void pripravnikClicked() {
         addType();
     }
-
-
 
     @OnClick(R.id.spasavatelj_btn)
     public void spasavateljClicked() {

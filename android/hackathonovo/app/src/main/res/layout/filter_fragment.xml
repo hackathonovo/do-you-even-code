@@ -113,51 +113,28 @@
         android:layout_height="wrap_content">
 
 
-
-
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/pripravnik_btn"
+        <CheckBox
+            android:layout_marginLeft="@dimen/_30dp"
             android:layout_weight="1"
-            android:background="@color/main_color_blue"
-            fancy:paddingEnd="@dimen/_20dp"
-            android:text="Da"
-            android:layout_margin="@dimen/_20dp"
+            android:id="@+id/checkbox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            fancy:fb_borderColor="#FFFFFF"
-            fancy:fb_borderWidth="1dp"
-            fancy:fb_defaultColor="@color/main_color_blue"
-            fancy:fb_iconPosition="left"
-            fancy:fb_radius="30dp"
-            fancy:fb_text="Pripravnik"
-            fancy:fb_textColor="#FFFFFF"/>
+            android:layout_alignStart="@+id/ll_radius"
+            android:layout_below="@+id/ll_filter_btns"
+            android:layout_marginTop="25dp"
+            android:text="Pripravnik"/>
 
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/spasavatelj_btn"
-            android:background="@color/main_color_blue"
-            android:layout_margin="@dimen/_20dp"
+        <CheckBox
             android:layout_weight="1"
-            android:text="Ne"
+            android:id="@+id/checkbox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            fancy:fb_borderColor="#FFFFFF"
-            fancy:fb_borderWidth="1dp"
-            fancy:fb_defaultColor="@color/main_color_blue"
-
-
-            fancy:fb_iconPosition="left"
-            fancy:fb_radius="30dp"
-            fancy:fb_text="Spašavatelj"
-            />
+            android:layout_alignStart="@+id/ll_radius"
+            android:layout_below="@+id/ll_filter_btns"
+            android:layout_marginTop="25dp"
+            android:text="Spašavatelj"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>
