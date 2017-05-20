@@ -53,8 +53,8 @@ func (e *Env) CreatePolygon(w http.ResponseWriter, r *http.Request) {
 		data.Geo.Push(&gp)
 	}
 
-	sql := "insert into polygons values(default, ?, ?, null, ?, ?, ?, ST_PolygonFromText(?, 4326), ?)"
-	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Color, h.ToPolygonWKT(data.Geo), data.ExtraColor).Error; err != nil {
+	sql := "insert into polygons values(default, ?, ?, null, ?, ?, ?, ST_PolygonFromText(?, 4326))"
+	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Color, h.ToPolygonWKT(data.Geo)).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}

@@ -15,6 +15,7 @@ import (
 	"flag"
 	"github.com/pressly/chi/docgen"
 	"github.com/pressly/chi/middleware"
+	"path/filepath"
 )
 
 var (
@@ -90,7 +91,6 @@ func main() {
 		})
 	})
 
-
 	router.Route("/polygons", func(r chi.Router) {
 		r.Post("/", e.CreatePolygon)
 		r.Get("/", e.GetPolygonList)
@@ -108,6 +108,11 @@ func main() {
 	router.Get("/googleLogin", e.GoogleLogin)
 	router.Get("/oauth2", e.GoogleCallback)
 	router.Post("/glogin", e.GOAuthLogin)
+
+
+	workDir, _ := os.Getwd()
+	logDir := filepath.Join(workDir, "logs")
+	router.FileServer("/logs", http.Dir(logDir))
 
 	if *genRoutes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
