@@ -1,23 +1,69 @@
 package eu.hackathonovo.data.api.models.request;
 
-public final class SearchDetailsData {
+import java.io.Serializable;
 
-    public final String vrijemeNestanka;
-    public final String ozlijeden;
-    public final String lokacija;
-    public final String hitnost;
-    public final String suicidalnost;
-    public final String mjestoSastanka;
-    public final String vrijemeSastanka;
+public final class SearchDetailsData implements Serializable{
+    public  String vrijemeNestanka=null;
+    public  boolean ozlijeden;
+    public  String lokacija=null;
+    public  boolean hitnost;
+    public  boolean suicidalnost;
+    public  String mjestoSastanka=null;
+    public  String vrijemeSastanka=null;
 
-    public SearchDetailsData(final String vrijemeNestanka, final String ozlijeden, final String lokacija, final String hitnost, final String suicidalnost,
-                             final String mjestoSastanka, final String vrijemeSastanka) {
+    public String getVrijemeNestanka() {
+        return vrijemeNestanka;
+    }
+
+    public void setVrijemeNestanka(final String vrijemeNestanka) {
         this.vrijemeNestanka = vrijemeNestanka;
+    }
+
+    public boolean getOzlijeden() {
+        return ozlijeden;
+    }
+
+    public void setOzlijeden(final boolean ozlijeden) {
         this.ozlijeden = ozlijeden;
+    }
+
+    public String getLokacija() {
+        return lokacija;
+    }
+
+    public void setLokacija(final String lokacija) {
         this.lokacija = lokacija;
+    }
+
+    public boolean getHitnost() {
+        return hitnost;
+    }
+
+    public void setHitnost(final boolean hitnost) {
         this.hitnost = hitnost;
+    }
+
+    public boolean getSuicidalnost() {
+        return suicidalnost;
+    }
+
+    public void setSuicidalnost(final boolean suicidalnost) {
         this.suicidalnost = suicidalnost;
+    }
+
+    public String getMjestoSastanka() {
+        return mjestoSastanka;
+    }
+
+    public void setMjestoSastanka(final String mjestoSastanka) {
         this.mjestoSastanka = mjestoSastanka;
+    }
+
+    public String getVrijemeSastanka() {
+        return vrijemeSastanka;
+    }
+
+    public void setVrijemeSastanka(final String vrijemeSastanka) {
         this.vrijemeSastanka = vrijemeSastanka;
     }
 }

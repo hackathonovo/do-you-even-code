@@ -34,7 +34,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:src="@drawable/ic_gallery_placeholder"/>
+                android:src="@drawable/ic_email_black_24dp" />
 
         </RelativeLayout>
 
@@ -49,10 +49,10 @@
             android:layout_marginTop="@dimen/_10dp"
             android:layout_weight="0.2"
             android:background="@android:color/transparent"
-            android:text="voditelj"
-
+            android:contentDescription="e-mail"
+            android:hint="e-mail"
             android:textColor="@color/main_color_black"
-
+            android:text="voditelj"
             android:textSize="@dimen/_20sp"/>
 
     </LinearLayout>
@@ -88,7 +88,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:src="@drawable/ic_gallery_placeholder"/>
+                android:src="@drawable/ic_group_add_black_24dp" />
 
         </RelativeLayout>
 
@@ -102,11 +102,13 @@
             android:layout_marginRight="@dimen/_25dp"
             android:layout_marginTop="@dimen/_10dp"
             android:layout_weight="0.2"
+            android:contentDescription="Šifra"
             android:background="@android:color/transparent"
             android:inputType="textPassword"
 
             android:text="1234"
 
+            android:hint="šifra"
             android:textColor="@color/main_color_black"
 
             android:textSize="@dimen/_20sp"/>
@@ -142,29 +144,19 @@
         android:layout_marginRight="@dimen/_25dp"
         android:background="@color/main_color_black"/>
 
-    <EditText
-        android:id="@+id/forgot_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/viewSecond"
-        android:layout_marginTop="@dimen/_30dp"
-        android:gravity="center"
-        android:text="Forgot your password?"
-        android:textAlignment="center"
-        android:textSize="@dimen/_20sp"/>
+
+
 
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40dp"
-        android:layout_below="@+id/forgot_password"
+        android:layout_below="@+id/viewSecond"
         android:layout_marginLeft="@dimen/_25dp"
-
         android:layout_marginRight="@dimen/_25dp"
         android:layout_marginTop="@dimen/_30dp"
         android:background="@color/main_color_blue"
-        android:text="CONTINUE"
-
+        android:text="Prijavi se"
         android:textColor="@color/white"
         android:textSize="@dimen/_20sp"/>
 

@@ -14,7 +14,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
-import eu.hackathonovo.ui.map.MapActivity;
+import eu.hackathonovo.ui.home_leader.HomeLeaderActivity;
 
 public class HGSSLoginActivity extends BaseActivity implements HGSSLoginView {
 
@@ -53,8 +53,7 @@ public class HGSSLoginActivity extends BaseActivity implements HGSSLoginView {
 
     @Override
     public void goToSaverHome() {
-        //startActivity(HomeLeaderActivity.createIntent(this));
-        startActivity(MapActivity.createIntent(this));
+        startActivity(HomeLeaderActivity.createIntent(this));
     }
 
     @Override
