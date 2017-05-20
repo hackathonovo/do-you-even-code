@@ -140,7 +140,6 @@ func (e *Env) GetPoint(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func (e *Env) GetActionPointsList(w http.ResponseWriter, r *http.Request) {
 	action := r.Context().Value("action").(*Action)
 

@@ -4,7 +4,9 @@ import (
 	"context"
 	"crypto/sha512"
 	"errors"
+	"fmt"
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	"github.com/mattermost/gcm"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
 	"log"
@@ -15,21 +17,20 @@ import (
 
 type User struct {
 	DBModel
-	Username   string     `json:"username"`
-	PassDigest []byte     `json:"-"`
-	Name       string     `json:"name"`
-	Surname    string     `json:"surname"`
-	Role       string     `json:"role"`
-	Type       string     `json:"type"`
-	Data       string     `json:"data"`
-	Address    string     `json:"address"`
-	Points     []*Point   `gorm:"-" json:"-"`
-	Polygons   []*Polygon `gorm:"-" json:"-"`
-	Phone      string     `json:"phone"`
-	Fcm        string     `json:"fcm"`
-	ActionId   uint       `json:"action_id"`
-	LocationPointId uint `json:"location_id"`
-
+	Username        string     `json:"username"`
+	PassDigest      []byte     `json:"-"`
+	Name            string     `json:"name"`
+	Surname         string     `json:"surname"`
+	Role            string     `json:"role"`
+	Type            string     `json:"type"`
+	Data            string     `json:"data"`
+	Address         string     `json:"address"`
+	Points          []*Point   `gorm:"-" json:"-"`
+	Polygons        []*Polygon `gorm:"-" json:"-"`
+	Phone           string     `json:"phone"`
+	Fcm             string     `json:"fcm"`
+	ActionId        uint       `json:"action_id"`
+	LocationPointId uint       `json:"location_id"`
 }
 
 type NewUserRequest struct {
@@ -50,6 +51,14 @@ type UserRespose struct {
 	*User
 	Polygons []*PolygonResponse `json:"polygons"`
 	Points   []*PointResponse   `json:"points"`
+}
+
+type FCMRequest struct {
+	Token string `json:"fcm_token"`
+}
+
+func (FCMRequest) Bind(r *http.Request) error {
+	return nil
 }
 
 func (u *NewUserRequest) Bind(r *http.Request) error {
@@ -182,8 +191,9 @@ func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 	role := r.URL.Query().Get("role")
 	typ := r.URL.Query().Get("type")
 	action := r.URL.Query().Get("actionId")
+	buffer := r.URL.Query().Get("buffer")
 
-	if name == "" && typ == "" && action == "" {
+	if name == "" && typ == "" && action == "" && role == "" {
 		render.Render(w, r, h.ErrInvalidRequest(errors.New("Empty query")))
 		return
 	}
@@ -218,7 +228,7 @@ func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 
 		polySql := "select geom from polygons po join action_polygons ap on ap.polygon_id = po.id and ap.action_id = " + action
 
-		query += " ST_Within( (" + locSql + "),  (" + polySql + "))"
+		query += " ST_Within( (" + locSql + "), ST_Buffer( (" + polySql + "), " + buffer + "))"
 	}
 
 	var users = []*User{}
@@ -296,4 +306,45 @@ func (e *Env) NewUserReponse(p *User) *UserRespose {
 	}
 
 	return resp
+}
+
+func (e *Env) RegisterFCM(rw http.ResponseWriter, req *http.Request) {
+	data := &FCMRequest{}
+
+	if err := render.Bind(req, data); err != nil {
+		render.Render(rw, req, h.ErrInvalidRequest(err))
+		return
+	}
+
+	user, ok := req.Context().Value("user").(*User)
+	if ok != true {
+		render.Render(rw, req, h.ErrServer)
+		return
+	}
+
+	user.Fcm = data.Token
+	if err := e.DB.Save(user).Error; err != nil {
+		render.Render(rw, req, h.ErrRender(err))
+		return
+	}
+
+	render.Status(req, http.StatusOK)
+	render.Render(rw, req, h.SucCreate)
+}
+
+func (e *Env) PushPointNotification(action Action, ids []string) {
+	data := map[string]interface{}{"msg": "Akcija započela", "meeting_address": action.MeetingAddress, "urgency": action.Urgency}
+	gmsg := gcm.NewMessage(data, ids...)
+
+	// Create a Sender to send the message.
+	sender := &gcm.Sender{ApiKey: API_KEY}
+
+	// Send the message and receive the response after at most two retries.
+	response, err := sender.Send(gmsg, 2)
+	if err != nil {
+		fmt.Println("Failed to send message:", err)
+		return
+	}
+
+	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }

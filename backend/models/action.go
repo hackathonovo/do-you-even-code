@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"errors"
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
@@ -65,14 +66,12 @@ func (e *Env) CreateAction(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-
 	if err := e.DB.Create(data.Action).Error; err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
 	}
 
 	go e.MakePointOnAddress(data.Address, data.Action.ID)
-
 
 	render.Status(req, http.StatusCreated)
 	render.Render(rw, req, e.NewActionResponse(data.Action))
@@ -129,7 +128,6 @@ func (e *Env) DeleteAction(w http.ResponseWriter, r *http.Request) {
 	render.Render(w, r, h.SucDelete)
 }
 
-
 func (e *Env) GetActionUsers(w http.ResponseWriter, r *http.Request) {
 	action := r.Context().Value("action").(*Action)
 
@@ -169,6 +167,76 @@ func (e *Env) GetActionUsersById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+}
+
+func (e *Env) SearchActionUsers(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	name := r.URL.Query().Get("name")
+	role := r.URL.Query().Get("role")
+	typ := r.URL.Query().Get("type")
+
+	if name == "" && typ == "" && role == "" {
+		render.Render(w, r, h.ErrInvalidRequest(errors.New("Empty query")))
+		return
+	}
+
+	query := ""
+	if name != "" {
+		query += " users.name || ' ' || users.surname ILIKE '%" + name + "%' "
+	}
+
+	if role != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " users.role ILIKE '%" + role + "%' "
+	}
+
+	if typ != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " users.type ILIKE '%" + typ + "%' "
+	}
+
+	if query != "" {
+		query += " AND "
+	}
+
+	query += " users.action_id = " + strconv.Itoa(int(action.ID))
+
+	var users = []*User{}
+
+	if err := e.DB.Where(query).Find(&users).Error; err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+}
+
+func (e *Env) PushAction(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	var users = []*User{}
+	e.DB.Where("action_id = ?", action.ID).Find(&users)
+
+	var tokens []string
+	for _, user := range users {
+		tokens = append(tokens, user.Fcm)
+	}
+
+	go e.PushPointNotification(*action, tokens)
+
+	render.Status(r, http.StatusCreated)
+	render.Render(w, r, h.SucDone)
 }
 
 func (e *Env) AddActionUser(w http.ResponseWriter, r *http.Request) {

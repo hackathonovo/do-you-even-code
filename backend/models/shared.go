@@ -1,12 +1,12 @@
 package models
 
 import (
-	"net/http"
-	"net/url"
 	"encoding/json"
-	"time"
 	"github.com/paulmach/go.geo"
 	"log"
+	"net/http"
+	"net/url"
+	"time"
 )
 
 type CheckResponse struct {
@@ -31,13 +31,11 @@ func (e *Env) MakePointOnAddress(address string, actionId uint) {
 		return
 	}
 
-
 	parameters := url.Values{}
 	parameters.Add("address", address)
 	parameters.Add("key", "AIzaSyBWKV70XZt6subVpYBhu1YGi5I3QKFgFDI ")
 	Url.RawQuery = parameters.Encode()
 	resp, err := http.Get(Url.String())
-
 
 	decoder := json.NewDecoder(resp.Body)
 	var t AddressResponse
@@ -47,7 +45,7 @@ func (e *Env) MakePointOnAddress(address string, actionId uint) {
 	defer resp.Body.Close()
 
 	if len(t.Results) != 0 {
-		point := &Point{Type:"base", Geo: geo.Point{t.Results[0].Geometry.Location.Lng, t.Results[0].Geometry.Location.Lat}}
+		point := &Point{Type: "base", Geo: geo.Point{t.Results[0].Geometry.Location.Lng, t.Results[0].Geometry.Location.Lat}}
 		sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
 		if err := e.DB.Exec(sql, time.Now(), time.Now(), point.Type, point.Data, point.Label, point.Draggable, point.Geo.ToWKT()).Error; err != nil {
 			log.Println(err.Error())

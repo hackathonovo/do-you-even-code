@@ -11,13 +11,13 @@ import (
 	"github.com/pressly/chi/docgen"
 	"github.com/pressly/chi/middleware"
 	"github.com/pressly/chi/render"
+	"log"
 	"net/http"
 	"net/http/httputil"
+	"net/url"
 	"os"
 	"os/signal"
 	"path/filepath"
-	"net/url"
-	"log"
 )
 
 var (
@@ -95,6 +95,10 @@ func main() {
 			r2.Route("/timetable", func(r3 chi.Router) {
 				r3.Get("/", e.ListUserTimetables)
 			})
+
+			r2.Route("/fcm", func(r3 chi.Router) {
+				r3.Post("/", e.RegisterFCM)
+			})
 		})
 
 	})
@@ -164,6 +168,14 @@ func main() {
 
 			r.Route("/users", func(r2 chi.Router) {
 				r2.Get("/", e.GetActionUsersById)
+			})
+
+			r.Route("/search", func(r2 chi.Router) {
+				r2.Get("/", e.SearchActionUsers)
+			})
+
+			r.Route("/push", func(r2 chi.Router) {
+				r2.Get("/", e.PushAction)
 			})
 		})
 	})
