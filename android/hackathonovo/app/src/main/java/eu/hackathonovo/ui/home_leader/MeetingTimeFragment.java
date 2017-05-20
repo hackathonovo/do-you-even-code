@@ -20,6 +20,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.BundleConstants;
+import eu.hackathonovo.ui.actions.EditActionsActivity;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 
 public class MeetingTimeFragment extends BaseFragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, HomeLeaderView {
@@ -44,6 +45,13 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
         searchDetailsData = (SearchDetailsData) bundle.getSerializable(BundleConstants.BUNDLE_KEY);
         setDateTimePicker();
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.setView(this);
     }
 
     @Override
@@ -93,7 +101,7 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
     public void onTimeSet(final TimePickerDialog view, final int hourOfDay, final int minute, final int second) {
         String hour;
         String min;
-        String sec ;
+        String sec;
         if (hourOfDay < 10) {
             hour = String.valueOf(0) + hourOfDay;
         } else {
@@ -109,6 +117,11 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
         } else {
             sec = String.valueOf(second);
         }
-        time = hour + ":" + min + ":" + sec+ ".0Z";
+        time = hour + ":" + min + ":" + sec + ".0Z";
+    }
+
+    @Override
+    public void goToEditScreen() {
+        startActivity(EditActionsActivity.createIntent(getActivity()));
     }
 }

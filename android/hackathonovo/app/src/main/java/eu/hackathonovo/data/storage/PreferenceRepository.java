@@ -6,4 +6,8 @@ public interface PreferenceRepository {
 
     long getUserId();
 
+    void setActionId(int id);
+
+    int getActionId();
+
 }

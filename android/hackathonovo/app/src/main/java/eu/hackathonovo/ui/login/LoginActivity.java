@@ -29,7 +29,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
-import eu.hackathonovo.ui.home_rescuer.HomeRescuerActivity;
+import eu.hackathonovo.ui.filter.FilterActivity;
 import timber.log.Timber;
 
 public class LoginActivity extends BaseActivity implements LoginView {
@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     /*@BindView(R.id.facebook_button)
     LoginButton facebookButton;*/
-
 
     private static final int RC_SIGN_IN = 9001;
     private static final int AUDIO_PERMISSION_CODE = 10;
@@ -124,7 +123,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void goToHomeScreen() {
-        startActivity(HomeRescuerActivity.createIntent(this));
+        startActivity(FilterActivity.createIntent(this));
     }
 
     @Override

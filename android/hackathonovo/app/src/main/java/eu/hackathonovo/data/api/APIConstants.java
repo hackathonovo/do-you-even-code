@@ -14,6 +14,7 @@ public interface APIConstants {
     String PATH_IMAGES = "imgs";
 
     String PATH_SEND_DETAILS = "/actions";
+    String PATH_GET_DETAILS = "/actions/{id}";
     String PATH_SEND_RESCUER_LOCATION = "/points";
 
 

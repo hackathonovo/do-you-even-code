@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 public final class TemplatePreferences implements PreferenceRepository {
 
     private static final String KEY_USER_ID = "key_user_id";
+    private static final String KEY_ACTION_ID = "key_action_id";
 
     private static final String EMPTY_STRING = "";
 
     private static final long EMPTY_USER_ID = 0;
+    private static final int EMPTY_ACTION_ID = 0;
 
     private final SharedPreferences secureDelegate;
 
@@ -28,5 +30,15 @@ public final class TemplatePreferences implements PreferenceRepository {
     @Override
     public long getUserId() {
         return secureDelegate.getLong(KEY_USER_ID, EMPTY_USER_ID);
+    }
+
+    @Override
+    public void setActionId(final int id) {
+        secureDelegate.edit().putLong(KEY_ACTION_ID, id).apply();
+    }
+
+    @Override
+    public int getActionId() {
+        return secureDelegate.getInt(KEY_ACTION_ID, EMPTY_ACTION_ID);
     }
 }

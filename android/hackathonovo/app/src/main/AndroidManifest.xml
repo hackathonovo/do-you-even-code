@@ -43,11 +43,17 @@
         </activity>
         <activity android:name=".ui.home_leader.HomeLeaderActivity">
         </activity>
-        <activity android:name=".ui.map.MapActivity">
+        <activity
+            android:name=".ui.map.MapActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            >
         </activity>
         <activity android:name=".ui.home_rescuer.HomeRescuerActivity">
         </activity>
-        <activity android:name=".ui.home_leader.EditActionParametersActivity">
+        <activity android:name=".ui.actions.EditActionsActivity">
+        </activity>
+        <activity android:name=".ui.filter.FilterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

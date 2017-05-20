@@ -8,6 +8,7 @@ import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.api.models.request.UserInformation;
+import eu.hackathonovo.data.api.models.response.ActionResponse;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import eu.hackathonovo.data.api.models.response.UserInformationResponse;
 import io.reactivex.Single;
@@ -44,12 +45,17 @@ public final class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Single<JSONObject> sendDetailsData(final SearchDetailsData data) {
+    public Single<ActionResponse> sendDetailsData(final SearchDetailsData data) {
         return Single.defer(() -> templateAPI.sendDetails(data));
     }
 
     @Override
     public Single<JSONObject> sendRescuerLocation(final RescuerLocation rescuerLocation) {
         return Single.defer(() -> templateAPI.sendRescuerLocation(rescuerLocation));
+    }
+
+    @Override
+    public Single<SearchDetailsData> getActions(final int id) {
+        return Single.defer(() -> templateAPI.getActions(id));
     }
 }

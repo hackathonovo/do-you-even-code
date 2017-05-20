@@ -9,6 +9,10 @@ import eu.hackathonovo.data.storage.TemplatePreferences;
 import eu.hackathonovo.domain.usecase.LocalImagesUseCase;
 import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.manager.StringManager;
+import eu.hackathonovo.ui.actions.EditActionPresenter;
+import eu.hackathonovo.ui.actions.EditActionPresenterImpl;
+import eu.hackathonovo.ui.filter.FilterPresenter;
+import eu.hackathonovo.ui.filter.FilterPresenterImpl;
 import eu.hackathonovo.ui.home.HomePresenter;
 import eu.hackathonovo.ui.home.HomePresenterImpl;
 import eu.hackathonovo.ui.home_leader.HomeLeaderPresenter;
@@ -62,8 +66,22 @@ public final class PresenterModule {
     @ForActivity
     @Provides
     HomeLeaderPresenter provideHomeLeaderPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
-                                                   final StringManager stringManager, final NetworkService networkService) {
-        return new HomeLeaderPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
+                                                   final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new HomeLeaderPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
+    }
+
+    @ForActivity
+    @Provides
+    EditActionPresenter getEditActionPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                               final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new EditActionPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
+    }
+
+    @ForActivity
+    @Provides
+    FilterPresenter getFilterPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                       final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new FilterPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
     }
 
     @ForActivity

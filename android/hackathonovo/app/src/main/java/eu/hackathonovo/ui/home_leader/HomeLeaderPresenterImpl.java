@@ -1,9 +1,9 @@
 package eu.hackathonovo.ui.home_leader;
 
-import org.json.JSONObject;
-
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
+import eu.hackathonovo.data.api.models.response.ActionResponse;
 import eu.hackathonovo.data.service.NetworkService;
+import eu.hackathonovo.data.storage.TemplatePreferences;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.base.presenters.BasePresenter;
 import io.reactivex.Scheduler;
@@ -17,12 +17,15 @@ public class HomeLeaderPresenterImpl extends BasePresenter implements HomeLeader
     private final Scheduler observeScheduler;
     private final StringManager stringManager;
     private final NetworkService networkService;
+    private final TemplatePreferences templatePreferences;
 
-    public HomeLeaderPresenterImpl(final Scheduler subscribeScheduler, final Scheduler observeScheduler, final StringManager stringManager, final NetworkService networkService) {
+    public HomeLeaderPresenterImpl(final Scheduler subscribeScheduler, final Scheduler observeScheduler, final StringManager stringManager, final NetworkService networkService,
+                                   TemplatePreferences templatePreferences) {
         this.subscribeScheduler = subscribeScheduler;
         this.observeScheduler = observeScheduler;
         this.stringManager = stringManager;
         this.networkService = networkService;
+        this.templatePreferences = templatePreferences;
     }
 
     @Override
@@ -38,8 +41,12 @@ public class HomeLeaderPresenterImpl extends BasePresenter implements HomeLeader
                                     .subscribe(this::onSendSuccess, this::onSendFailure));
     }
 
-    private void onSendSuccess(final JSONObject jsonObject) {
-
+    private void onSendSuccess(final ActionResponse jsonObject) {
+        templatePreferences.setActionId(jsonObject.id);
+        if (view!= null){
+            view.goToEditScreen();
+        }
+        Timber.e(String.valueOf(jsonObject.id));
     }
 
     private void onSendFailure(final Throwable throwable) {

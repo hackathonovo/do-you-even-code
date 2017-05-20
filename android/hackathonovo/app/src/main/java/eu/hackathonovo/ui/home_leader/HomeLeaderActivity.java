@@ -47,4 +47,9 @@ public class HomeLeaderActivity extends BaseActivity implements HomeLeaderView {
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);
     }
+
+    @Override
+    public void goToEditScreen() {
+
+    }
 }

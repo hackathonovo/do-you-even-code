@@ -1,5 +1,9 @@
 package eu.hackathonovo.injection.component;
 
+import eu.hackathonovo.ui.actions.EditActionsActivity;
+import eu.hackathonovo.ui.filter.FilterActivity;
+import eu.hackathonovo.ui.filter.FilterFragment;
+import eu.hackathonovo.ui.filter.MapFragment;
 import eu.hackathonovo.ui.home.HomeActivity;
 import eu.hackathonovo.ui.home_leader.HomeLeaderActivity;
 import eu.hackathonovo.ui.home_leader.MeetingTimeFragment;
@@ -29,4 +33,12 @@ public interface ActivityComponentActivityInjects {
     void inject(HomeRescuerActivity Activity);
 
     void inject(MeetingTimeFragment Activity);
+
+    void inject(EditActionsActivity Activity);
+
+    void inject(FilterActivity Activity);
+
+    void inject(MapFragment Activity);
+
+    void inject(FilterFragment Activity);
 }
