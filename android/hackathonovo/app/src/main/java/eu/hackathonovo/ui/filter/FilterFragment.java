@@ -95,7 +95,9 @@ public class FilterFragment extends BaseFragment implements FilterView {
 
             @Override
             public void afterTextChanged(final Editable s) {
-                presenter.filterData(et_name_surname.getText().toString(), Integer.valueOf(et_radius.getText().toString()));
+                if (!et_radius.getText().toString().matches("")) {
+                    presenter.filterData(et_name_surname.getText().toString(), Integer.valueOf(et_radius.getText().toString()));
+                }
             }
         });
 
@@ -113,7 +115,9 @@ public class FilterFragment extends BaseFragment implements FilterView {
 
             @Override
             public void afterTextChanged(final Editable s) {
-                presenter.filterData(et_name_surname.getText().toString(), Integer.valueOf(et_radius.getText().toString()));
+                if (!et_radius.getText().toString().matches("")) {
+                    presenter.filterData(et_name_surname.getText().toString(), Integer.valueOf(et_radius.getText().toString()));
+                }
             }
         });
         presenter.setView(this);

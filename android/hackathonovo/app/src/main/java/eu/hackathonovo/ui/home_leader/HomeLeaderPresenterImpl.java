@@ -13,6 +13,7 @@ public class HomeLeaderPresenterImpl extends BasePresenter implements HomeLeader
 
     private HomeLeaderView view;
 
+    public static int ACTION_ID;
     private final Scheduler subscribeScheduler;
     private final Scheduler observeScheduler;
     private final StringManager stringManager;
@@ -43,6 +44,7 @@ public class HomeLeaderPresenterImpl extends BasePresenter implements HomeLeader
 
     private void onSendSuccess(final ActionResponse jsonObject) {
         templatePreferences.setActionId(jsonObject.id);
+        ACTION_ID = jsonObject.id;
         if (view!= null){
             view.goToEditScreen();
         }

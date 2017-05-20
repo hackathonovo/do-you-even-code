@@ -3,7 +3,6 @@ package eu.hackathonovo.ui.actions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -53,13 +52,13 @@ public class EditActionsActivity extends BaseActivity implements EditActionView{
             searchDetailsData.setSuicidalnost(true);
             searchDetailsDatas.add(searchDetailsData);
         }
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_edit_action_parameters);
-        gridLayoutManager = new GridLayoutManager(this, 1);
+       // mRecyclerView = (RecyclerView) findViewById(R.id.rv_edit_action_parameters);
+   /*     gridLayoutManager = new GridLayoutManager(this, 1);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ActionParametersAdapter(gridLayoutManager);
 
-        addRecyclerItems();
+        addRecyclerItems();*/
     }
 
     @Override

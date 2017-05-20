@@ -10,13 +10,18 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
+
+import static eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl.ACTION_ID;
 
 public class MapFragment extends BaseFragment implements FilterView {
 
@@ -71,6 +76,11 @@ public class MapFragment extends BaseFragment implements FilterView {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.requestFocus();
-        webView.loadUrl("http://46.101.148.24/webviews/map/view");
+        webView.loadUrl("http://46.101.148.24/webviews/map/areas-edit/"+ ACTION_ID);
+    }
+
+    @Override
+    public void renderView(final List<FilterUsers> filterUserses) {
+
     }
 }

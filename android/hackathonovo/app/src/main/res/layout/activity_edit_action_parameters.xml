@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="eu.hackathonovo.ui.actions.EditActionsActivity">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_edit_action_parameters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/text1"
+        android:textSize="@dimen/_20sp"
+        android:text="Da li je osoba ozljeđena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="55dp"/>
+
+    <TextView
+        android:layout_below="@id/text1"
+        android:textSize="@dimen/_20sp"
+        android:text="Lokacija pretrage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/text1"
+        android:layout_below="@+id/text1"
+        android:layout_alignBottom="@+id/textView"/>
+
 </RelativeLayout>
+
+<!--
+    @SerializedName("injury")
+    public String ozlijeden;
+
+    @SerializedName("address")
+    public String lokacija = null;
+
+    @SerializedName("urgency")
+    public String hitnost;
+    @SerializedName("suicidal")
+    public boolean suicidalnost;
+    @SerializedName("meeting_address")
+    public String mjestoSastanka = null;
+    @SerializedName("time_meeting")
+    public String vrijemeSastanka = null;
+    public String vrijemeOd;
+    public String vrijemeDo;
+    public String type;
+    public String data;
+    public int id;-->
