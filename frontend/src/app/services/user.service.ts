@@ -63,7 +63,13 @@ export class UserService {
   }
 
   listByAction(actionId: number, params = []): Observable<User[]> {
-    return this.http.get(this.baseUrl+'/actions/'+actionId+'/users', {headers: this.headers})
+    let search = new URLSearchParams();
+
+    for (let param in params) {
+      search.set(param, params[param]);
+    }
+
+    return this.http.get(this.baseUrl+'/actions/'+actionId+'/search', {headers: this.headers, search: search})
       .map(UserService.extractData)
       .catch(UserService.handleError);
   }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, HostListener, ViewChild, ElementRef} from '@angular/core';
 import {PointService} from "../../services/point.service";
 import {Polygon} from "../../models/polygon";
 import {Point} from "../../models/point";
@@ -10,6 +10,7 @@ import {ActionService} from "app/services/action.service";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import '../../rxjs-operators';
+import {PolygonService} from "../../services/polygon.service";
 declare let $:any;
 const ICON_SIZE = 40;
 const REFRESH_INTERVAL = 1000; // in ms
@@ -20,6 +21,8 @@ const REFRESH_INTERVAL = 1000; // in ms
   styleUrls: ['../map.component.css', './map-users-edit.component.css']
 })
 export class MapUsersEditComponent implements OnDestroy{
+  @ViewChild('draggable') draggable: ElementRef;
+
   zoom: number = 8;
   areas : Array<Polygon> = [];
   markers: Point[] = [];
@@ -36,12 +39,14 @@ export class MapUsersEditComponent implements OnDestroy{
   autoRefresh: Subscription;
   model: Action;
   users: User[];
-  selectedUserId: number;
-  selectedUserType: number;
+  selectedUser: User;
+  selectedUserType: string;
   searchParam: string;
   isSearchVisible: boolean = false;
+  newMarker: Point;
 
   constructor(private pointService: PointService,
+              private polygonService: PolygonService,
               private actionService: ActionService,
               private userService: UserService,
               private route: ActivatedRoute) {
@@ -51,16 +56,21 @@ export class MapUsersEditComponent implements OnDestroy{
       .subscribe(user => {
         this.model = user as Action;
         this.getMapData(this.model.id);
-        this.setAutoRefresh();
+        //this.setAutoRefresh();
       });
   }
 
   ngOnDestroy(): void {
-    this.autoRefresh.unsubscribe();
+    //this.autoRefresh.unsubscribe();
   }
 
   search(): void {
-    this.userService.listByAction(this.model.id).subscribe(
+    console.debug(this.searchParam);
+    let params = [];
+    if(this.searchParam) params['name'] = this.searchParam;
+    if(this.selectedUserType) params['type'] = this.selectedUserType;
+
+    this.userService.listByAction(this.model.id, params).subscribe(
       list => {
         if(JSON.stringify(this.users) != JSON.stringify(list)) {
           this.users = list;
@@ -73,7 +83,6 @@ export class MapUsersEditComponent implements OnDestroy{
 
   cancel(): void {
     this.isSearchVisible = !this.isSearchVisible;
-    this.users = [];
   }
 
   clickedMarker(marker: Point) {
@@ -84,8 +93,11 @@ export class MapUsersEditComponent implements OnDestroy{
     }
   }
 
-  selectUser(userId: number): void {
-    this.selectedUserId = userId;
+  selectUser(user: User): void {
+    this.newMarker = new Point();
+    this.selectedUser = user;
+    this.isSearchVisible = false;
+    this.onToolPick('\uf007', 'fa-user');
   }
 
   private setAutoRefresh(): void {
@@ -104,6 +116,16 @@ export class MapUsersEditComponent implements OnDestroy{
       },
       error =>  this.errorMessage = <any>error
     );
+
+    //get areas
+    this.polygonService.listByAction(actionId).subscribe(
+      list => {
+        if(JSON.stringify(this.areas) != JSON.stringify(list)) {
+          this.areas = list;
+        }
+      },
+      error =>  this.errorMessage = <any>error
+    );
   }
 
   mapClicked(event: any) {
@@ -112,7 +134,7 @@ export class MapUsersEditComponent implements OnDestroy{
         case "DELETE":
           break;
         default:
-          if(this.selectedUserId) {
+          if(this.selectedUser) {
             let canvas = document.createElement("canvas");
             canvas.width = ICON_SIZE;
             canvas.height = ICON_SIZE;
@@ -129,10 +151,12 @@ export class MapUsersEditComponent implements OnDestroy{
             marker.lng = event.coords.lng;
             marker.label = canvas.toDataURL('image/png');
             marker.action_id = this.model.id;
-            marker.user_id = this.selectedUserId;
+            marker.user_id = this.selectedUser.id;
 
             this.markers.push(marker);
             this.pointService.create(marker);
+            this.selectedUser = null;
+            this.cancel();
           }
       }
     }
@@ -154,6 +178,16 @@ export class MapUsersEditComponent implements OnDestroy{
 
   onColorPick(color): void {
     this.markerColor = color;
+  }
+
+  onResetTool(): void {
+    if(this.isToolActive) {
+      this.activeTool = null;
+      this.isToolActive = false;
+      this.customTool = null;
+      this.customClassName = null;
+      this.selectedUser = null;
+    }
   }
 
   toggleFAB(toggle): void {

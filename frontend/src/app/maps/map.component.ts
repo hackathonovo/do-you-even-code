@@ -8,6 +8,7 @@ import {AuthenticationService} from "../services/authentication.service";
 import {LatLngLiteral} from "@agm/core";
 import {Observable} from "rxjs/Rx";
 import {Subscription} from "rxjs/Subscription";
+import '../rxjs-operators';
 declare let $:any;
 const ICON_SIZE = 40;
 const REFRESH_INTERVAL = 1000; // in ms
@@ -132,7 +133,7 @@ export class MapComponent implements OnDestroy{
           marker.label = canvas.toDataURL('image/png');
 
           this.markers.push(marker);
-          this.pointService.create(marker).subscribe(data => this.getMapData());
+          this.pointService.create(marker);
 
       }
     }
@@ -142,7 +143,7 @@ export class MapComponent implements OnDestroy{
     let index = this.markers.indexOf(marker);
     this.markers[index].lat = event.coords.lat;
     this.markers[index].lng = event.coords.lng;
-    this.pointService.update(this.markers[index]).subscribe(data => this.getMapData());
+    this.pointService.update(this.markers[index]);
   }
 
   onToolPick(unicode, className, custom = null): void {
@@ -166,7 +167,7 @@ export class MapComponent implements OnDestroy{
     polygon.polygon = this.tempPoints;
     this.areas.push(polygon);
     this.tempPoints = [];
-    this.polygonService.create(polygon).subscribe(data => this.getMapData());
+    this.polygonService.create(polygon);
   }
 
   onResetTool(): void {

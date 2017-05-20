@@ -1,6 +1,6 @@
 <section class="toolbar">
   STATUS: <span class="status-live blink">LIVE</span>
-  <i *ngIf="!isSearchVisible" (click)="isSearchVisible=!isSearchVisible" class="fa fa-search"></i>
+  <i *ngIf="!isSearchVisible && !selectedUser" (click)="isSearchVisible=!isSearchVisible" class="fa fa-search"></i>
 
   <section *ngIf="isSearchVisible" class="filter-search">
     <div class="input-group">
@@ -9,14 +9,18 @@
           <button (click)="search()" class="btn btn-default big-search-btn" type="button">TRAŽI</button>
           <button (click)="cancel()" class="btn btn-default big-search-btn" type="button">ODUSTANI</button>
       </span>
+      <section class="users-chips">
+        <div *ngFor="let user of users" (mousedown)="selectUser(user)" class="chip">
+          {{user.name}} {{user.surname}}
+        </div>
+      </section>
     </div>
     <div class="clearfix"></div>
-    <ul class="locations-dropdown">
-      <li *ngFor="let user of users" (click)="selectUser(user.id)" >
-        {{user.name}} {{user.surname}} ({{user.username}})
-      </li>
-    </ul>
   </section>
+  <div class="clearfix"></div>
+  <div *ngIf="!!selectedUser" (mousedown)="selectUser(user)" class="chip selected-chip">
+    <i class="fa fa-check"></i> {{selectedUser.name}} {{selectedUser.surname}}
+  </div>
 </section>
 <div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
   <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">

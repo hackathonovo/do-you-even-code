@@ -3,7 +3,7 @@
 }
 
 .input-group input {
-  width: 96% !important;
+  width: 90% !important;
   max-width: 320px !important;
   margin-right: 20px !important;
   background: #ffffff !important;
@@ -27,4 +27,19 @@
 
 button {
   cursor: pointer;
+}
+
+.users-chips {
+  margin-top: 10px;
+}
+
+.users-chips div {
+  cursor: move;
+}
+
+.selected-chip {
+  background: #e53935 !important;
+  color: #fff;
+  font-weight: bold;
+  margin-top: -10px !important;
 }
