@@ -180,6 +180,8 @@ func (e *Env) NewUserReponse(p *User) *UserRespose {
 	resp := &UserRespose{User: p}
 
 	p.Points = e.GetRelatedPointList(p.ID)
+	resp.Points = make([]*PointResponse, 0)
+	resp.Polygons = make([]*PolygonResponse, 0)
 	for _, p := range p.Points {
 		resp.Points = append(resp.Points, NewPointResponse(p))
 	}

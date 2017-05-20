@@ -80,6 +80,8 @@ func main() {
 		r.Route("/:userId", func(r2 chi.Router) {
 			r2.Use(e.UserCtx)
 			r2.Get("/", e.GetUser)
+			r2.Delete("/", e.DeleteUser)
+			r2.Put("/", e.UpdateUser)
 		})
 	})
 
