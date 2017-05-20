@@ -25,6 +25,7 @@ type PolygonRequest struct {
 	ExtraData  string        `json:"data"`
 	ExtraType  string        `json:"type"`
 	Border     []BorderPoint `json:"polygon"`
+	UserId uint `json:"user_id"`
 }
 
 func (PolygonRequest) Bind(r *http.Request) error {
@@ -59,6 +60,26 @@ func (e *Env) CreatePolygon(w http.ResponseWriter, r *http.Request) {
 	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.ExtraType, data.ExtraData, data.ExtraColor, h.ToPolygonWKT(data.Geo)).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
+	}
+
+	if data.UserId != 0 {
+		idSql := "select MAX(id) from polygons"
+
+		rows, err := e.DB.Raw(idSql).Rows()
+		if err != nil {
+			render.Render(w, r, h.ErrRender(err))
+			return
+		}
+
+		for rows.Next() {
+			rows.Scan(&data.ID)
+		}
+
+		sql2 := "insert into user_polygons values(default, ?, ?, ?)"
+		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
+			render.Render(w, r, h.ErrRender(err))
+			return
+		}
 	}
 
 	//e.PolygonAdd <- *data.Polygon
@@ -116,7 +137,7 @@ func (e *Env) UpdatePolygon(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sql := "update polygons set type = ?, set data = ?, color = ?, geom = ST_PolygonFromText(?, 4326), updated_at = ? WHERE id = ?"
-	if err := e.DB.Exec(sql, data.Type, data.Data, data.ExtraColor, h.ToPolygonWKT(data.Geo), time.Now(), poly.ID).Error; err != nil {
+	if err := e.DB.Exec(sql, data.ExtraType, data.ExtraData, data.ExtraColor, h.ToPolygonWKT(data.Geo), time.Now(), poly.ID).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}

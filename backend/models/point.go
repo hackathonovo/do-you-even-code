@@ -79,29 +79,31 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	//user, ok := req.Context().Value("user").(*User)
-	//fmt.Printf("Current user: %s %s\n", user, ok)
-	//if ok != true {
-	//	render.Render(rw, req, h.ErrServer)
-	//	return
-	//}
-
+	data.Point = &Point{}
 	data.Geo = geo.Point{data.Lng, data.Lat}
 	fmt.Printf("Point WKT: %s\n", data.Geo.ToWKT())
-	var pointId uint
+	sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
+	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Error; err != nil {
+		render.Render(rw, req, h.ErrRender(err))
+		return
+	}
 
-	//sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
-	//if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Error; err != nil {
-	//	render.Render(rw, req, h.ErrRender(err))
-	//	return
-	//}
-	//
-	sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326)) RETURNING id"
-	e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Scan(&pointId)
 
 	if data.UserId != 0 {
-		sql2 := "insert into user_points values(default, ?, ?)"
-		if err := e.DB.Exec(sql2, data.UserId, pointId).Error; err != nil {
+		idSql := "select MAX(id) from points"
+
+		rows, err := e.DB.Raw(idSql).Rows()
+		if err != nil {
+			render.Render(rw, req, h.ErrRender(err))
+			return
+		}
+
+		for rows.Next() {
+			rows.Scan(&data.ID)
+		}
+
+		sql2 := "insert into user_points values(default, ?, ?, ?)"
+		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
 		}
