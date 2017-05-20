@@ -11,6 +11,8 @@ import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.home.HomePresenter;
 import eu.hackathonovo.ui.home.HomePresenterImpl;
+import eu.hackathonovo.ui.login.HGSSLoginPresenter;
+import eu.hackathonovo.ui.login.HGSSLoginPresenterImpl;
 import eu.hackathonovo.ui.login.LoginPresenter;
 import eu.hackathonovo.ui.login.LoginPresenterImpl;
 import eu.hackathonovo.ui.photo.TakeOrPickAPhotoPresenter;
@@ -41,7 +43,15 @@ public final class PresenterModule {
     @Provides
     TakeOrPickAPhotoPresenter provideTakeOrPickAPhotoPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler,
                                                                @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler, final LocalImagesUseCase localImagesUseCase,
-                                                               final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+                                                               final StringManager stringManager, final NetworkService networkService,
+                                                               final TemplatePreferences templatePreferences) {
         return new TakeOrPickAPhotoPresenterImpl(subscribeScheduler, observeScheduler, stringManager, localImagesUseCase, networkService, templatePreferences);
+    }
+
+    @ForActivity
+    @Provides
+    HGSSLoginPresenter provideHgssLoginPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                                 final StringManager stringManager, final NetworkService networkService) {
+        return new HGSSLoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
     }
 }

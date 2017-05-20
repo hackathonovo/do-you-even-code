@@ -40,6 +40,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     /*@BindView(R.id.facebook_button)
     LoginButton facebookButton;*/
 
+
     private static final int RC_SIGN_IN = 9001;
     private static final int AUDIO_PERMISSION_CODE = 10;
 
@@ -83,7 +84,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         super.onResume();
         //requestAudioPermission();
         presenter.setView(this);
-
     }
 /*
     @Override
@@ -119,10 +119,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @OnClick(R.id.login_btn)
     public void hgssLoginClicked() {
-
+        goToHGSSLogin();
     }
-
-
 
     @Override
     public void goToHomeScreen() {
@@ -131,7 +129,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void goToHGSSLogin() {
-
+        startActivity(HGSSLoginActivity.createIntent(this));
     }
 
     private void googleLogin() {

@@ -7,4 +7,5 @@ public interface LoginPresenter {
     void setView(LoginView view);
 
     void login(UserInformation userInformation);
+
 }

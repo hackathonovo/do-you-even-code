@@ -3,6 +3,7 @@ package eu.hackathonovo.data.service;
 import org.json.JSONObject;
 
 import eu.hackathonovo.data.api.APIConstants;
+import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
@@ -22,6 +23,11 @@ public final class NetworkServiceImpl implements NetworkService {
     @Override
     public Single<UserInformation> login(final UserInformation userInformation) {
         return Single.defer(() -> templateAPI.login(userInformation));
+    }
+
+    @Override
+    public Single<UserInformation> loginHGSS(final HGSSUserInformation userInformation) {
+        return Single.defer(() -> templateAPI.loginHGSS(userInformation));
     }
 
     @Override
