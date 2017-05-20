@@ -5,7 +5,7 @@
 
       <ul class="collection">
         <li *ngFor="let model of list" class="collection-item">
-          <span>Action {{model.id}}</span>
+          <span>Akcija#{{model.id}} {{model.time_reported}} {{model.type}}</span>
           <a (click)="remove(model.id)" class="secondary-content delete-link"><i class="small material-icons">delete</i></a>
           <a [routerLink]="['/actions/detail/' + model.id]" class="secondary-content"><i class="small material-icons">visibility</i></a>
         </li>
