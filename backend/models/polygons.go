@@ -34,11 +34,6 @@ type PolygonResponse struct {
 	Border []BorderPoint `json:"polygon"`
 }
 
-type BorderPoint struct {
-	Lat float64 `json:"lat"`
-	Lng float64 `json:"lng"`
-}
-
 func (p *PolygonResponse) Render(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }

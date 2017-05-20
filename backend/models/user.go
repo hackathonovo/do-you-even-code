@@ -21,7 +21,10 @@ type User struct {
 	Role string `json:"role"`
 	Data string `json:"data"`
 	Address string `json:"address"`
-
+	Points []Point `gorm:"-" json:"-"`
+	Polygons []Polygon `gorm:"-" json:"-"`
+	Phone string `json:"phone"`
+	Fcm string `json:"fcm"`
 }
 
 type NewUserRequest struct {
@@ -31,6 +34,8 @@ type NewUserRequest struct {
 
 type UserRespose struct {
 	*User
+	Polygons []PolygonResponse `json:"polygons"`
+	Points []PointResponse `json:"points"`
 }
 
 func (u *NewUserRequest) Bind(r *http.Request) error {
@@ -90,7 +95,7 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 func NewUserListReponse(users []*User) []render.Renderer {
 	list := []render.Renderer{}
 	for _, user := range users {
-		list = append(list, &UserRespose{user})
+		list = append(list, &UserRespose{User: user})
 	}
 	return list
 }

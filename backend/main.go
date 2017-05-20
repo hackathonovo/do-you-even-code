@@ -47,8 +47,8 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{})
+	db.LogMode(true)
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -102,6 +102,8 @@ func main() {
 			r2.Delete("/", e.DeletePolygon)
 		})
 	})
+
+	router.Post("/login", e.LoginUser)
 
 	if *genRoutes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
