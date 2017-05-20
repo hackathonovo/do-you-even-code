@@ -10,9 +10,11 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"net/http/httputil"
 	m "github.com/hackathonovo/do-you-even-code/backend/models"
+	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
 	"github.com/jinzhu/gorm"
 	"flag"
 	"github.com/pressly/chi/docgen"
+	"github.com/pressly/chi/middleware"
 )
 
 var (
@@ -50,6 +52,16 @@ func main() {
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
+
+	router.Use(middleware.RequestID)
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+	router.Use(ReqLogger)
+	router.Use(OptionsAllowed)
+	router.Use(render.SetContentType(render.ContentTypeJSON))
+
+	router.MethodNotAllowed(NotAllowedHandler)
+	router.NotFound(NotFoundHandler)
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		request, err := httputil.DumpRequest(r, true)
@@ -104,4 +116,39 @@ func main() {
 
 }
 
+func OptionsAllowed(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "OPTIONS" {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET,HEAD,POST,OPTIONS,PUT,DELETE")
+			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
+			w.Header().Set("Content-Type", "httpd/unix-directory")
+			return
+		}
+
+		handler.ServeHTTP(w, r)
+	})
+}
+
+func ReqLogger(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		request, err := httputil.DumpRequest(r, true)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%s \n", request)
+
+		handler.ServeHTTP(w, r)
+	})
+}
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, h.ErrNotFound)
+	return
+}
+
+func NotAllowedHandler(w http.ResponseWriter, r *http.Request) {
+	render.Render(w, r, h.ErrNotAllowed)
+	return
+}
 
