@@ -1,0 +1,17 @@
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h4>Logs</h4>
+
+      <a [routerLink]="['/logs/create']" class="waves-effect waves-light btn">New log</a>
+
+      <ul class="collection">
+        <li *ngFor="let model of list" class="collection-item">
+          <span>Log {{model.id}}</span>
+          <a (click)="remove(model.id)" class="secondary-content delete-link"><i class="small material-icons">delete</i></a>
+          <a [routerLink]="['/logs/detail/' + model.id]" class="secondary-content"><i class="small material-icons">edit</i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

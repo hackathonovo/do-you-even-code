@@ -1,0 +1,65 @@
+<div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
+  <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
+    <i class="fa fa-times"></i>
+  </a>
+  <a class="btn-floating btn-large red">
+    <i *ngIf="!isToolActive" class="large material-icons">add</i>
+    <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
+  </a>
+  <ul *ngIf="!isToolActive">
+    <li (click)="onToolPick('\uf1b0', 'fa-paw')"><a class="btn-floating red"><i class="fa fa-paw"></i></a></li>
+    <li (click)="onToolPick('\uf007', 'fa-user')"><a class="btn-floating yellow darken-1"><i class="fa fa-user"></i></a></li>
+    <li (click)="onToolPick('\uf0fe', 'fa-plus-square')"><a class="btn-floating green"><i class="fa fa-plus-square"></i></a></li>
+    <li (click)="onToolPick('\uf0c0', 'fa-group')"><a class="btn-floating blue"><i class="fa fa-group"></i></a></li>
+    <li (click)="onToolPick('\uf041', 'fa-map-marker')"><a class="btn-floating purple"><i class="fa fa-map-marker"></i></a></li>
+    <li (click)="onToolPick('\uf24a', 'fa-sticky-note-o', 'AREA')"><a class="btn-floating orange"><i class="fa fa-sticky-note-o"></i></a></li>
+    <li (click)="onToolPick('\uf12d', 'fa-eraser', 'DELETE')"><a class="btn-floating orange"><i class="fa fa-eraser"></i></a></li>
+  </ul>
+  <ul *ngIf="isToolActive">
+    <li (click)="onColorPick('red')"><a class="btn-floating red"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('green')"><a class="btn-floating green"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('yellow')"><a class="btn-floating yellow"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('blue')"><a class="btn-floating blue"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('white')"><a class="btn-floating white"><i style="color: #000000;" class="fa fa-eyedropper"></i></a></li>
+  </ul>
+</div>
+<agm-map *ngIf="areas.length > 0 && markers.length > 0"
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="false"
+  [styles]="mapStyle"
+  (mapClick)="mapClicked($event)">
+
+  <agm-polyline class="temp-polyline" [strokeColor]="'white'" (lineClick)="createPolygon()">
+    <agm-polyline-point *ngFor="let tp of tempPoints" class="temp-point"
+                        [latitude]="tp.lat" [longitude]="tp.lng">
+    </agm-polyline-point>
+  </agm-polyline>
+
+  <agm-polygon *ngFor="let area of areas"
+    [paths]="area.polygon"
+    [editable]="false"
+    [polyDraggable]="false"
+    (polyClick)="clickedPaths(area)"
+    [fillColor]="area.color"
+    [strokeColor]="area.color">
+  </agm-polygon>
+
+  <agm-marker
+      *ngFor="let m of markers"
+      (markerClick)="clickedMarker(m)"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [iconUrl]="m.label"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd(m, $event)">
+
+    <i class="{{m.label}}"></i>
+    <agm-info-window>
+      <strong class="marker-info">InfoWindow content</strong>
+    </agm-info-window>
+  </agm-marker>
+
+</agm-map>

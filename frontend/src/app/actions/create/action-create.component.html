@@ -1,0 +1,15 @@
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <div>
+        <h4>Action</h4>
+        <div><label>id: </label>New</div>
+        <div>
+          <input type="number" [(ngModel)]="model.lng" placeholder="longitude"/>
+          <input type="number" [(ngModel)]="model.lat" placeholder="latitude"/>
+        </div>
+        <button (click)="save()">Create</button>
+      </div>
+    </div>
+  </div>
+</section>

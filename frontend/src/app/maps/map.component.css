@@ -1,0 +1,22 @@
+.sebm-google-map-container {
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  z-index:777;
+  color:#fff;
+}
+
+.map-toolbox {
+  z-index: 778;
+}
+
+.marker-info {
+  color: #000000;
+}
+
+.temp-polyline,
+.temp-point {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
+}
