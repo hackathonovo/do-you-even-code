@@ -20,6 +20,7 @@ type User struct {
 	Name       string     `json:"name"`
 	Surname    string     `json:"surname"`
 	Role       string     `json:"role"`
+	Type       string     `json:"type"`
 	Data       string     `json:"data"`
 	Address    string     `json:"address"`
 	Points     []*Point   `gorm:"-" json:"-"`
@@ -178,7 +179,8 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 
 func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
-	typ := r.URL.Query().Get("role")
+	role := r.URL.Query().Get("role")
+	typ := r.URL.Query().Get("type")
 	action := r.URL.Query().Get("actionId")
 
 	if name == "" && typ == "" && action == "" {
@@ -188,7 +190,15 @@ func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 
 	query := ""
 	if name != "" {
-		query += " users.name || ' ' || users.surname LIKE '%" + name + "%' "
+		query += " users.name || ' ' || users.surname ILIKE '%" + name + "%' "
+	}
+
+	if role != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " users.role ILIKE '%" + role + "%' "
 	}
 
 	if typ != "" {
@@ -196,7 +206,7 @@ func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 			query += " AND "
 		}
 
-		query += " users.role LIKE '%" + typ + "%' "
+		query += " users.type ILIKE '%" + typ + "%' "
 	}
 
 	if action != "" {

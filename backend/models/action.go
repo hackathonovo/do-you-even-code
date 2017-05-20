@@ -162,7 +162,7 @@ func (e *Env) GetActionUsersById(w http.ResponseWriter, r *http.Request) {
 	action := r.Context().Value("action").(*Action)
 
 	var users = []*User{}
-	e.DB.Where("id = ?", action.ID).Find(&users)
+	e.DB.Where("action_id = ?", action.ID).Find(&users)
 
 	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
 		render.Render(w, r, h.ErrServer)
