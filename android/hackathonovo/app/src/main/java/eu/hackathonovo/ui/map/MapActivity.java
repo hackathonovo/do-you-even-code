@@ -13,6 +13,8 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 
+import static eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl.ACTION_ID;
+
 public class MapActivity extends BaseActivity {
 
     public static Intent createIntent(final Context context) {
@@ -48,6 +50,6 @@ public class MapActivity extends BaseActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.requestFocus();
-        webView.loadUrl("http://46.101.148.24/webviews/map/view");
+        webView.loadUrl("http://46.101.148.24/webviews/map/view/" + ACTION_ID);
     }
 }

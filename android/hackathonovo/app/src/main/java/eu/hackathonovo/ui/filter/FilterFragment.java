@@ -18,12 +18,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 import eu.hackathonovo.ui.filter.rv_adapter.ChildItem;
 import eu.hackathonovo.ui.filter.rv_adapter.FilterAdapter;
+import eu.hackathonovo.ui.map.MapActivity;
 
 public class FilterFragment extends BaseFragment implements FilterView {
 
@@ -47,6 +49,11 @@ public class FilterFragment extends BaseFragment implements FilterView {
     @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);
+    }
+
+    @OnClick(R.id.button_spremi)
+    public void clicked(){
+        startActivity(MapActivity.createIntent(getActivity()));
     }
 
     @Nullable
