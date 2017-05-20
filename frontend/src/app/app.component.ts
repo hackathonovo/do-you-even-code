@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { isHeaderVisible } from './session';
 
 @Component({
   moduleId: module.id,
@@ -8,9 +7,7 @@ import { isHeaderVisible } from './session';
   styleUrls: ['app.component.css'],
 })
 export class AppComponent {
-  public header;
 
   constructor() {
-    this.header = isHeaderVisible;
   }
 }

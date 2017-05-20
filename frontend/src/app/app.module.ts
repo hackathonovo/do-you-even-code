@@ -28,7 +28,6 @@ import {LogModule} from "./logs/log.module";
     JsonpModule,
     AppRoutingModule,
     PointModule,
-    HeaderModule,
     MapModule,
     UserModule,
     ActionModule,

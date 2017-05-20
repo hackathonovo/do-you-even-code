@@ -1,3 +1,7 @@
+<my-header></my-header>
+<section class="toolbar">
+  STATUS: <span class="status-live blink">LIVE</span>
+</section>
 <div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
   <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
     <i class="fa fa-times"></i>
@@ -20,19 +24,19 @@
     <li (click)="onColorPick('green')"><a class="btn-floating green"><i class="fa fa-eyedropper"></i></a></li>
     <li (click)="onColorPick('yellow')"><a class="btn-floating yellow"><i class="fa fa-eyedropper"></i></a></li>
     <li (click)="onColorPick('blue')"><a class="btn-floating blue"><i class="fa fa-eyedropper"></i></a></li>
-    <li (click)="onColorPick('white')"><a class="btn-floating white"><i style="color: #000000;" class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('black')"><a class="btn-floating black"><i class="fa fa-eyedropper"></i></a></li>
   </ul>
 </div>
-<agm-map *ngIf="areas.length > 0 && markers.length > 0"
+<agm-map
   [latitude]="lat"
   [longitude]="lng"
   [zoom]="zoom"
   [disableDefaultUI]="false"
-  [zoomControl]="false"
   [styles]="mapStyle"
+  [zoomControl]="false"
   (mapClick)="mapClicked($event)">
 
-  <agm-polyline class="temp-polyline" [strokeColor]="'white'" (lineClick)="createPolygon()">
+  <agm-polyline style="cursor: crosshair;" class="temp-polyline" [strokeColor]="'white'" (lineClick)="createPolygon()">
     <agm-polyline-point *ngFor="let tp of tempPoints" class="temp-point"
                         [latitude]="tp.lat" [longitude]="tp.lng">
     </agm-polyline-point>

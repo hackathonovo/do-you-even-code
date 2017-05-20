@@ -2,8 +2,8 @@ import {Authentication} from "./authentication";
 
 export class User {
   id: number;
-  username: string = "frontend";
-  password: string = "12345";
+  username: string = "voditelj";
+  password: string = "1234";
   name: string;
   surname: string;
   role: string;

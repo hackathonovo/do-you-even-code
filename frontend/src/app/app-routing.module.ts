@@ -16,6 +16,7 @@ import {LogComponent} from "./logs/logs.component";
 import {TimeTableDetailComponent} from "./timetables/edit/timetable-detail-component";
 import {TimeTableComponent} from "app/timetables/timetables.component";
 import {TimeTableCreateComponent} from "./timetables/create/timetable-create.component";
+import {MapViewComponent} from "./maps/view/map-view.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/points', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'points',     component: PointComponent },
 
   { path: 'map',     component: MapComponent },
+  { path: 'webviews/map/view',     component: MapViewComponent },
 
   { path: 'users/detail/:id', component: UserDetailComponent },
   { path: 'users/create', component: UserCreateComponent },

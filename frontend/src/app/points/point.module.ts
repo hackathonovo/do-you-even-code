@@ -6,12 +6,14 @@ import {PointCreateComponent} from './create/point-create.component';
 import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
+import {HeaderModule} from "../header/header.module";
 
 @NgModule({
   imports: [
     FormsModule,
     BrowserModule,
-    RouterModule
+    RouterModule,
+    HeaderModule
   ],
   declarations: [
     PointDetailComponent,

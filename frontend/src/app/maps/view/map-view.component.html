@@ -1,0 +1,44 @@
+<section class="toolbar">
+  STATUS: <span class="status-live blink">LIVE</span>
+</section>
+<div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
+  <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
+    <i class="fa fa-times"></i>
+  </a>
+  <a class="btn-floating btn-large red">
+    <i *ngIf="!isToolActive" class="large material-icons">edit</i>
+    <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
+  </a>
+  <ul>
+  </ul>
+</div>
+<agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="true"
+  [styles]="mapStyle"
+  [zoomControl]="false">
+
+  <agm-polygon *ngFor="let area of areas"
+    [paths]="area.polygon"
+    [editable]="false"
+    [polyDraggable]="false"
+    [fillColor]="area.color"
+    [strokeColor]="area.color">
+  </agm-polygon>
+
+  <agm-marker
+      *ngFor="let m of markers"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [iconUrl]="m.label"
+      [markerDraggable]="false">
+
+    <i class="{{m.label}}"></i>
+    <agm-info-window>
+      <strong class="marker-info">InfoWindow content</strong>
+    </agm-info-window>
+  </agm-marker>
+
+</agm-map>
