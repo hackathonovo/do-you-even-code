@@ -27,6 +27,7 @@ type PointRequest struct {
 	Lat            float64 `json:"lat"`
 	Lng            float64 `json:"lng"`
 	UserId         uint    `json:"user_id"`
+	ActionId       uint    `json:"action_id"`
 	TypeExtra      string  `json:"type"`
 	DataExtra      string  `json:"data"`
 	LabelExtra     string  `json:"label"`
@@ -69,7 +70,7 @@ func (e *Env) ListPoints(rw http.ResponseWriter, req *http.Request) {
 		points = append(points, &p)
 	}
 
-	if err := render.RenderList(rw, req, NewPointListResponse(points)); err != nil {
+	if err := render.RenderList(rw, req, e.NewPointListResponse(points)); err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
 	}
@@ -92,21 +93,29 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if data.UserId != 0 {
-		idSql := "select MAX(id) from points"
+	idSql := "select MAX(id) from points"
 
-		rows, err := e.DB.Raw(idSql).Rows()
-		if err != nil {
+	rows, err := e.DB.Raw(idSql).Rows()
+	if err != nil {
+		render.Render(rw, req, h.ErrRender(err))
+		return
+	}
+
+	for rows.Next() {
+		rows.Scan(&data.ID)
+	}
+
+	if data.UserId != 0 {
+		sql2 := "insert into user_points values(default, ?, ?, ?)"
+		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
 		}
+	}
 
-		for rows.Next() {
-			rows.Scan(&data.ID)
-		}
-
-		sql2 := "insert into user_points values(default, ?, ?, ?)"
-		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
+	if data.ActionId != 0 {
+		sql2 := "insert into action_points values(default, ?, ?, ?)"
+		if err := e.DB.Exec(sql2, data.ActionId, data.ID, time.Now()).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
 		}
@@ -120,6 +129,18 @@ func (e *Env) GetPoint(w http.ResponseWriter, r *http.Request) {
 	point := r.Context().Value("point").(*Point)
 
 	if err := render.Render(w, r, NewPointResponse(point)); err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+}
+
+
+func (e *Env) GetActionPointsList(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	points := e.GetRelatedPointsList(action.ID, "action")
+
+	if err := render.RenderList(w, r, e.NewPointListResponse(points)); err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -187,7 +208,7 @@ func (e *Env) PointCtx(next http.Handler) http.Handler {
 	})
 }
 
-func NewPointListResponse(points []*Point) []render.Renderer {
+func (e *Env) NewPointListResponse(points []*Point) []render.Renderer {
 	list := []render.Renderer{}
 	for _, point := range points {
 		list = append(list, NewPointResponse(point))
@@ -200,8 +221,15 @@ func (e *Env) GetRelatedPointsList(entityId uint, table string) []*Point {
 
 	//sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
 	//	"from points where deleted_at IS NULL and id IN (select points_id from user_points WHERE user_id = ?);"
-	sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
-		"from points where deleted_at IS NULL and id IN (select points_id from user_points WHERE user_id = ? order by id desc limit 1);"
+
+	var sql string
+	if table == "action" {
+		sql = "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
+			"from points where deleted_at IS NULL and id IN (select points_id from action_points WHERE action_id = ?);"
+	} else {
+		sql = "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
+			"from points where deleted_at IS NULL and id IN (select points_id from user_points WHERE user_id = ? order by id desc limit 1);"
+	}
 
 	rows, err := e.DB.Raw(sql, entityId).Rows()
 	if err != nil {

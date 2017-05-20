@@ -83,6 +83,10 @@ func main() {
 			r2.Get("/", e.GetUser)
 			r2.Delete("/", e.DeleteUser)
 			r2.Put("/", e.UpdateUser)
+
+			r2.Route("/location", func(r3 chi.Router) {
+				r2.Get("/", e.GetUser)
+			})
 		})
 
 	})
@@ -127,10 +131,11 @@ func main() {
 			r.Route("/polygons", func(r2 chi.Router) {
 				r2.Get("/", e.GetActionPolygonList)
 			})
+
+			r.Route("/points", func(r2 chi.Router) {
+				r2.Get("/", e.GetActionPointsList)
+			})
 		})
-
-
-
 	})
 
 	router.Route("/polygons", func(r chi.Router) {

@@ -27,6 +27,7 @@ type PolygonRequest struct {
 	ExtraType  string        `json:"type"`
 	Border     []BorderPoint `json:"polygon"`
 	UserId     uint          `json:"user_id"`
+	ActionId   uint          `json:"action_id"`
 }
 
 func (PolygonRequest) Bind(r *http.Request) error {
@@ -63,19 +64,19 @@ func (e *Env) CreatePolygon(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	idSql := "select MAX(id) from polygons"
+
+	rows, err := e.DB.Raw(idSql).Rows()
+	if err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+
+	for rows.Next() {
+		rows.Scan(&data.ID)
+	}
+
 	if data.UserId != 0 {
-		idSql := "select MAX(id) from polygons"
-
-		rows, err := e.DB.Raw(idSql).Rows()
-		if err != nil {
-			render.Render(w, r, h.ErrRender(err))
-			return
-		}
-
-		for rows.Next() {
-			rows.Scan(&data.ID)
-		}
-
 		sql2 := "insert into user_polygons values(default, ?, ?, ?)"
 		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
 			render.Render(w, r, h.ErrRender(err))
@@ -83,11 +84,16 @@ func (e *Env) CreatePolygon(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	//e.PolygonAdd <- *data.Polygon
+	if data.ActionId != 0 {
+		sql2 := "insert into action_polygons values(default, ?, ?, ?)"
+		if err := e.DB.Exec(sql2, data.ActionId, data.ID, time.Now()).Error; err != nil {
+			render.Render(w, r, h.ErrRender(err))
+			return
+		}
+	}
 
 	render.Status(r, http.StatusCreated)
 	render.Render(w, r, h.SucCreate)
-
 }
 
 func (e *Env) GetPolygonList(w http.ResponseWriter, r *http.Request) {
@@ -224,8 +230,6 @@ func (e *Env) GetRelatedPolygonList(entityId uint, table string) []*Polygon {
 			"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from user_polygons WHERE user_id = ?);"
 	}
 
-	sql = "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
-		"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from user_polygons WHERE user_id = ?);"
 	rows, err := e.DB.Raw(sql, entityId).Rows()
 	if err != nil {
 		log.Printf(err.Error())
