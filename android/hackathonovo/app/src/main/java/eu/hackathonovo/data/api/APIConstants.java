@@ -13,8 +13,8 @@ public interface APIConstants {
     String PATH_ADMIN_LOGIN = "login";
     String PATH_IMAGES = "imgs";
 
-    String PATH_SEND_DETAILS = "";
-    String PATH_SEND_RESCUER_LOCATION = "";
+    String PATH_SEND_DETAILS = "/actions";
+    String PATH_SEND_RESCUER_LOCATION = "/points";
 
 
     String CONTENT_TYPE_OCTET_STREAM = "Content-Type: application/octet-stream";

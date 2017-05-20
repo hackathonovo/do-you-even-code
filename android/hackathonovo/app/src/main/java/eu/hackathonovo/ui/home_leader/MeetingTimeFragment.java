@@ -13,15 +13,20 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
+import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.BundleConstants;
+import eu.hackathonovo.ui.base.fragments.BaseFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class MeetingTimeFragment extends Fragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener{
+public class MeetingTimeFragment extends BaseFragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, HomeLeaderView {
+
+    @Inject
+    HomeLeaderPresenter presenter;
+
     public static String DATE_PICKER_DIALOG_TAG = "date_picker";
     private Fragment fragment;
     private FragmentManager fragmentManager;
@@ -39,6 +44,11 @@ public class MeetingTimeFragment extends Fragment implements TimePickerDialog.On
         searchDetailsData = (SearchDetailsData) bundle.getSerializable(BundleConstants.BUNDLE_KEY);
         setDateTimePicker();
         return v;
+    }
+
+    @Override
+    protected void inject(final ActivityComponent activityComponent) {
+        activityComponent.inject(this);
     }
 
     private void setDateTimePicker() {
@@ -67,19 +77,38 @@ public class MeetingTimeFragment extends Fragment implements TimePickerDialog.On
 
     @Override
     public void onDateSet(final DatePickerDialog view, final int year, final int monthOfYear, final int dayOfMonth) {
-        date = year+"-0"+monthOfYear+1+"-"+dayOfMonth;
-        searchDetailsData.setVrijemeSastanka(date+time);
+        date = year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth + "T";
+        searchDetailsData.setVrijemeSastanka(date + time);
         sendData();
     }
 
     private void sendData() {
-        Log.d("podaci",searchDetailsData.getLokacija());
-        Log.d("","");
+        Log.d("podaci", searchDetailsData.getLokacija());
+        Log.d("", "");
+
+        presenter.sendDetails(searchDetailsData);
     }
 
     @Override
     public void onTimeSet(final TimePickerDialog view, final int hourOfDay, final int minute, final int second) {
-        time = hourOfDay+":"+minute+":"+second;
+        String hour;
+        String min;
+        String sec ;
+        if (hourOfDay < 10) {
+            hour = String.valueOf(0) + hourOfDay;
+        } else {
+            hour = String.valueOf(hourOfDay);
+        }
+        if (minute < 10) {
+            min = String.valueOf(0) + minute;
+        } else {
+            min = String.valueOf(minute);
+        }
+        if (second < 10) {
+            sec = String.valueOf(0) + second;
+        } else {
+            sec = String.valueOf(second);
+        }
+        time = hour + ":" + min + ":" + sec+ ".0Z";
     }
-
 }

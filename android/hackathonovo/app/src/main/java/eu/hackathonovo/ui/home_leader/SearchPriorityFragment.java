@@ -36,18 +36,18 @@ public class SearchPriorityFragment extends Fragment {
 
     @OnClick(R.id.priority_yes_btn)
     public void suicidalYesClicked() {
-        isPriority=true;
+        isPriority = true;
         nextFrag();
     }
 
     @OnClick(R.id.priority_no_btn)
     public void suicidalNoClicked() {
-        isPriority=false;
+        isPriority = false;
         nextFrag();
     }
 
     private void nextFrag() {
-        searchDetailsData.setHitnost(isPriority);
+        searchDetailsData.setHitnost(String.valueOf(isPriority));
         bundle = new Bundle();
         fragmentManager = getActivity().getSupportFragmentManager();
         //FragmentUtils.clearFragmentBackStack(fragmentManager);

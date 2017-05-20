@@ -47,7 +47,7 @@ public class InjuryDescriptionFragment extends Fragment {
     }
 
     private void nextFrag() {
-        searchDetailsData.setOzlijeden(isInjured);
+        searchDetailsData.setOzlijeden(String.valueOf(isInjured));
         bundle = new Bundle();
         fragmentManager = getActivity().getSupportFragmentManager();
         //FragmentUtils.clearFragmentBackStack(fragmentManager);

@@ -2,6 +2,7 @@ package eu.hackathonovo.injection.component;
 
 import eu.hackathonovo.ui.home.HomeActivity;
 import eu.hackathonovo.ui.home_leader.HomeLeaderActivity;
+import eu.hackathonovo.ui.home_leader.MeetingTimeFragment;
 import eu.hackathonovo.ui.home_rescuer.HomeRescuerActivity;
 import eu.hackathonovo.ui.login.HGSSLoginActivity;
 import eu.hackathonovo.ui.login.LoginActivity;
@@ -26,4 +27,6 @@ public interface ActivityComponentActivityInjects {
     void inject(MapActivity mapActivity);
 
     void inject(HomeRescuerActivity Activity);
+
+    void inject(MeetingTimeFragment Activity);
 }

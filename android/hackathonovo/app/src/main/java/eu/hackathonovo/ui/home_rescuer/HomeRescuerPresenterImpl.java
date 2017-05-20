@@ -36,7 +36,8 @@ public class HomeRescuerPresenterImpl extends BasePresenter implements HomeRescu
 
     @Override
     public void sendRescuersLocation(final RescuerLocation rescuerLocation) {
-        addDisposable(networkService.sendRescuerLocation(new RescuerLocation(rescuerLocation.latitude, rescuerLocation.longitude, templatePreferences.getUserId()))
+        addDisposable(networkService.sendRescuerLocation(new RescuerLocation(rescuerLocation.latitude, rescuerLocation.longitude, templatePreferences.getUserId(),
+                                                                             rescuerLocation.draggable, rescuerLocation.type, rescuerLocation.data))
                                     .subscribeOn(subscribeScheduler)
                                     .observeOn(observeScheduler)
                                     .subscribe(this::onSendRescuerLocationSuccess, this::onSendRescuerLocationFailure));

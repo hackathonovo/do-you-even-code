@@ -1,15 +1,33 @@
 package eu.hackathonovo.data.api.models.request;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
-public final class SearchDetailsData implements Serializable{
-    public  String vrijemeNestanka=null;
-    public  boolean ozlijeden;
-    public  String lokacija=null;
-    public  boolean hitnost;
-    public  boolean suicidalnost;
-    public  String mjestoSastanka=null;
-    public  String vrijemeSastanka=null;
+public final class SearchDetailsData implements Serializable {
+
+    @SerializedName("time_reported")
+    public String vrijemeNestanka = null;
+
+    @SerializedName("injury")
+    public String ozlijeden;
+
+    @SerializedName("address")
+    public String lokacija = null;
+
+    @SerializedName("urgency")
+    public String hitnost;
+    @SerializedName("suicidal")
+    public boolean suicidalnost;
+    @SerializedName("meeting_address")
+    public String mjestoSastanka = null;
+    @SerializedName("time_meeting")
+    public String vrijemeSastanka = null;
+    public String vrijemeOd;
+    public String vrijemeDo;
+    public String type;
+    public String data;
+    public int id;
 
     public String getVrijemeNestanka() {
         return vrijemeNestanka;
@@ -19,11 +37,11 @@ public final class SearchDetailsData implements Serializable{
         this.vrijemeNestanka = vrijemeNestanka;
     }
 
-    public boolean getOzlijeden() {
+    public String isOzlijeden() {
         return ozlijeden;
     }
 
-    public void setOzlijeden(final boolean ozlijeden) {
+    public void setOzlijeden(final String ozlijeden) {
         this.ozlijeden = ozlijeden;
     }
 
@@ -35,11 +53,11 @@ public final class SearchDetailsData implements Serializable{
         this.lokacija = lokacija;
     }
 
-    public boolean getHitnost() {
+    public String getHitnost() {
         return hitnost;
     }
 
-    public void setHitnost(final boolean hitnost) {
+    public void setHitnost(final String hitnost) {
         this.hitnost = hitnost;
     }
 
@@ -65,5 +83,45 @@ public final class SearchDetailsData implements Serializable{
 
     public void setVrijemeSastanka(final String vrijemeSastanka) {
         this.vrijemeSastanka = vrijemeSastanka;
+    }
+
+    public String getVrijemeOd() {
+        return vrijemeOd;
+    }
+
+    public void setVrijemeOd(final String vrijemeOd) {
+        this.vrijemeOd = vrijemeOd;
+    }
+
+    public String getVrijemeDo() {
+        return vrijemeDo;
+    }
+
+    public void setVrijemeDo(final String vrijemeDo) {
+        this.vrijemeDo = vrijemeDo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(final String type) {
+        this.type = type;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(final String data) {
+        this.data = data;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 }

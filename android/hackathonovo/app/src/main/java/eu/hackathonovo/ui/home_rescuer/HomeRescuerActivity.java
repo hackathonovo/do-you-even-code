@@ -56,7 +56,8 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
                     @Override
                     public void onLocationChanged(final Location location) {
 
-                        presenter.sendRescuersLocation(new RescuerLocation(String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()),0));
+                        presenter.sendRescuersLocation(new RescuerLocation((float)location.getLatitude(), (float)location.getLongitude(),0, false,
+                                                                           "last", ""));
                         Timber.e(String.valueOf(location.getLatitude()));
                         Timber.e(String.valueOf(location.getLongitude()));
                     }

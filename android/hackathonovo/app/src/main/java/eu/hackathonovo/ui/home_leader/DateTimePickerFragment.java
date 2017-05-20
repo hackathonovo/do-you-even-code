@@ -19,7 +19,7 @@ import eu.hackathonovo.ui.BundleConstants;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DateTimePickerFragment extends Fragment implements TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener{
+public class DateTimePickerFragment extends Fragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     public static String DATE_PICKER_DIALOG_TAG = "date_picker";
 
@@ -29,6 +29,7 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
     private SearchDetailsData searchDetailsData;
     private String date;
     private String time;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,8 +42,8 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
 
     @Override
     public void onDateSet(final DatePickerDialog view, final int year, final int monthOfYear, final int dayOfMonth) {
-        date = year+"-0"+monthOfYear+1+"-"+dayOfMonth;
-        searchDetailsData.setVrijemeNestanka(date+time);
+        date = year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth + "T";
+        searchDetailsData.setVrijemeNestanka(date + time);
         callAnotherFrag();
     }
 
@@ -56,12 +57,29 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
         fragmentManager.beginTransaction().setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left)
                        .replace(R.id.fragment_create_action, fragment).addToBackStack(null)
                        .commit();
-
     }
 
     @Override
     public void onTimeSet(final TimePickerDialog view, final int hourOfDay, final int minute, final int second) {
-        time = hourOfDay+":"+minute+":"+second;
+        String hour;
+        String min;
+        String sec ;
+        if (hourOfDay < 10) {
+            hour = String.valueOf(0) + hourOfDay;
+        } else {
+            hour = String.valueOf(hourOfDay);
+        }
+        if (minute < 10) {
+            min = String.valueOf(0) + minute;
+        } else {
+            min = String.valueOf(minute);
+        }
+        if (second < 10) {
+            sec = String.valueOf(0) + second;
+        } else {
+            sec = String.valueOf(second);
+        }
+        time = hour + ":" + min + ":" + sec+ ".0Z";
     }
 
     private void setDateTimePicker() {
@@ -87,6 +105,4 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         datePickerDialog.setMinDate(calendar);
     }
-
-
 }
