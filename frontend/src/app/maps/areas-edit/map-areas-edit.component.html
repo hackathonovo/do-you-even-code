@@ -10,7 +10,6 @@
     <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
   </a>
   <ul *ngIf="!isToolActive">
-    <li (click)="onToolPick('\uf041', 'fa-map-marker')"><a class="btn-floating purple"><i class="fa fa-map-marker"></i></a></li>
     <li (click)="onToolPick('\uf24a', 'fa-sticky-note-o', 'AREA')"><a class="btn-floating orange"><i class="fa fa-sticky-note-o"></i></a></li>
     <li (click)="onToolPick('\uf12d', 'fa-eraser', 'DELETE')"><a class="btn-floating"><i class="fa fa-eraser"></i></a></li>
   </ul>
@@ -48,12 +47,10 @@
 
   <agm-marker
     *ngFor="let m of markers"
-    (markerClick)="clickedMarker(m)"
     [latitude]="m.lat"
     [longitude]="m.lng"
     [iconUrl]="m.label"
-    [markerDraggable]="m.draggable"
-    (dragEnd)="markerDragEnd(m, $event)">
+    [markerDraggable]="false">
 
     <i class="{{m.label}}"></i>
     <agm-info-window>
