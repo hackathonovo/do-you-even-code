@@ -1,6 +1,7 @@
 package eu.hackathonovo.injection.component;
 
 import eu.hackathonovo.ui.actions.EditActionsActivity;
+import eu.hackathonovo.ui.actions.HistoryActionsActivity;
 import eu.hackathonovo.ui.filter.FilterActivity;
 import eu.hackathonovo.ui.filter.FilterFragment;
 import eu.hackathonovo.ui.filter.MapFragment;
@@ -17,6 +18,8 @@ import eu.hackathonovo.ui.photo.TakeOrPickAPhotoActivity;
 public interface ActivityComponentActivityInjects {
 
     void inject(HomeActivity homeActivity);
+
+    void inject(HistoryActionsActivity homeActivity);
 
     void inject(LoginActivity loginActivity);
 

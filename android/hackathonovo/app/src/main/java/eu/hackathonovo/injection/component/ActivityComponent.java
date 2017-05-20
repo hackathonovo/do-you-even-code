@@ -6,6 +6,7 @@ import eu.hackathonovo.injection.module.PresenterModule;
 import eu.hackathonovo.injection.module.RouterModule;
 import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.ui.actions.EditActionPresenter;
+import eu.hackathonovo.ui.actions.HistoryPresenter;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 import eu.hackathonovo.ui.filter.FilterPresenter;
 import eu.hackathonovo.ui.home.HomePresenter;
@@ -59,4 +60,6 @@ public interface ActivityComponent extends ActivityComponentActivityInjects, Act
     EditActionPresenter getEditActionPresenter();
 
     FilterPresenter getFilterPresenter();
+
+    HistoryPresenter getHistoryPresenter();
 }

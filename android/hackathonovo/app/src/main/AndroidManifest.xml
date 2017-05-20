@@ -52,7 +52,12 @@
         </activity>
         <activity android:name=".ui.actions.EditActionsActivity">
         </activity>
-        <activity android:name=".ui.filter.FilterActivity"
+        <activity
+            android:name=".ui.filter.FilterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".ui.actions.HistoryActionsActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

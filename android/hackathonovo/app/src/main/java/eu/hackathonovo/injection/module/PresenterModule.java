@@ -11,6 +11,8 @@ import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.actions.EditActionPresenter;
 import eu.hackathonovo.ui.actions.EditActionPresenterImpl;
+import eu.hackathonovo.ui.actions.HistoryPresenter;
+import eu.hackathonovo.ui.actions.HistoryPresenterImpl;
 import eu.hackathonovo.ui.filter.FilterPresenter;
 import eu.hackathonovo.ui.filter.FilterPresenterImpl;
 import eu.hackathonovo.ui.home.HomePresenter;
@@ -89,5 +91,12 @@ public final class PresenterModule {
     HomeRescuerPresenter provideHomeRescuerPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
                                                      final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
         return new HomeRescuerPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
+    }
+
+    @ForActivity
+    @Provides
+    HistoryPresenter provideHistoryPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                                 final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new HistoryPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
     }
 }
