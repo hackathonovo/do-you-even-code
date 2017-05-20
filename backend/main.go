@@ -49,7 +49,7 @@ func main() {
 	}
 	defer db.Close()
 	db.LogMode(true)
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{})
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -92,6 +92,19 @@ func main() {
 			r.Use(e.PointCtx)
 			r.Get("/", e.GetPoint)
 			r.Put("/", e.UpdatePoint)
+			r.Delete("/", e.DeletePoint)
+		})
+	})
+
+	router.Route("/actions", func(router chi.Router) {
+		router.Get("/", e.ListActions)
+		//router.Options("/", Dummy)
+		router.Post("/", e.CreateAction)
+
+		router.Route("/:actionId", func(r chi.Router) {
+			r.Use(e.ActionCtx)
+			r.Get("/", e.GetAction)
+			r.Put("/", e.UpdateAction)
 			r.Delete("/", e.DeletePoint)
 		})
 	})
