@@ -19,7 +19,7 @@ export class LogService {
     params.set('format', 'json');
     params.set('callback', 'JSONP_CALLBACK');
 
-    return this.http.get(this.baseUrl+'/logs', params)
+    return this.http.get(this.baseUrl+'/logger', params)
       .map(LogService.extractData)
       .catch(LogService.handleError);
   }
@@ -29,13 +29,13 @@ export class LogService {
     params.set('format', 'json');
     params.set('callback', 'JSONP_CALLBACK');
 
-    return this.http.get(this.baseUrl+'/logs/'+id, params)
+    return this.http.get(this.baseUrl+'/logger/'+id, params)
       .map(LogService.extractData)
       .catch(LogService.handleError);
   }
 
   create(model: Log): any {
-    const url = this.baseUrl+'/logs';
+    const url = this.baseUrl+'/logger';
 
     return this.http
       .post(url, JSON.stringify(model), {headers: this.headers})
@@ -44,7 +44,7 @@ export class LogService {
   }
 
   remove(id: number): any {
-    const url = this.baseUrl+'/logs/'+id;
+    const url = this.baseUrl+'/logger/'+id;
 
     return this.http
       .delete(url, {headers: this.headers})
@@ -53,7 +53,7 @@ export class LogService {
   }
 
   update(model: Log): any {
-    const url = this.baseUrl+'/logs/'+model.id;
+    const url = this.baseUrl+'/logger/'+model.id;
 
     return this.http
       .put(url, JSON.stringify(model), {headers: this.headers})

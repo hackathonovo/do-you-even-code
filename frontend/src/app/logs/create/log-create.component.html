@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col s12">
       <div>
-        <h4>Log</h4>
-        <div><label>id: </label>New</div>
+        <h4>Zapisnik</h4>
+        <div><label>id: </label>Novi</div>
         <div>
-          <input type="number" [(ngModel)]="model.lng" placeholder="longitude"/>
-          <input type="number" [(ngModel)]="model.lat" placeholder="latitude"/>
+          <input type="text" [(ngModel)]="model.key" placeholder="Naslov"/>
+          <textarea class="materialize-textarea" [(ngModel)]="model.value" placeholder="Opis"></textarea>
         </div>
         <button class="btn waves-effect waves-light" (click)="save()">Kreiraj <i class="material-icons right">add</i></button>
       </div>

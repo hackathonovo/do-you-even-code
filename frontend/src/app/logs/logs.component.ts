@@ -45,7 +45,7 @@ export class LogComponent implements OnInit {
   }
 
   remove(id: number): void {
-    if(confirm("Are you sure you wish to delete this Log?")) {
+    if(confirm("Želite obrisati ovaj zapisnik?")) {
       this.logService.remove(id)
         .then(() => {
           this.getList();
