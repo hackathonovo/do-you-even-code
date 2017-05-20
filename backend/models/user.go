@@ -21,8 +21,8 @@ type User struct {
 	Role string `json:"role"`
 	Data string `json:"data"`
 	Address string `json:"address"`
-	Points []Point `gorm:"-" json:"-"`
-	Polygons []Polygon `gorm:"-" json:"-"`
+	Points []*Point `gorm:"-" json:"-"`
+	Polygons []*Polygon `gorm:"-" json:"-"`
 	Phone string `json:"phone"`
 	Fcm string `json:"fcm"`
 }
@@ -30,6 +30,14 @@ type User struct {
 type NewUserRequest struct {
 	*User
 	Password string `json:"password"`
+}
+
+type UserRequest struct {
+	*User
+}
+
+func (UserRequest) Bind(r *http.Request) error {
+	return nil
 }
 
 type UserRespose struct {
@@ -59,6 +67,16 @@ func (u *NewUserRequest) Bind(r *http.Request) error {
 	return nil
 }
 
+
+func (e *Env) GetUser(w http.ResponseWriter, r *http.Request) {
+	user := r.Context().Value("user").(*User)
+
+	if err := render.Render(w, r, e.NewUserReponse(user)); err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+}
+
 func (e *Env) CreateUser(rw http.ResponseWriter, req *http.Request) {
 	data := &NewUserRequest{}
 
@@ -82,6 +100,38 @@ func (e *Env) CreateUser(rw http.ResponseWriter, req *http.Request) {
 	render.Render(rw, req, h.SucCreate)
 }
 
+
+func (e *Env) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	user := r.Context().Value("user").(*User)
+
+	p := &UserRequest{User: user}
+	if err := render.Bind(r, p); err != nil {
+		render.Render(w, r, h.ErrInvalidRequest(err))
+		return
+	}
+
+	if err := e.DB.Save(&p.User).Error; err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, h.SucUpdate)
+}
+
+func (e *Env) DeleteUser(w http.ResponseWriter, r *http.Request) {
+	user := r.Context().Value("user").(*User)
+
+	if err := e.DB.Delete(user).Error; err != nil {
+		render.Render(w, r, h.ErrInvalidRequest(err))
+		return
+	}
+
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, h.SucDelete)
+}
+
+
 func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 	var users = []*User{}
 	e.DB.Find(&users)
@@ -95,7 +145,7 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 func (e *Env) NewUserListReponse(users []*User) []render.Renderer {
 	list := []render.Renderer{}
 	for _, user := range users {
-		list = append(list, &UserRespose{User: user, Points: e.GetRelatedPointList(user.ID)})
+		list = append(list, &UserRespose{User: user})
 	}
 	return list
 }
@@ -106,19 +156,33 @@ func (rd *UserRespose) Render(w http.ResponseWriter, r *http.Request) error {
 
 func (e *Env) UserCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		pointId, err := strconv.Atoi(chi.URLParam(r, "id"))
+		userId, err := strconv.Atoi(chi.URLParam(r, "userId"))
 		if err != nil {
 			render.Render(w, r, h.ErrRender(err))
 			return
 		}
 
 		user := User{}
-		if err := e.DB.First(&user, pointId).Error; err != nil {
+		if err := e.DB.First(&user, userId).Error; err != nil {
 			render.Render(w, r, h.ErrNotFound)
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "targetUser", &user)
+		user.Points = e.GetRelatedPointList(user.ID)
+
+		ctx := context.WithValue(r.Context(), "user", &user)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
+}
+
+
+func (e *Env) NewUserReponse(p *User) *UserRespose {
+	resp := &UserRespose{User: p}
+
+	p.Points = e.GetRelatedPointList(p.ID)
+	for _, p := range p.Points {
+		resp.Points = append(resp.Points, NewPointResponse(p))
+	}
+
+	return resp
 }

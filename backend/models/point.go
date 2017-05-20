@@ -194,7 +194,7 @@ func NewPointListResponse(points []*Point) []render.Renderer {
 }
 
 
-func (e *Env) GetRelatedPointList(entityId uint) []*PointResponse {
+func (e *Env) GetRelatedPointList(entityId uint) []*Point {
 	var points = []*Point{}
 
 	sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
@@ -215,14 +215,14 @@ func (e *Env) GetRelatedPointList(entityId uint) []*PointResponse {
 		}
 		points = append(points, &p)
 	}
+	//
+	//
+	//list := []*PointResponse{}
+	//for _, point := range points {
+	//	list = append(list, NewPointResponse(point))
+	//}
 
-
-	list := []*PointResponse{}
-	for _, point := range points {
-		list = append(list, NewPointResponse(point))
-	}
-
-	return list
+	return points
 }
 
 func NewPointResponse(p *Point) *PointResponse {

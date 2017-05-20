@@ -76,6 +76,11 @@ func main() {
 	router.Route("/users", func(r chi.Router) {
 		r.Get("/", e.ListUsers)
 		r.Post("/", e.CreateUser)
+
+		r.Route("/:userId", func(r2 chi.Router) {
+			r2.Use(e.UserCtx)
+			r2.Get("/", e.GetUser)
+		})
 	})
 
 	router.Route("/points", func(router chi.Router) {
