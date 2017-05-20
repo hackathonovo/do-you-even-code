@@ -145,7 +145,7 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 func (e *Env) NewUserListReponse(users []*User) []render.Renderer {
 	list := []render.Renderer{}
 	for _, user := range users {
-		list = append(list, &UserRespose{User: user})
+		list = append(list, e.NewUserReponse(user))
 	}
 	return list
 }
