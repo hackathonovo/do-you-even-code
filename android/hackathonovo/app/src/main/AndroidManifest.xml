@@ -6,9 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     android.permission.READ_EXTERNAL_STORAGE
-
     <application
         android:name=".application.HackathonovoApplication"
         android:allowBackup="true"
@@ -18,24 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.home.HomeActivity">
-
         </activity>
         <activity
             android:name=".ui.photo.TakeOrPickAPhotoActivity"
             android:parentActivityName=".ui.home.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-
-
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name="com.soundcloud.android.crop.CropImageActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -43,6 +36,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.photo.PhotoDetailsActivity">
+        </activity>
+        <activity android:name=".ui.login.HGSSLoginActivity">
         </activity>
     </application>
 

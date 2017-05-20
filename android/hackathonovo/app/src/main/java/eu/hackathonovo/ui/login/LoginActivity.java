@@ -117,9 +117,21 @@ public class LoginActivity extends BaseActivity implements LoginView {
         googleLogin();
     }
 
+    @OnClick(R.id.login_btn)
+    public void hgssLoginClicked() {
+
+    }
+
+
+
     @Override
     public void goToHomeScreen() {
         startActivity(TakeOrPickAPhotoActivity.createIntent(this));
+    }
+
+    @Override
+    public void goToHGSSLogin() {
+
     }
 
     private void googleLogin() {
