@@ -1,20 +1,20 @@
 package models
 
 import (
-	"net/http"
-	"github.com/pressly/chi/render"
-	"github.com/paulmach/go.geo"
-	"time"
-	"strconv"
-	"github.com/pressly/chi"
-	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
 	"context"
+	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	"github.com/paulmach/go.geo"
+	"github.com/pressly/chi"
+	"github.com/pressly/chi/render"
+	"net/http"
+	"strconv"
+	"time"
 )
 
 type Polygon struct {
 	DBModel
-	Type string `json:"type"`
-	Data string `json:"data"`
+	Type  string       `json:"type"`
+	Data  string       `json:"data"`
 	Color string       `json:"color"`
 	Geo   geo.PointSet `gorm:"-" json:"-"`
 }
@@ -22,6 +22,8 @@ type Polygon struct {
 type PolygonRequest struct {
 	*Polygon
 	ExtraColor string        `json:"color"`
+	ExtraData  string        `json:"data"`
+	ExtraType  string        `json:"type"`
 	Border     []BorderPoint `json:"polygon"`
 }
 
@@ -54,7 +56,7 @@ func (e *Env) CreatePolygon(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sql := "insert into polygons values(default, ?, ?, null, ?, ?, ?, ST_PolygonFromText(?, 4326))"
-	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Color, h.ToPolygonWKT(data.Geo)).Error; err != nil {
+	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.ExtraType, data.ExtraData, data.ExtraColor, h.ToPolygonWKT(data.Geo)).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -101,7 +103,7 @@ func (e *Env) GetPolygon(w http.ResponseWriter, r *http.Request) {
 func (e *Env) UpdatePolygon(w http.ResponseWriter, r *http.Request) {
 	poly := r.Context().Value("poly").(*Polygon)
 
-	data := &PolygonRequest{Polygon:poly, ExtraColor: poly.Color}
+	data := &PolygonRequest{Polygon: poly, ExtraColor: poly.Color}
 	if err := render.Bind(r, data); err != nil {
 		render.Render(w, r, h.ErrInvalidRequest(err))
 		return
@@ -114,7 +116,7 @@ func (e *Env) UpdatePolygon(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sql := "update polygons set type = ?, set data = ?, color = ?, geom = ST_PolygonFromText(?, 4326), updated_at = ? WHERE id = ?"
-	if err := e.DB.Exec(sql,  data.Type, data.Data, data.ExtraColor, h.ToPolygonWKT(data.Geo), time.Now(), poly.ID).Error; err != nil {
+	if err := e.DB.Exec(sql, data.Type, data.Data, data.ExtraColor, h.ToPolygonWKT(data.Geo), time.Now(), poly.ID).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -218,4 +220,3 @@ func (e *Env) CheckPointInPoly(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-
