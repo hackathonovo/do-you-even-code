@@ -7,6 +7,7 @@ import (
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
+	"log"
 	"net/http"
 	"regexp"
 	"strconv"
@@ -34,6 +35,7 @@ type NewUserRequest struct {
 
 type UserRequest struct {
 	*User
+	LastLocation *Point `json:"last_location"`
 }
 
 func (UserRequest) Bind(r *http.Request) error {
@@ -117,6 +119,38 @@ func (e *Env) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	render.Render(w, r, h.SucUpdate)
 }
 
+func (e *Env) GetLastLocation(w http.ResponseWriter, r *http.Request) {
+	user := r.Context().Value("user").(*User)
+
+	p := &UserRequest{User: user}
+	if err := render.Bind(r, p); err != nil {
+		render.Render(w, r, h.ErrInvalidRequest(err))
+		return
+	}
+
+	var points = []*Point{}
+
+	sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
+		"from points where deleted_at IS NULL and id IN (select MAX(created_at) from user_points WHERE user_id = ? AND type = 'last');"
+	rows, err := e.DB.Raw(sql, p.ID).Rows()
+	if err != nil {
+		log.Printf(err.Error())
+		return
+	}
+
+	for rows.Next() {
+		p := Point{}
+		rows.Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt, &p.Type, &p.Data, &p.Label, &p.Draggable, &p.Geo)
+
+		points = append(points, &p)
+	}
+
+	if err := render.Render(w, r, NewPointResponse(points[0])); err != nil {
+		render.Render(w, r, &PointResponse{})
+		return
+	}
+}
+
 func (e *Env) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	user := r.Context().Value("user").(*User)
 
@@ -165,7 +199,7 @@ func (e *Env) UserCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		user.Points = e.GetRelatedPointList(user.ID, "user_points")
+		user.Points = e.GetRelatedPointsList(user.ID, "user_points")
 		user.Polygons = e.GetRelatedPolygonList(user.ID, "user_points")
 
 		ctx := context.WithValue(r.Context(), "user", &user)
@@ -176,7 +210,7 @@ func (e *Env) UserCtx(next http.Handler) http.Handler {
 func (e *Env) NewUserReponse(p *User) *UserRespose {
 	resp := &UserRespose{User: p}
 
-	p.Points = e.GetRelatedPointList(p.ID, "user_points")
+	p.Points = e.GetRelatedPointsList(p.ID, "user_points")
 	resp.Points = make([]*PointResponse, 0)
 	resp.Polygons = make([]*PolygonResponse, 0)
 	for _, p := range p.Points {

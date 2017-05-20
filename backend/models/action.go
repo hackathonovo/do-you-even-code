@@ -12,17 +12,19 @@ import (
 
 type Action struct {
 	DBModel
-	TimeReported time.Time  `json:"time_reported"`
-	TimeFrom     time.Time  `json:"time_from"`
-	TimeTo       time.Time  `json:"time_to"`
-	Type         string     `json:"type"`
-	Data         string     `json:"data"`
-	Injury       string     `json:"injury"`
-	Address      string     `json:"address"`
-	Urgency      string     `json:"urgency"`
-	Suicidal     bool       `json:"suicidal"`
-	Points       []*Point   `gorm:"-" json:"-"`
-	Polygons     []*Polygon `gorm:"-" json:"-"`
+	TimeReported   time.Time  `json:"time_reported"`
+	TimeMeeting    time.Time  `json:"time_meeting"`
+	MeetingAddress string     `json:"meeting_address"`
+	TimeFrom       time.Time  `json:"time_from"`
+	TimeTo         time.Time  `json:"time_to"`
+	Type           string     `json:"type"`
+	Data           string     `json:"data"`
+	Injury         string     `json:"injury"`
+	Address        string     `json:"address"`
+	Urgency        string     `json:"urgency"`
+	Suicidal       bool       `json:"suicidal"`
+	Points         []*Point   `gorm:"-" json:"-"`
+	Polygons       []*Polygon `gorm:"-" json:"-"`
 }
 
 type ActionRequest struct {
