@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'points',     component: PointComponent },
 
   { path: 'map',     component: MapComponent },
-  { path: 'webviews/map/view',     component: MapViewComponent },
+  { path: 'webviews/map/view/:aid',     component: MapViewComponent },
   { path: 'webviews/map/users-edit/:aid',     component: MapUsersEditComponent },
   { path: 'webviews/map/areas-edit/:aid',     component: MapAreasEditComponent },
 

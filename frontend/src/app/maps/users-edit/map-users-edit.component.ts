@@ -78,11 +78,10 @@ export class MapUsersEditComponent implements OnDestroy{
       },
       error =>  this.errorMessage = <any>error
     );
-    //TODO: serach user by this.serachParam and this.selectedUserType
   }
 
   cancel(): void {
-    this.isSearchVisible = !this.isSearchVisible;
+    this.isSearchVisible = false;
   }
 
   clickedMarker(marker: Point) {
@@ -134,30 +133,31 @@ export class MapUsersEditComponent implements OnDestroy{
         case "DELETE":
           break;
         default:
+          let canvas = document.createElement("canvas");
+          canvas.width = ICON_SIZE;
+          canvas.height = ICON_SIZE;
+          let ctx = canvas.getContext("2d");
+          ctx.fillStyle = this.markerColor;
+          ctx.font = ICON_SIZE + "px FontAwesome";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(this.activeTool, ICON_SIZE/2, ICON_SIZE/2);
+
+          let marker = new Point();
+
+          marker.lat = event.coords.lat;
+          marker.lng = event.coords.lng;
+          marker.label = canvas.toDataURL('image/png');
+          marker.action_id = this.model.id;
           if(this.selectedUser) {
-            let canvas = document.createElement("canvas");
-            canvas.width = ICON_SIZE;
-            canvas.height = ICON_SIZE;
-            let ctx = canvas.getContext("2d");
-            ctx.fillStyle = this.markerColor;
-            ctx.font = ICON_SIZE + "px FontAwesome";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(this.activeTool, ICON_SIZE/2, ICON_SIZE/2);
-
-            let marker = new Point();
-
-            marker.lat = event.coords.lat;
-            marker.lng = event.coords.lng;
-            marker.label = canvas.toDataURL('image/png');
-            marker.action_id = this.model.id;
             marker.user_id = this.selectedUser.id;
-
-            this.markers.push(marker);
-            this.pointService.create(marker);
-            this.selectedUser = null;
-            this.cancel();
+            marker.data = this.selectedUser.name + " " + this.selectedUser.surname;
           }
+
+          this.markers.push(marker);
+          this.pointService.create(marker);
+          this.selectedUser = null;
+          this.cancel();
       }
     }
   }

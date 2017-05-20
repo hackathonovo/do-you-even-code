@@ -31,6 +31,10 @@
     <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
   </a>
   <ul *ngIf="!isToolActive">
+    <li (click)="onToolPick('\uf1b0', 'fa-paw')"><a class="btn-floating red"><i class="fa fa-paw"></i></a></li>
+    <li (click)="onToolPick('\uf007', 'fa-user')"><a class="btn-floating yellow darken-1"><i class="fa fa-user"></i></a></li>
+    <li (click)="onToolPick('\uf0fe', 'fa-plus-square')"><a class="btn-floating green"><i class="fa fa-plus-square"></i></a></li>
+    <li (click)="onToolPick('\uf0c0', 'fa-group')"><a class="btn-floating blue"><i class="fa fa-group"></i></a></li>
     <li (click)="onToolPick('\uf041', 'fa-map-marker')"><a class="btn-floating purple"><i class="fa fa-map-marker"></i></a></li>
     <li (click)="onToolPick('\uf12d', 'fa-eraser', 'DELETE')"><a class="btn-floating"><i class="fa fa-eraser"></i></a></li>
   </ul>
@@ -70,8 +74,8 @@
     (dragEnd)="markerDragEnd(m, $event)">
 
     <i class="{{m.label}}"></i>
-    <agm-info-window>
-      <strong class="marker-info">InfoWindow content</strong>
+    <agm-info-window *ngIf="!!m.data">
+      <strong class="marker-info">{{m.data}}</strong>
     </agm-info-window>
   </agm-marker>
 

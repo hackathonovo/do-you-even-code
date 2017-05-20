@@ -53,8 +53,8 @@
     [markerDraggable]="false">
 
     <i class="{{m.label}}"></i>
-    <agm-info-window>
-      <strong class="marker-info">InfoWindow content</strong>
+    <agm-info-window *ngIf="!!m.data">
+      <strong class="marker-info">{{m.data}}</strong>
     </agm-info-window>
   </agm-marker>
 

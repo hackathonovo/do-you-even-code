@@ -1,17 +1,6 @@
 <section class="toolbar">
   STATUS: <span class="status-live blink">LIVE</span>
 </section>
-<div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
-  <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
-    <i class="fa fa-times"></i>
-  </a>
-  <a class="btn-floating btn-large red">
-    <i *ngIf="!isToolActive" class="large material-icons">edit</i>
-    <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
-  </a>
-  <ul>
-  </ul>
-</div>
 <agm-map
   [latitude]="lat"
   [longitude]="lng"
@@ -36,8 +25,8 @@
       [markerDraggable]="false">
 
     <i class="{{m.label}}"></i>
-    <agm-info-window>
-      <strong class="marker-info">InfoWindow content</strong>
+    <agm-info-window *ngIf="!!m.data">
+      <strong class="marker-info">{{m.data}}</strong>
     </agm-info-window>
   </agm-marker>
 
