@@ -6,5 +6,5 @@ public interface FilterPresenter {
 
     void filterData(String name, int buffer);
 
-    void updateUser();
+    void updateUser(int id);
 }

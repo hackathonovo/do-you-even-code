@@ -56,8 +56,8 @@ public class FilterPresenterImpl extends BasePresenter implements FilterPresente
     }
 
     @Override
-    public void updateUser() {
-        addDisposable(networkService.updateUser((int) templatePreferences.getUserId(), new AddUsers(templatePreferences.getActionId()))
+    public void updateUser(int id) {
+        addDisposable(networkService.updateUser(id, new AddUsers(templatePreferences.getActionId()))
                                     .subscribeOn(subscribeScheduler)
                                     .observeOn(observeScheduler)
                                     .subscribe(this::onUpdateUsersSuccess, this::onUpdateUsersFailure));

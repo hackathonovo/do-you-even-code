@@ -83,4 +83,6 @@ public class MapFragment extends BaseFragment implements FilterView {
         webView.requestFocus();
         webView.loadUrl("http://46.101.148.24/webviews/map/areas-edit/" + ACTION_ID);
     }
+
+
 }
