@@ -79,6 +79,8 @@ func main() {
 		r.Get("/", e.ListUsers)
 		r.Post("/", e.CreateUser)
 
+		r.Get("/search", e.SearchUsers)
+
 		r.Route("/:userId", func(r2 chi.Router) {
 			r2.Use(e.UserCtx)
 			//r2.Get("/lastLocation", e.GetLastLocation)

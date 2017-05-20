@@ -27,6 +27,8 @@ type User struct {
 	Phone      string     `json:"phone"`
 	Fcm        string     `json:"fcm"`
 	ActionId   uint       `json:"action_id"`
+	LocationPointId uint `json:"location_id"`
+
 }
 
 type NewUserRequest struct {
@@ -170,6 +172,66 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 
 	if err := render.RenderList(rw, req, e.NewUserListReponse(users)); err != nil {
 		render.Render(rw, req, h.ErrServer)
+		return
+	}
+}
+
+func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
+	name := r.URL.Query().Get("name")
+	typ := r.URL.Query().Get("role")
+	action := r.URL.Query().Get("actionId")
+
+	if name == "" && typ == "" && action == "" {
+		render.Render(w, r, h.ErrInvalidRequest(errors.New("Empty query")))
+		return
+	}
+
+	query := ""
+	if name != "" {
+		query += " users.name || ' ' || users.surname LIKE '%" + name + "%' "
+	}
+
+	if typ != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " users.role LIKE '%" + typ + "%' "
+	}
+
+	if action != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		locSql := " ( select geom from points p where deleted_at IS NULL and p.id = users.location_point_id )"
+
+		polySql := "select geom from polygons po join action_polygons ap on ap.polygon_id = po.id and ap.action_id = " + action
+
+		query += " ST_Within( (" + locSql + "),  (" + polySql + "))"
+	}
+
+	var users = []*User{}
+
+	if err := e.DB.Where(query).Find(&users).Error; err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+	//if err != nil {
+	//	render.Render(w, r, h.ErrRender(err))
+	//	return
+	//}
+	//
+	//for rows.Next() {
+	//	var p User
+	//	rows.Scan(&p)
+	//
+	//	users = append(users, &p)
+	//}
+
+	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
+		render.Render(w, r, h.ErrServer)
 		return
 	}
 }
