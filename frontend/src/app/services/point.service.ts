@@ -62,6 +62,12 @@ export class PointService {
       .catch(PointService.handleError);
   }
 
+  listByAction(actionId: number): Observable<Point[]> {
+    return this.http.get(this.baseUrl+'/actions/' + actionId + '/points', {headers: this.headers})
+      .map(PointService.extractData)
+      .catch(PointService.handleError);
+  }
+
   private static extractData(res: Response) {
     let body = res.json();
     return body || { };

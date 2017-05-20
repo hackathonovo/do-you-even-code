@@ -1,23 +1,24 @@
-import {ApplicationRef, Component, OnDestroy} from '@angular/core';
-import {PointService} from "../services/point.service";
-import {PolygonService} from "../services/polygon.service";
-import {Polygon} from "../models/polygon";
-import {Point} from "../models/point";
-import {user} from "../session";
-import {AuthenticationService} from "../services/authentication.service";
-import {LatLngLiteral} from "@agm/core";
+import {Component, OnDestroy} from '@angular/core';
+import {PointService} from "../../services/point.service";
+import {PolygonService} from "../../services/polygon.service";
+import {Polygon} from "../../models/polygon";
+import {Point} from "../../models/point";
 import {Observable} from "rxjs/Rx";
 import {Subscription} from "rxjs/Subscription";
+import {Params, ActivatedRoute} from "@angular/router";
+import {ActionService} from "../../services/action.service";
+import {Action} from "../../models/action";
+import {LatLngLiteral} from "@agm/core";
 declare let $:any;
 const ICON_SIZE = 40;
 const REFRESH_INTERVAL = 1000; // in ms
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  templateUrl: './map-areas-edit.component.html',
+  styleUrls: ['../map.component.css', './map-areas-edit.component.css']
 })
-export class MapComponent implements OnDestroy{
+export class MapAreasEditComponent implements OnDestroy{
   zoom: number = 8;
   areas : Array<Polygon> = [];
   markers: Point[] = [];
@@ -34,58 +35,31 @@ export class MapComponent implements OnDestroy{
   tempPoints: Array<LatLngLiteral> = [];
   isFABVisible: boolean = false;
   autoRefresh: Subscription;
+  model: Action;
 
-  constructor(private application: ApplicationRef,
-              private pointService: PointService,
+  constructor(private pointService: PointService,
               private polygonService: PolygonService,
-              private authService: AuthenticationService) {
+              private actionService: ActionService,
+              private route: ActivatedRoute) {
 
-    if(!user.token) {
-      this.authService.handshake()
-        .subscribe(auth => {
-          user.authenticate(auth);
-          this.polygonService.headers.append('Authorization', user.token);
-          this.pointService.headers.append('Authorization', user.token);
-          this.getMapData();
-          //this.setAutoRefresh();
-        });
-    } else {
-      this.getMapData();
-      //this.setAutoRefresh();
-    }
+    this.route.params
+      .switchMap((params: Params) => this.actionService.get(+params['aid']))
+      .subscribe(user => {
+        this.model = user as Action;
+        this.getMapData(this.model.id);
+        //this.setAutoRefresh();
+      });
   }
 
   ngOnDestroy(): void {
-    //this.autoRefresh.unsubscribe()
+    //this.autoRefresh.unsubscribe();
   }
 
   private setAutoRefresh(): void {
     this.autoRefresh = Observable.interval(REFRESH_INTERVAL).subscribe(x => {
-      this.getMapData();
+      this.getMapData(this.model.id);
       console.debug("refresh");
     });
-  }
-
-  private getMapData() {
-    //get markers
-    this.pointService.list().subscribe(
-      list => {
-        if(JSON.stringify(this.markers) != JSON.stringify(list)) {
-          this.markers = list;
-        }
-      },
-      error =>  this.errorMessage = <any>error
-    );
-
-    //get areas
-    this.polygonService.list().subscribe(
-      list => {
-        if(JSON.stringify(this.areas) != JSON.stringify(list)) {
-          this.areas = list;
-        }
-      },
-      error =>  this.errorMessage = <any>error
-    );
   }
 
   clickedMarker(marker: Point) {
@@ -106,6 +80,29 @@ export class MapComponent implements OnDestroy{
       }
     }
   }
+
+  private getMapData(actionId: number) {
+    //get markers
+    this.pointService.listByAction(actionId).subscribe(
+      list => {
+        if(JSON.stringify(this.markers) != JSON.stringify(list)) {
+          this.markers = list;
+        }
+      },
+      error =>  this.errorMessage = <any>error
+    );
+
+    //get areas
+    this.polygonService.listByAction(actionId).subscribe(
+      list => {
+        if(JSON.stringify(this.areas) != JSON.stringify(list)) {
+          this.areas = list;
+        }
+      },
+      error =>  this.errorMessage = <any>error
+    );
+  }
+
 
   mapClicked(event: any) {
     if(this.isToolActive) {
@@ -131,9 +128,10 @@ export class MapComponent implements OnDestroy{
           marker.lat = event.coords.lat;
           marker.lng = event.coords.lng;
           marker.label = canvas.toDataURL('image/png');
+          marker.action_id = this.model.id;
 
           this.markers.push(marker);
-          this.pointService.create(marker).subscribe(data => this.getMapData());
+          this.pointService.create(marker);
 
       }
     }
@@ -143,7 +141,7 @@ export class MapComponent implements OnDestroy{
     let index = this.markers.indexOf(marker);
     this.markers[index].lat = event.coords.lat;
     this.markers[index].lng = event.coords.lng;
-    this.pointService.update(this.markers[index]).subscribe(data => this.getMapData());
+    this.pointService.update(this.markers[index]);
   }
 
   onToolPick(unicode, className, custom = null): void {
@@ -165,9 +163,10 @@ export class MapComponent implements OnDestroy{
     let polygon = new Polygon();
     polygon.color = this.areaColor;
     polygon.polygon = this.tempPoints;
+    polygon.action_id = this.model.id;
     this.areas.push(polygon);
     this.tempPoints = [];
-    this.polygonService.create(polygon).subscribe(data => this.getMapData());
+    this.polygonService.create(polygon);
   }
 
   onResetTool(): void {
@@ -177,7 +176,6 @@ export class MapComponent implements OnDestroy{
       this.customTool = null;
       this.customClassName = null;
       this.tempPoints = [];
-      this.application.tick();
     }
   }
 

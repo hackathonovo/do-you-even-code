@@ -6,4 +6,5 @@ export class Polygon {
   data: string;
   polygon: Array<LatLngLiteral> = [];
   color: string = "green";
+  action_id: number;
 }

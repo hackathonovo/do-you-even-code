@@ -9,4 +9,5 @@ export class Action {
   address: string;
   urgency: string;
   suicidal: boolean;
+  action_id: number;
 }

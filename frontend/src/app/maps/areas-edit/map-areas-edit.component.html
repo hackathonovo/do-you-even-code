@@ -1,4 +1,3 @@
-<my-header></my-header>
 <section class="toolbar">
   STATUS: <span class="status-live blink">LIVE</span>
 </section>
@@ -11,10 +10,6 @@
     <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
   </a>
   <ul *ngIf="!isToolActive">
-    <li (click)="onToolPick('\uf1b0', 'fa-paw')"><a class="btn-floating red"><i class="fa fa-paw"></i></a></li>
-    <li (click)="onToolPick('\uf007', 'fa-user')"><a class="btn-floating yellow darken-1"><i class="fa fa-user"></i></a></li>
-    <li (click)="onToolPick('\uf0fe', 'fa-plus-square')"><a class="btn-floating green"><i class="fa fa-plus-square"></i></a></li>
-    <li (click)="onToolPick('\uf0c0', 'fa-group')"><a class="btn-floating blue"><i class="fa fa-group"></i></a></li>
     <li (click)="onToolPick('\uf041', 'fa-map-marker')"><a class="btn-floating purple"><i class="fa fa-map-marker"></i></a></li>
     <li (click)="onToolPick('\uf24a', 'fa-sticky-note-o', 'AREA')"><a class="btn-floating orange"><i class="fa fa-sticky-note-o"></i></a></li>
     <li (click)="onToolPick('\uf12d', 'fa-eraser', 'DELETE')"><a class="btn-floating"><i class="fa fa-eraser"></i></a></li>
@@ -43,22 +38,22 @@
   </agm-polyline>
 
   <agm-polygon *ngFor="let area of areas"
-    [paths]="area.polygon"
-    [editable]="false"
-    [polyDraggable]="false"
-    (polyClick)="clickedPaths(area)"
-    [fillColor]="area.color"
-    [strokeColor]="area.color">
+               [paths]="area.polygon"
+               [editable]="false"
+               [polyDraggable]="false"
+               (polyClick)="clickedPaths(area)"
+               [fillColor]="area.color"
+               [strokeColor]="area.color">
   </agm-polygon>
 
   <agm-marker
-      *ngFor="let m of markers"
-      (markerClick)="clickedMarker(m)"
-      [latitude]="m.lat"
-      [longitude]="m.lng"
-      [iconUrl]="m.label"
-      [markerDraggable]="m.draggable"
-      (dragEnd)="markerDragEnd(m, $event)">
+    *ngFor="let m of markers"
+    (markerClick)="clickedMarker(m)"
+    [latitude]="m.lat"
+    [longitude]="m.lng"
+    [iconUrl]="m.label"
+    [markerDraggable]="m.draggable"
+    (dragEnd)="markerDragEnd(m, $event)">
 
     <i class="{{m.label}}"></i>
     <agm-info-window>

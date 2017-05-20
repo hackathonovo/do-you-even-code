@@ -17,6 +17,8 @@ import {TimeTableDetailComponent} from "./timetables/edit/timetable-detail-compo
 import {TimeTableComponent} from "app/timetables/timetables.component";
 import {TimeTableCreateComponent} from "./timetables/create/timetable-create.component";
 import {MapViewComponent} from "./maps/view/map-view.component";
+import {MapUsersEditComponent} from "./maps/users-edit/map-users-edit.component";
+import {MapAreasEditComponent} from "./maps/areas-edit/map-areas-edit.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/points', pathMatch: 'full' },
@@ -26,6 +28,8 @@ const routes: Routes = [
 
   { path: 'map',     component: MapComponent },
   { path: 'webviews/map/view',     component: MapViewComponent },
+  { path: 'webviews/map/users-edit/:aid',     component: MapUsersEditComponent },
+  { path: 'webviews/map/areas-edit/:aid',     component: MapAreasEditComponent },
 
   { path: 'users/detail/:id', component: UserDetailComponent },
   { path: 'users/create', component: UserCreateComponent },

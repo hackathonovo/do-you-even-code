@@ -5,11 +5,15 @@ import {AgmCoreModule} from "@agm/core";
 import {KeyChain} from '../../keys';
 import {MapViewComponent} from "./view/map-view.component";
 import {HeaderModule} from "app/header/header.module";
+import {MapAreasEditComponent} from "app/maps/areas-edit/map-areas-edit.component";
+import {MapUsersEditComponent} from "app/maps/users-edit/map-users-edit.component";
 
 @NgModule({
   declarations: [
     MapComponent,
     MapViewComponent,
+    MapUsersEditComponent,
+    MapAreasEditComponent
   ],
   imports: [
     BrowserModule,

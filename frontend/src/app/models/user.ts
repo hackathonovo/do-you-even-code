@@ -11,6 +11,7 @@ export class User {
   address: string;
   token: string;
   phone: string;
+  action_id: number;
 
   public authenticate(auth: Authentication) {
     this.token = auth.token;

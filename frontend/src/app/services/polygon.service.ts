@@ -54,6 +54,12 @@ export class PolygonService {
       .catch(PolygonService.handleError);
   }
 
+  listByAction(actionId: number): Observable<Polygon[]> {
+    return this.http.get(this.baseUrl+'/actions/'+actionId+'/polygons', {headers: this.headers})
+      .map(PolygonService.extractData)
+      .catch(PolygonService.handleError);
+  }
+
   private static extractData(res: Response) {
     let body = res.json();
     return body || { };

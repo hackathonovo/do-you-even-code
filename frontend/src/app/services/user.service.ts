@@ -62,6 +62,12 @@ export class UserService {
       .catch(UserService.handleError);
   }
 
+  listByAction(actionId: number): Observable<User[]> {
+    return this.http.get(this.baseUrl+'/users/action/'+actionId, {headers: this.headers})
+      .map(UserService.extractData)
+      .catch(UserService.handleError);
+  }
+
   private static extractData(res: Response) {
     let body = res.json();
     return body || { };
