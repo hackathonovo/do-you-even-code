@@ -7,10 +7,10 @@ import (
 	"github.com/paulmach/go.geo"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
-	"log"
 )
 
 type Point struct {
@@ -24,9 +24,13 @@ type Point struct {
 
 type PointRequest struct {
 	*Point
-	Lat float64 `json:"lat"`
-	Lng float64 `json:"lng"`
-	UserId uint `json:"user_id"`
+	Lat            float64 `json:"lat"`
+	Lng            float64 `json:"lng"`
+	UserId         uint    `json:"user_id"`
+	TypeExtra      string  `json:"type"`
+	DataExtra      string  `json:"data"`
+	LabelExtra     string  `json:"label"`
+	DraggableExtra bool    `json:"draggable"`
 }
 
 func (p *PointRequest) Bind(r *http.Request) error {
@@ -83,11 +87,10 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 	data.Geo = geo.Point{data.Lng, data.Lat}
 	fmt.Printf("Point WKT: %s\n", data.Geo.ToWKT())
 	sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
-	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Error; err != nil {
+	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.TypeExtra, data.DataExtra, data.LabelExtra, data.DraggableExtra, data.Geo.ToWKT()).Error; err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
 	}
-
 
 	if data.UserId != 0 {
 		idSql := "select MAX(id) from points"
@@ -133,15 +136,13 @@ func (e *Env) UpdatePoint(w http.ResponseWriter, r *http.Request) {
 	p.Geo = geo.Point{p.Lng, p.Lat}
 
 	sql := "update points set updated_at = ?, type = ?, data = ?, label = ?, draggable = ?, geom = ST_GeomFromText(?, 4326) WHERE id = ?"
-	if err := e.DB.Exec(sql, time.Now(), p.Type, p.Data, p.Label, p.Draggable, p.Geo.ToWKT(), point.ID).Error; err != nil {
+	if err := e.DB.Exec(sql, time.Now(), p.TypeExtra, p.DataExtra, p.LabelExtra, p.DraggableExtra, p.Geo.ToWKT(), point.ID).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
 
-	if err := render.Render(w, r, NewPointResponse(point)); err != nil {
-		render.Render(w, r, h.SucUpdate)
-		return
-	}
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, h.SucUpdate)
 }
 
 func (e *Env) DeletePoint(w http.ResponseWriter, r *http.Request) {
@@ -152,6 +153,7 @@ func (e *Env) DeletePoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	render.Status(r, http.StatusOK)
 	render.Render(w, r, h.SucDelete)
 }
 
@@ -193,7 +195,6 @@ func NewPointListResponse(points []*Point) []render.Renderer {
 	return list
 }
 
-
 func (e *Env) GetRelatedPointList(entityId uint) []*Point {
 	var points = []*Point{}
 
@@ -230,4 +231,3 @@ func NewPointResponse(p *Point) *PointResponse {
 	fmt.Printf("%s", p.Geo.ToWKT())
 	return resp
 }
-
