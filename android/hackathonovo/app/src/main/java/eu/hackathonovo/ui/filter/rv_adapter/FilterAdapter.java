@@ -30,6 +30,7 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
     }
 
 
+
     private boolean isHeaderType(int position) {
         return mItemList.get(position).getTypeItem() == Item.TYPE_HEADER;
     }
@@ -64,7 +65,7 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
         View container = holder.itemView;
         ChildItem item = (ChildItem) mItemList.get(position);
         TextView tv = (TextView) container.findViewById(R.id.tv_name);
-        tv.setText(item.getName());
+        //tv.setText(item.getFilterUsers());
     }
 
     @Override

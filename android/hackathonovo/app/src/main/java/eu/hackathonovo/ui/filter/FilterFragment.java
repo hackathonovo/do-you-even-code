@@ -10,8 +10,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,7 +18,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
@@ -28,19 +25,17 @@ import eu.hackathonovo.ui.base.fragments.BaseFragment;
 import eu.hackathonovo.ui.filter.rv_adapter.ChildItem;
 import eu.hackathonovo.ui.filter.rv_adapter.FilterAdapter;
 
-
 public class FilterFragment extends BaseFragment implements FilterView {
+
     private RecyclerView mRecyclerView;
     private GridLayoutManager gridLayoutManager;
     private FilterAdapter filterAdapter;
-
 
     @BindView(R.id.et_name_surname)
     TextView et_name_surname;
 
     @BindView(R.id.et_radius)
     TextView et_radius;
-
 
     @Inject
     FilterPresenter presenter;
@@ -67,7 +62,6 @@ public class FilterFragment extends BaseFragment implements FilterView {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         filterAdapter = new FilterAdapter(gridLayoutManager);
         mRecyclerView.setAdapter(filterAdapter);
-        addRecyclerItems();
 
         return v;
     }
@@ -79,12 +73,12 @@ public class FilterFragment extends BaseFragment implements FilterView {
         presenter.setView(this);
     }
 
-    private void addRecyclerItems() {
+    private void addRecyclerItems(final List<FilterUsers> filterUserses) {
 
-        for (int i = 0; i < 10; i++) {
-            filterAdapter.addItem(new ChildItem("ime"));
+
+        for (int i = 0; i < filterUserses.size(); i++) {
+            filterAdapter.addItem(new ChildItem(filterUserses.get(i)));
         }
-
     }
 
     @Override
@@ -148,7 +142,7 @@ public class FilterFragment extends BaseFragment implements FilterView {
 
     @Override
     public void renderView(final List<FilterUsers> filterUserses) {
-
+        addRecyclerItems(filterUserses);
     }
 
     private void addType() {}

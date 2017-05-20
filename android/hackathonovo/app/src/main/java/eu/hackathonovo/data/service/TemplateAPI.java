@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import eu.hackathonovo.data.api.models.request.AddUsers;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
@@ -17,6 +18,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -28,6 +30,7 @@ import static eu.hackathonovo.data.api.APIConstants.PATH_LOGIN;
 import static eu.hackathonovo.data.api.APIConstants.PATH_SEARCH;
 import static eu.hackathonovo.data.api.APIConstants.PATH_SEND_DETAILS;
 import static eu.hackathonovo.data.api.APIConstants.PATH_SEND_RESCUER_LOCATION;
+import static eu.hackathonovo.data.api.APIConstants.PATH_UPDATE_USER;
 
 public interface TemplateAPI {
 
@@ -50,6 +53,9 @@ public interface TemplateAPI {
     @GET(PATH_GET_DETAILS)
     Single<SearchDetailsData> getActions(@Path("id") int id);
 
+    @PUT(PATH_UPDATE_USER)
+    Single<JSONObject> updateUser(@Query("id") int id, @Body AddUsers addUsers);
+
     @GET(PATH_SEARCH)
-    Single<List<FilterUsers>> filterUsers(@Query("name") String name, @Query("buffer") int  buffer, @Query("actionId") int id);
+    Single<List<FilterUsers>> filterUsers(@Query("name") String name, @Query("buffer") int buffer, @Query("actionId") int id);
 }

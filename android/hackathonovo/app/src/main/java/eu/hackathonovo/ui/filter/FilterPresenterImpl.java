@@ -1,7 +1,10 @@
 package eu.hackathonovo.ui.filter;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
+import eu.hackathonovo.data.api.models.request.AddUsers;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.data.service.NetworkService;
 import eu.hackathonovo.data.storage.TemplatePreferences;
@@ -49,6 +52,22 @@ public class FilterPresenterImpl extends BasePresenter implements FilterPresente
     }
 
     private void onGetUsersFailure(final Throwable throwable) {
+        Timber.e(throwable);
+    }
+
+    @Override
+    public void updateUser() {
+        addDisposable(networkService.updateUser((int) templatePreferences.getUserId(), new AddUsers(templatePreferences.getActionId()))
+                                    .subscribeOn(subscribeScheduler)
+                                    .observeOn(observeScheduler)
+                                    .subscribe(this::onUpdateUsersSuccess, this::onUpdateUsersFailure));
+    }
+
+    private void onUpdateUsersSuccess(final JSONObject jsonObject) {
+
+    }
+
+    private void onUpdateUsersFailure(final Throwable throwable) {
         Timber.e(throwable);
     }
 }

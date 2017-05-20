@@ -19,6 +19,11 @@ public interface APIConstants {
     String PATH_SEARCH = "users/search";
 
 
+    String PATH_UPDATE_USER = "users/{id}";
+
+
+
+
     String CONTENT_TYPE_OCTET_STREAM = "Content-Type: application/octet-stream";
 
 }

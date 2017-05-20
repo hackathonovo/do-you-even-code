@@ -52,13 +52,13 @@ public class EditActionsActivity extends BaseActivity implements EditActionView{
             searchDetailsData.setSuicidalnost(true);
             searchDetailsDatas.add(searchDetailsData);
         }
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_edit_action_parameters);
+    /*    mRecyclerView = (RecyclerView) findViewById(R.id.rv_edit_action_parameters);
         gridLayoutManager = new GridLayoutManager(this, 1);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ActionParametersAdapter(gridLayoutManager);
         mRecyclerView.setAdapter(adapter);
-        addRecyclerItems();
+        addRecyclerItems();*/
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FilterViewAdapter extends FragmentPagerAdapter {
 
+
     private List<Fragment> fragmentList = new ArrayList<>();
 
     private List<String> titleList = new ArrayList<>();
@@ -36,4 +37,5 @@ public class FilterViewAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(final int position) {
         return titleList.get(position);
     }
+
 }

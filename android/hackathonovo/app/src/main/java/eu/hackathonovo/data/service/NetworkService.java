@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import eu.hackathonovo.data.api.models.request.AddUsers;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
@@ -33,4 +34,5 @@ public interface NetworkService {
     Single<SearchDetailsData> getActions(int id);
 
     Single<List<FilterUsers>> filterUsers(String name, int id, int buffer);
+    Single<JSONObject> updateUser(int id, AddUsers addUsers);
 }
