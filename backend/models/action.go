@@ -50,7 +50,7 @@ func (e *Env) ListActions(rw http.ResponseWriter, req *http.Request) {
 	var Actions = []*Action{}
 	e.DB.Find(&Actions)
 
-	if err := render.RenderList(rw, req, NewActionListResponse(Actions)); err != nil {
+	if err := render.RenderList(rw, req, e.NewActionListResponse(Actions)); err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
 	}
@@ -70,13 +70,24 @@ func (e *Env) CreateAction(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	render.Status(req, http.StatusCreated)
-	render.Render(rw, req, NewActionResponse(data.Action))
+	render.Render(rw, req, e.NewActionResponse(data.Action))
 }
 
 func (e *Env) GetAction(w http.ResponseWriter, r *http.Request) {
 	Action := r.Context().Value("action").(*Action)
 
-	if err := render.Render(w, r, NewActionResponse(Action)); err != nil {
+	if err := render.Render(w, r, e.NewActionResponse(Action)); err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+}
+
+func (e *Env) GetActionPolygonList(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	polygons := e.GetRelatedPolygonList(action.ID, "action")
+
+	if err := render.RenderList(w, r, e.NewListPolygonResponse(polygons)); err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -96,7 +107,7 @@ func (e *Env) UpdateAction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := render.Render(w, r, NewActionResponse(action)); err != nil {
+	if err := render.Render(w, r, e.NewActionResponse(action)); err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -132,15 +143,16 @@ func (e *Env) ActionCtx(next http.Handler) http.Handler {
 	})
 }
 
-func NewActionListResponse(Actions []*Action) []render.Renderer {
+func (e *Env) NewActionListResponse(Actions []*Action) []render.Renderer {
 	list := []render.Renderer{}
 	for _, Action := range Actions {
-		list = append(list, NewActionResponse(Action))
+		list = append(list, e.NewActionResponse(Action))
 	}
 	return list
 }
 
-func NewActionResponse(p *Action) *ActionResponse {
+func (e *Env) NewActionResponse(p *Action) *ActionResponse {
 	resp := &ActionResponse{Action: p}
+
 	return resp
 }

@@ -123,7 +123,14 @@ func main() {
 			r.Get("/", e.GetAction)
 			r.Put("/", e.UpdateAction)
 			r.Delete("/", e.DeletePoint)
+
+			r.Route("/polygons", func(r2 chi.Router) {
+				r2.Get("/", e.GetActionPolygonList)
+			})
 		})
+
+
+
 	})
 
 	router.Route("/polygons", func(r chi.Router) {

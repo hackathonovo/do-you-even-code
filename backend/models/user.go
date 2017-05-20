@@ -26,6 +26,7 @@ type User struct {
 	Polygons   []*Polygon `gorm:"-" json:"-"`
 	Phone      string     `json:"phone"`
 	Fcm        string     `json:"fcm"`
+	ActionId   uint       `json:"action_id"`
 }
 
 type NewUserRequest struct {
@@ -199,8 +200,8 @@ func (e *Env) UserCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		user.Points = e.GetRelatedPointsList(user.ID, "user_points")
-		user.Polygons = e.GetRelatedPolygonList(user.ID, "user_points")
+		user.Points = e.GetRelatedPointsList(user.ID, "user")
+		user.Polygons = e.GetRelatedPolygonList(user.ID, "user")
 
 		ctx := context.WithValue(r.Context(), "user", &user)
 		next.ServeHTTP(w, r.WithContext(ctx))
@@ -210,14 +211,14 @@ func (e *Env) UserCtx(next http.Handler) http.Handler {
 func (e *Env) NewUserReponse(p *User) *UserRespose {
 	resp := &UserRespose{User: p}
 
-	p.Points = e.GetRelatedPointsList(p.ID, "user_points")
+	p.Points = e.GetRelatedPointsList(p.ID, "user")
 	resp.Points = make([]*PointResponse, 0)
 	resp.Polygons = make([]*PolygonResponse, 0)
 	for _, p := range p.Points {
 		resp.Points = append(resp.Points, NewPointResponse(p))
 	}
 
-	p.Polygons = e.GetRelatedPolygonList(p.ID, "user_polygons")
+	p.Polygons = e.GetRelatedPolygonList(p.ID, "user")
 	for _, p := range p.Polygons {
 		resp.Polygons = append(resp.Polygons, NewPolygonReponse(p))
 	}

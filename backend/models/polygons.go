@@ -107,7 +107,7 @@ func (e *Env) GetPolygonList(w http.ResponseWriter, r *http.Request) {
 		polygons = append(polygons, &p)
 	}
 
-	if err := render.RenderList(w, r, NewListPolygonResponse(polygons)); err != nil {
+	if err := render.RenderList(w, r, e.NewListPolygonResponse(polygons)); err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
@@ -203,18 +203,28 @@ func NewPolygonReponse(p *Polygon) *PolygonResponse {
 	return resp
 }
 
-func NewListPolygonResponse(polygons []*Polygon) []render.Renderer {
+func (e *Env) NewListPolygonResponse(polygons []*Polygon) []render.Renderer {
 	list := []render.Renderer{}
 	for _, polygon := range polygons {
 		list = append(list, NewPolygonReponse(polygon))
 	}
+
 	return list
 }
 
 func (e *Env) GetRelatedPolygonList(entityId uint, table string) []*Polygon {
 	var polygons = []*Polygon{}
 
-	sql := "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
+	var sql string
+	if table == "action" {
+		sql = "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
+			"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from action_polygons WHERE action_id = ?);"
+	} else {
+		sql = "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
+			"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from user_polygons WHERE user_id = ?);"
+	}
+
+	sql = "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
 		"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from user_polygons WHERE user_id = ?);"
 	rows, err := e.DB.Raw(sql, entityId).Rows()
 	if err != nil {
