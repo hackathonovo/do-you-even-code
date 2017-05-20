@@ -45,7 +45,7 @@ export class ActionComponent implements OnInit {
   }
 
   remove(id: number): void {
-    if(confirm("Are you sure you wish to delete this Action?")) {
+    if(confirm("Želite izbrisati ovu akciju?")) {
       this.actionService.remove(id)
         .then(() => {
           this.getList();

@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
   }
 
   remove(id: number): void {
-    if(confirm("Are you sure you wish to delete this User?")) {
+    if(confirm("Želite izbrisati ovog korisnika?")) {
       this.userService.remove(id)
         .then(() => {
           this.getList();
