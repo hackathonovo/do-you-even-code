@@ -11,6 +11,8 @@ import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.home.HomePresenter;
 import eu.hackathonovo.ui.home.HomePresenterImpl;
+import eu.hackathonovo.ui.home_leader.HomeLeaderPresenter;
+import eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl;
 import eu.hackathonovo.ui.login.HGSSLoginPresenter;
 import eu.hackathonovo.ui.login.HGSSLoginPresenterImpl;
 import eu.hackathonovo.ui.login.LoginPresenter;
@@ -53,5 +55,12 @@ public final class PresenterModule {
     HGSSLoginPresenter provideHgssLoginPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
                                                  final StringManager stringManager, final NetworkService networkService) {
         return new HGSSLoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
+    }
+
+    @ForActivity
+    @Provides
+    HomeLeaderPresenter provideHomeLeaderPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                                   final StringManager stringManager, final NetworkService networkService) {
+        return new HomeLeaderPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
     }
 }

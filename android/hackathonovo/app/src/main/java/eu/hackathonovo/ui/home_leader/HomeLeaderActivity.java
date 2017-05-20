@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
-import eu.hackathonovo.ui.login.HGSSLoginActivity;
 
-public class HomeLeaderActivity extends BaseActivity {
+public class HomeLeaderActivity extends BaseActivity implements HomeLeaderView {
+
+    @Inject
+    HomeLeaderPresenter presenter;
 
     public static Intent createIntent(final Context context) {
         return new Intent(context, HomeLeaderActivity.class);
@@ -19,6 +23,13 @@ public class HomeLeaderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_leader);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        presenter.setView(this);
     }
 
     @Override

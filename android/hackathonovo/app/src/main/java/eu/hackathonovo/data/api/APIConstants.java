@@ -11,6 +11,9 @@ public interface APIConstants {
     String PREDICTION_KEY = "f26374bf1fdd4206af544f4477cfd312";
 
     String PATH_ADMIN_LOGIN = "login";
+    String PATH_IMAGES = "imgs";
+
+    String PATH_SEND_DETAILS = "";
 
 
     String CONTENT_TYPE_OCTET_STREAM = "Content-Type: application/octet-stream";

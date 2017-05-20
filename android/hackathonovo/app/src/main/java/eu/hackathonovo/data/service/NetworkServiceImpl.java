@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import eu.hackathonovo.data.api.APIConstants;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
+import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import io.reactivex.Single;
@@ -37,6 +38,11 @@ public final class NetworkServiceImpl implements NetworkService {
 
     @Override
     public Single<ScanImageResponse> scanImageCustom(final ScanImage scanImage) {
-        return Single.defer(()-> customVisionAPI.scanImage(APIConstants.PREDICTION_KEY, scanImage));
+        return Single.defer(() -> customVisionAPI.scanImage(APIConstants.PREDICTION_KEY, scanImage));
+    }
+
+    @Override
+    public Single<JSONObject> sendDetailsData(final SearchDetailsData data) {
+        return Single.defer(() -> templateAPI.sendDetails(data));
     }
 }
