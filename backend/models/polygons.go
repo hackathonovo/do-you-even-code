@@ -6,6 +6,7 @@ import (
 	"github.com/paulmach/go.geo"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -25,7 +26,7 @@ type PolygonRequest struct {
 	ExtraData  string        `json:"data"`
 	ExtraType  string        `json:"type"`
 	Border     []BorderPoint `json:"polygon"`
-	UserId uint `json:"user_id"`
+	UserId     uint          `json:"user_id"`
 }
 
 func (PolygonRequest) Bind(r *http.Request) error {
@@ -208,6 +209,27 @@ func NewListPolygonResponse(polygons []*Polygon) []render.Renderer {
 		list = append(list, NewPolygonReponse(polygon))
 	}
 	return list
+}
+
+func (e *Env) GetRelatedPolygonList(entityId uint, table string) []*Polygon {
+	var polygons = []*Polygon{}
+
+	sql := "SELECT id, created_at, updated_at, type, data, color, ST_AsBinary(geom) " +
+		"FROM polygons WHERE deleted_at IS NULL and id IN (select polygon_id from user_polygons WHERE user_id = ?);"
+	rows, err := e.DB.Raw(sql, entityId).Rows()
+	if err != nil {
+		log.Printf(err.Error())
+		return nil
+	}
+
+	for rows.Next() {
+		var p Polygon
+		rows.Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt, &p.Type, &p.Data, &p.Color, &p.Geo)
+
+		polygons = append(polygons, &p)
+	}
+
+	return polygons
 }
 
 func (e *Env) CheckPointInPoly(w http.ResponseWriter, r *http.Request) {

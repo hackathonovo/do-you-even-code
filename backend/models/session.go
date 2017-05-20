@@ -1,21 +1,21 @@
 package models
 
 import (
-	"github.com/pressly/chi/render"
-	"time"
-	"golang.org/x/oauth2/google"
-	"net/http"
+	"context"
+	"crypto/rand"
 	"crypto/sha512"
 	"encoding/base64"
+	"encoding/json"
+	"errors"
 	"fmt"
+	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	"github.com/pressly/chi/render"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"io/ioutil"
 	"log"
-	"encoding/json"
-	"crypto/rand"
-	"golang.org/x/oauth2"
-	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
-	"context"
-	"errors"
+	"net/http"
+	"time"
 )
 
 var (
@@ -24,9 +24,9 @@ var (
 		ClientSecret: "oez3UDoAEWAfBkS6r5CD4Rmm",
 		RedirectURL:  "http://localhost:3000/oauth2",
 		Scopes: []string{"https://www.googleapis.com/auth/userinfo.profile",
-						 "https://www.googleapis.com/auth/userinfo.email",
-						 "https://www.googleapis.com/auth/drive",
-						 "https://www.googleapis.com/auth/drive.photos.readonly"},
+			"https://www.googleapis.com/auth/userinfo.email",
+			"https://www.googleapis.com/auth/drive",
+			"https://www.googleapis.com/auth/drive.photos.readonly"},
 		Endpoint: google.Endpoint,
 	}
 	oauthStateString = "thisshouldberandom"

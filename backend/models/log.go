@@ -1,18 +1,20 @@
 package models
 
 import (
+	"context"
+	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
 	"net/http"
 	"strconv"
-	"github.com/pressly/chi"
-	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
-	"context"
 )
 
 type Log struct {
 	DBModel
-	Key string `json:"key"`
-	Value string `json:"value"`
+	Key    string `json:"key"`
+	Value  string `json:"value"`
+	User   User   `json:"-"`
+	UserID uint   `json:"user_id"`
 }
 
 type LogRequest struct {

@@ -195,11 +195,11 @@ func NewPointListResponse(points []*Point) []render.Renderer {
 	return list
 }
 
-func (e *Env) GetRelatedPointList(entityId uint) []*Point {
+func (e *Env) GetRelatedPointList(entityId uint, table string) []*Point {
 	var points = []*Point{}
 
 	sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
-		"from points where deleted_at IS NULL and id = (select points_id from user_points WHERE user_id = ?);"
+		"from points where deleted_at IS NULL and id IN (select points_id from user_points WHERE user_id = ?);"
 	rows, err := e.DB.Raw(sql, entityId).Rows()
 	if err != nil {
 		log.Printf(err.Error())

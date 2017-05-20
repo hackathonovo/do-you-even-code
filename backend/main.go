@@ -1,20 +1,20 @@
 package main
 
 import (
-	"github.com/pressly/chi/render"
-	"net/http"
-	"os"
-	"os/signal"
-	"fmt"
-	"github.com/pressly/chi"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"net/http/httputil"
-	m "github.com/hackathonovo/do-you-even-code/backend/models"
-	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
-	"github.com/jinzhu/gorm"
 	"flag"
+	"fmt"
+	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	m "github.com/hackathonovo/do-you-even-code/backend/models"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/pressly/chi"
 	"github.com/pressly/chi/docgen"
 	"github.com/pressly/chi/middleware"
+	"github.com/pressly/chi/render"
+	"net/http"
+	"net/http/httputil"
+	"os"
+	"os/signal"
 	"path/filepath"
 )
 
@@ -142,7 +142,6 @@ func main() {
 	router.Get("/oauth2", e.GoogleCallback)
 	router.Post("/glogin", e.GOAuthLogin)
 
-
 	workDir, _ := os.Getwd()
 	logDir := filepath.Join(workDir, "logs")
 	router.FileServer("/logs", http.Dir(logDir))
@@ -195,4 +194,3 @@ func NotAllowedHandler(w http.ResponseWriter, r *http.Request) {
 	render.Render(w, r, h.ErrNotAllowed)
 	return
 }
-

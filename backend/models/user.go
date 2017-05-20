@@ -1,30 +1,30 @@
 package models
 
 import (
-	"github.com/pressly/chi/render"
-	"net/http"
-	"strconv"
-	"github.com/pressly/chi"
-	"regexp"
+	"context"
 	"crypto/sha512"
 	"errors"
-	"context"
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
+	"github.com/pressly/chi"
+	"github.com/pressly/chi/render"
+	"net/http"
+	"regexp"
+	"strconv"
 )
 
 type User struct {
 	DBModel
-	Username      string `json:"username"`
-	PassDigest []byte `json:"-"`
-	Name string `json:"name"`
-	Surname string `json:"surname"`
-	Role string `json:"role"`
-	Data string `json:"data"`
-	Address string `json:"address"`
-	Points []*Point `gorm:"-" json:"-"`
-	Polygons []*Polygon `gorm:"-" json:"-"`
-	Phone string `json:"phone"`
-	Fcm string `json:"fcm"`
+	Username   string     `json:"username"`
+	PassDigest []byte     `json:"-"`
+	Name       string     `json:"name"`
+	Surname    string     `json:"surname"`
+	Role       string     `json:"role"`
+	Data       string     `json:"data"`
+	Address    string     `json:"address"`
+	Points     []*Point   `gorm:"-" json:"-"`
+	Polygons   []*Polygon `gorm:"-" json:"-"`
+	Phone      string     `json:"phone"`
+	Fcm        string     `json:"fcm"`
 }
 
 type NewUserRequest struct {
@@ -43,7 +43,7 @@ func (UserRequest) Bind(r *http.Request) error {
 type UserRespose struct {
 	*User
 	Polygons []*PolygonResponse `json:"polygons"`
-	Points []*PointResponse `json:"points"`
+	Points   []*PointResponse   `json:"points"`
 }
 
 func (u *NewUserRequest) Bind(r *http.Request) error {
@@ -66,7 +66,6 @@ func (u *NewUserRequest) Bind(r *http.Request) error {
 
 	return nil
 }
-
 
 func (e *Env) GetUser(w http.ResponseWriter, r *http.Request) {
 	user := r.Context().Value("user").(*User)
@@ -100,7 +99,6 @@ func (e *Env) CreateUser(rw http.ResponseWriter, req *http.Request) {
 	render.Render(rw, req, e.NewUserReponse(user))
 }
 
-
 func (e *Env) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	user := r.Context().Value("user").(*User)
 
@@ -130,7 +128,6 @@ func (e *Env) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	render.Status(r, http.StatusOK)
 	render.Render(w, r, h.SucDelete)
 }
-
 
 func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 	var users = []*User{}
@@ -168,22 +165,27 @@ func (e *Env) UserCtx(next http.Handler) http.Handler {
 			return
 		}
 
-		user.Points = e.GetRelatedPointList(user.ID)
+		user.Points = e.GetRelatedPointList(user.ID, "user_points")
+		user.Polygons = e.GetRelatedPolygonList(user.ID, "user_points")
 
 		ctx := context.WithValue(r.Context(), "user", &user)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
-
 func (e *Env) NewUserReponse(p *User) *UserRespose {
 	resp := &UserRespose{User: p}
 
-	p.Points = e.GetRelatedPointList(p.ID)
+	p.Points = e.GetRelatedPointList(p.ID, "user_points")
 	resp.Points = make([]*PointResponse, 0)
 	resp.Polygons = make([]*PolygonResponse, 0)
 	for _, p := range p.Points {
 		resp.Points = append(resp.Points, NewPointResponse(p))
+	}
+
+	p.Polygons = e.GetRelatedPolygonList(p.ID, "user_polygons")
+	for _, p := range p.Polygons {
+		resp.Polygons = append(resp.Polygons, NewPolygonReponse(p))
 	}
 
 	return resp

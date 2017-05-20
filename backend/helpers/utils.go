@@ -1,9 +1,9 @@
 package helpers
 
 import (
-	"github.com/paulmach/go.geo"
 	"bytes"
 	"fmt"
+	"github.com/paulmach/go.geo"
 )
 
 func ToPolygonWKT(ps geo.PointSet) string {

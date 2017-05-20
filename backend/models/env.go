@@ -6,7 +6,7 @@ import (
 )
 
 type Env struct {
-	DB         *gorm.DB
+	DB *gorm.DB
 }
 
 var (
