@@ -58,7 +58,7 @@ public class EditActionsActivity extends BaseActivity implements EditActionView{
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ActionParametersAdapter(gridLayoutManager);
-
+        mRecyclerView.setAdapter(adapter);
         addRecyclerItems();
     }
 

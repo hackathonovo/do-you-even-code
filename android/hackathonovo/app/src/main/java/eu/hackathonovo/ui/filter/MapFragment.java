@@ -10,11 +10,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 
@@ -58,6 +61,11 @@ public class MapFragment extends BaseFragment implements FilterView {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void renderView(final List<FilterUsers> filterUserses) {
+
     }
 
     @Override

@@ -6,42 +6,44 @@
               android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/_20dp"
         android:id="@+id/ll_name_surname"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_radius"
+        android:layout_marginBottom="@dimen/_20dp"
         android:layout_marginLeft="@dimen/_30dp"
         android:layout_marginRight="@dimen/_30dp"
         android:background="@drawable/border_for_layouts"
 
-        android:weightSum="1">
+       >
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8">
+           >
 
             <ImageView
                 android:id="@+id/iv_name_surname"
                 android:layout_width="@dimen/_30dp"
                 android:layout_height="@dimen/_40dp"
                 android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_20dp"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:src="@drawable/ic_location_on_black_24dp"/>
+                android:src="@drawable/ic_group_add_black_24dp"/>
 
         </RelativeLayout>
 
         <EditText
             android:id="@+id/et_name_surname"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="@dimen/_10dp"
-            android:layout_marginLeft="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_25dp"
+
             android:layout_marginTop="@dimen/_10dp"
-            android:layout_weight="0.2"
 
             android:background="@android:color/transparent"
             android:contentDescription="Šifra"
@@ -58,22 +60,23 @@
         android:id="@+id/ll_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_above="@+id/ll_filter_btns"
+        android:layout_below="@+id/ll_name_surname"
+        android:layout_marginBottom="@dimen/_20dp"
         android:layout_marginLeft="@dimen/_30dp"
         android:layout_marginRight="@dimen/_30dp"
         android:background="@drawable/border_for_layouts"
-        android:weightSum="1">
+        >
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8">
+           >
 
             <ImageView
                 android:id="@+id/ivPassword"
                 android:layout_width="@dimen/_30dp"
                 android:layout_height="@dimen/_40dp"
+                android:layout_marginLeft="@dimen/_20dp"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
@@ -90,7 +93,7 @@
             android:layout_marginLeft="@dimen/_10dp"
             android:layout_marginRight="@dimen/_25dp"
             android:layout_marginTop="@dimen/_10dp"
-            android:layout_weight="0.2"
+
 
             android:background="@android:color/transparent"
             android:contentDescription="Šifra"
@@ -104,37 +107,15 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/ll_filter_btns"
-        android:layout_marginTop="@dimen/_10dp"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_filter"
+        android:layout_below="@+id/ll_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <CheckBox
-            android:layout_marginLeft="@dimen/_30dp"
-            android:layout_weight="1"
-            android:id="@+id/checkbox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/ll_radius"
-            android:layout_below="@+id/ll_filter_btns"
-            android:layout_marginTop="25dp"
-            android:text="Pripravnik"/>
-
-        <CheckBox
-            android:layout_weight="1"
-            android:id="@+id/checkbox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/ll_radius"
-            android:layout_below="@+id/ll_filter_btns"
-            android:layout_marginTop="25dp"
-            android:text="Spašavatelj"/>
-
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>
