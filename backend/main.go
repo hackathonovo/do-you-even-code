@@ -16,6 +16,8 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"net/url"
+	"log"
 )
 
 var (
@@ -152,6 +154,15 @@ func main() {
 			r.Route("/points", func(r2 chi.Router) {
 				r2.Get("/", e.GetActionPointsList)
 			})
+
+			r.Route("/allUsers", func(r2 chi.Router) {
+				r2.Get("/", e.GetActionUsers)
+				r2.Post("/", e.AddActionUser)
+			})
+
+			r.Route("/users", func(r2 chi.Router) {
+				r2.Get("/", e.GetActionUsersById)
+			})
 		})
 	})
 
@@ -165,6 +176,23 @@ func main() {
 			r2.Put("/", e.UpdatePolygon)
 			r2.Delete("/", e.DeletePolygon)
 		})
+	})
+
+	router.Get("/address", func(w http.ResponseWriter, r *http.Request) {
+		var Url *url.URL
+		Url, err := url.Parse("https://maps.googleapis.com/maps/api/geocode/json")
+		if err != nil {
+			panic("boom")
+		}
+
+		parameters := url.Values{}
+		parameters.Add("address", chi.URLParam(r, "address"))
+		parameters.Add("key", "AIzaSyD8S_Sh6t797n-W9z8SGaqTh0h4k0eaOtU")
+		Url.RawQuery = parameters.Encode()
+
+		resp, err := http.Get(Url.String())
+
+		log.Println(resp.Body)
 	})
 
 	router.Post("/login", e.LoginUser)
@@ -187,7 +215,6 @@ func main() {
 	}
 
 	http.ListenAndServe(":3000", router)
-
 }
 
 func OptionsAllowed(handler http.Handler) http.Handler {

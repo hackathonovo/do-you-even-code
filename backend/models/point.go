@@ -219,9 +219,6 @@ func (e *Env) NewPointListResponse(points []*Point) []render.Renderer {
 func (e *Env) GetRelatedPointsList(entityId uint, table string) []*Point {
 	var points = []*Point{}
 
-	//sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
-	//	"from points where deleted_at IS NULL and id IN (select points_id from user_points WHERE user_id = ?);"
-
 	var sql string
 	if table == "action" {
 		sql = "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
@@ -247,12 +244,6 @@ func (e *Env) GetRelatedPointsList(entityId uint, table string) []*Point {
 		}
 		points = append(points, &p)
 	}
-	//
-	//
-	//list := []*PointResponse{}
-	//for _, point := range points {
-	//	list = append(list, NewPointResponse(point))
-	//}
 
 	return points
 }

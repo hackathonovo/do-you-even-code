@@ -29,6 +29,7 @@ type Action struct {
 
 type ActionRequest struct {
 	*Action
+	UserId uint `json:"user_id"`
 }
 
 func (ActionRequest) Bind(r *http.Request) error {
@@ -64,10 +65,14 @@ func (e *Env) CreateAction(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+
 	if err := e.DB.Create(data.Action).Error; err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
 	}
+
+	go e.MakePointOnAddress(data.Address, data.Action.ID)
+
 
 	render.Status(req, http.StatusCreated)
 	render.Render(rw, req, e.NewActionResponse(data.Action))
@@ -122,6 +127,67 @@ func (e *Env) DeleteAction(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.Render(w, r, h.SucDelete)
+}
+
+
+func (e *Env) GetActionUsers(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	sql := "SELECT user_id FROM action_users WHERE action_id = ?"
+	rows, err := e.DB.Raw(sql, action.ID).Rows()
+	if err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+
+	var ids []int
+	for rows.Next() {
+		var id int
+		rows.Scan(&id)
+
+		ids = append(ids, id)
+	}
+
+	var users = []*User{}
+	e.DB.Where("id IN (?)", ids).Find(&users)
+
+	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+}
+
+func (e *Env) GetActionUsersById(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	var users = []*User{}
+	e.DB.Where("id = ?", action.ID).Find(&users)
+
+	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+}
+
+func (e *Env) AddActionUser(w http.ResponseWriter, r *http.Request) {
+	action := r.Context().Value("action").(*Action)
+
+	data := &ActionRequest{}
+
+	if err := render.Bind(r, data); err != nil {
+		render.Render(w, r, h.ErrInvalidRequest(err))
+		return
+	}
+
+	sql2 := "insert into action_users values(default, ?, ?, ?)"
+	if err := e.DB.Exec(sql2, action.ID, data.UserId, time.Now()).Error; err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+
+	render.Render(w, r, h.SucCreate)
 }
 
 func (e *Env) ActionCtx(next http.Handler) http.Handler {
