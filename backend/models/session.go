@@ -66,6 +66,7 @@ type LoginResponse struct {
 	Expiry       time.Time `json:"expiry"`
 	RefreshToken string    `json:"refresh_token"`
 	TokenType    string    `json:"token_type"`
+	*UserRespose
 }
 
 func (lr *LoginResponse) Render(rw http.ResponseWriter, req *http.Request) error {
@@ -85,9 +86,9 @@ func (e *Env) LoginUser(rw http.ResponseWriter, req *http.Request) {
 	passDigest := hash.Sum(nil)
 
 	var user User
-	e.DB.Where(&User{Username: data.Username, PassDigest: passDigest}).First(&user)
+	e.DB.Where("username = ? AND pass_digest = ?", data.Username, passDigest).First(&user)
 
-	if user.Username == "" {
+	if user.ID == 0 {
 		render.Render(rw, req, h.ErrNotFound)
 		return
 	}
@@ -104,7 +105,7 @@ func (e *Env) LoginUser(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	render.Status(req, http.StatusCreated)
-	render.Render(rw, req, &LoginResponse{Token: session.Token})
+	render.Render(rw, req, &LoginResponse{Token: session.Token, UserRespose: e.NewUserReponse(&user)})
 }
 
 func generateRandomBytes(n int) ([]byte, error) {

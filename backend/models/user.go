@@ -96,8 +96,8 @@ func (e *Env) CreateUser(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	render.Status(req, http.StatusCreated)
-	render.Render(rw, req, h.SucCreate)
+	render.Status(req, http.StatusOK)
+	render.Render(rw, req, e.NewUserReponse(user))
 }
 
 

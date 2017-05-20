@@ -49,7 +49,7 @@ func main() {
 	}
 	defer db.Close()
 	db.LogMode(true)
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{})
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -93,6 +93,19 @@ func main() {
 			r.Get("/", e.GetPoint)
 			r.Put("/", e.UpdatePoint)
 			r.Delete("/", e.DeletePoint)
+		})
+	})
+
+	router.Route("/logger", func(router chi.Router) {
+		router.Get("/", e.ListLogs)
+		//router.Options("/", Dummy)
+		router.Post("/", e.CreateLog)
+
+		router.Route("/:logId", func(r chi.Router) {
+			r.Use(e.LogCtx)
+			r.Get("/", e.GetLog)
+			r.Put("/", e.UpdateLog)
+			r.Delete("/", e.DeleteLog)
 		})
 	})
 
