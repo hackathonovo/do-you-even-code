@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout android:id="@+id/activity_login"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_login"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".ui.login.HGSSLoginActivity">
 
-
     <include
         android:id="@+id/tv_header"
         layout="@layout/shadow_layout">
     </include>
-
 
     <LinearLayout
         android:id="@+id/llFirst"
@@ -24,7 +21,6 @@
         android:layout_marginLeft="@dimen/_30dp"
         android:layout_marginRight="@dimen/_30dp"
         android:weightSum="1">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,7 +34,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:src="@drawable/ic_gallery_placeholder" />
+                android:src="@drawable/ic_gallery_placeholder"/>
 
         </RelativeLayout>
 
@@ -53,13 +49,13 @@
             android:layout_marginTop="@dimen/_10dp"
             android:layout_weight="0.2"
             android:background="@android:color/transparent"
+            android:text="voditelj"
 
             android:textColor="@color/main_color_black"
 
-            android:textSize="@dimen/_20sp" />
+            android:textSize="@dimen/_20sp"/>
 
     </LinearLayout>
-
 
     <View
         android:id="@+id/viewFirst"
@@ -69,7 +65,7 @@
         android:layout_marginLeft="@dimen/_25dp"
 
         android:layout_marginRight="@dimen/_25dp"
-        android:background="@color/main_color_black" />
+        android:background="@color/main_color_black"/>
 
     <LinearLayout
         android:id="@+id/llSecond"
@@ -79,7 +75,6 @@
         android:layout_marginLeft="@dimen/_30dp"
         android:layout_marginRight="@dimen/_30dp"
         android:weightSum="1">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,7 +88,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:src="@drawable/ic_gallery_placeholder" />
+                android:src="@drawable/ic_gallery_placeholder"/>
 
         </RelativeLayout>
 
@@ -108,13 +103,13 @@
             android:layout_marginTop="@dimen/_10dp"
             android:layout_weight="0.2"
             android:background="@android:color/transparent"
-
             android:inputType="textPassword"
+
+            android:text="1234"
 
             android:textColor="@color/main_color_black"
 
-
-            android:textSize="@dimen/_20sp" />
+            android:textSize="@dimen/_20sp"/>
 
     </LinearLayout>
 
@@ -137,7 +132,6 @@
         android:textColor="@color/main_color_black"
         android:textSize="@dimen/_20sp" /> -->
 
-
     <View
         android:id="@+id/viewSecond"
         android:layout_width="match_parent"
@@ -146,8 +140,7 @@
         android:layout_marginLeft="@dimen/_25dp"
 
         android:layout_marginRight="@dimen/_25dp"
-        android:background="@color/main_color_black" />
-
+        android:background="@color/main_color_black"/>
 
     <EditText
         android:id="@+id/forgot_password"
@@ -158,8 +151,7 @@
         android:gravity="center"
         android:text="Forgot your password?"
         android:textAlignment="center"
-        android:textSize="@dimen/_20sp" />
-
+        android:textSize="@dimen/_20sp"/>
 
     <Button
         android:id="@+id/login_button"
@@ -174,8 +166,6 @@
         android:text="CONTINUE"
 
         android:textColor="@color/white"
-        android:textSize="@dimen/_20sp" />
-
-
+        android:textSize="@dimen/_20sp"/>
 
 </RelativeLayout>

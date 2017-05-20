@@ -13,6 +13,8 @@ import eu.hackathonovo.ui.home.HomePresenter;
 import eu.hackathonovo.ui.home.HomePresenterImpl;
 import eu.hackathonovo.ui.home_leader.HomeLeaderPresenter;
 import eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl;
+import eu.hackathonovo.ui.home_rescuer.HomeRescuerPresenter;
+import eu.hackathonovo.ui.home_rescuer.HomeRescuerPresenterImpl;
 import eu.hackathonovo.ui.login.HGSSLoginPresenter;
 import eu.hackathonovo.ui.login.HGSSLoginPresenterImpl;
 import eu.hackathonovo.ui.login.LoginPresenter;
@@ -37,8 +39,8 @@ public final class PresenterModule {
     @ForActivity
     @Provides
     LoginPresenter provideLoginPresenter(@Named(SUBSCRIBE_SCHEDULER) Scheduler subscribeScheduler, final NetworkService networkService,
-                                         @Named(OBSERVE_SCHEDULER) Scheduler observeScheduler, StringManager stringManager) {
-        return new LoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
+                                         @Named(OBSERVE_SCHEDULER) Scheduler observeScheduler, StringManager stringManager, final TemplatePreferences templatePreferences) {
+        return new LoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
     }
 
     @ForActivity
@@ -53,8 +55,8 @@ public final class PresenterModule {
     @ForActivity
     @Provides
     HGSSLoginPresenter provideHgssLoginPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
-                                                 final StringManager stringManager, final NetworkService networkService) {
-        return new HGSSLoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
+                                                 final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new HGSSLoginPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
     }
 
     @ForActivity
@@ -62,5 +64,12 @@ public final class PresenterModule {
     HomeLeaderPresenter provideHomeLeaderPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
                                                    final StringManager stringManager, final NetworkService networkService) {
         return new HomeLeaderPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService);
+    }
+
+    @ForActivity
+    @Provides
+    HomeRescuerPresenter provideHomeRescuerPresenter(@Named(SUBSCRIBE_SCHEDULER) final Scheduler subscribeScheduler, @Named(OBSERVE_SCHEDULER) final Scheduler observeScheduler,
+                                                     final StringManager stringManager, final NetworkService networkService, final TemplatePreferences templatePreferences) {
+        return new HomeRescuerPresenterImpl(subscribeScheduler, observeScheduler, stringManager, networkService, templatePreferences);
     }
 }

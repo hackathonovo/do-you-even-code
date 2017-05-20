@@ -29,7 +29,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
-import eu.hackathonovo.ui.home.HomeActivity;
+import eu.hackathonovo.ui.home_rescuer.HomeRescuerActivity;
 import timber.log.Timber;
 
 public class LoginActivity extends BaseActivity implements LoginView {
@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void goToHomeScreen() {
-        startActivity(HomeActivity.createIntent(this));
+        startActivity(HomeRescuerActivity.createIntent(this));
     }
 
     @Override

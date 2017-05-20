@@ -8,6 +8,8 @@ import eu.hackathonovo.injection.scope.ForActivity;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 import eu.hackathonovo.ui.home.HomePresenter;
 import eu.hackathonovo.ui.home.HomeRouter;
+import eu.hackathonovo.ui.home_leader.HomeLeaderPresenter;
+import eu.hackathonovo.ui.home_rescuer.HomeRescuerPresenter;
 import eu.hackathonovo.ui.login.HGSSLoginPresenter;
 import eu.hackathonovo.ui.login.LoginPresenter;
 import eu.hackathonovo.ui.photo.TakeOrPickAPhotoPresenter;
@@ -47,4 +49,8 @@ public interface ActivityComponent extends ActivityComponentActivityInjects, Act
     TakeOrPickAPhotoPresenter getTakeOrPickAPhotoPresenter();
 
     HGSSLoginPresenter getHgssLoginPresenter();
+
+    HomeRescuerPresenter getHomeRescuerPresenter();
+
+    HomeLeaderPresenter getHomeLeaderPresenter();
 }

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     android.permission.READ_EXTERNAL_STORAGE
     <application
         android:name=".application.HackathonovoApplication"
@@ -40,6 +42,10 @@
         <activity android:name=".ui.login.HGSSLoginActivity">
         </activity>
         <activity android:name=".ui.home_leader.HomeLeaderActivity">
+        </activity>
+        <activity android:name=".ui.map.MapActivity">
+        </activity>
+        <activity android:name=".ui.home_rescuer.HomeRescuerActivity">
         </activity>
     </application>
 

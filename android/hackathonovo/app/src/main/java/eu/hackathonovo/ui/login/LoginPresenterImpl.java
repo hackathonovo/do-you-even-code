@@ -2,6 +2,7 @@ package eu.hackathonovo.ui.login;
 
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.service.NetworkService;
+import eu.hackathonovo.data.storage.TemplatePreferences;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.base.presenters.BasePresenter;
 import io.reactivex.Scheduler;
@@ -15,12 +16,15 @@ public class LoginPresenterImpl extends BasePresenter implements LoginPresenter 
     private final Scheduler observeScheduler;
     private final StringManager stringManager;
     private final NetworkService networkService;
+    private final TemplatePreferences templatePreferences;
 
-    public LoginPresenterImpl(final Scheduler subscribeScheduler, final Scheduler observeScheduler, final StringManager stringManager, final NetworkService networkService) {
+    public LoginPresenterImpl(final Scheduler subscribeScheduler, final Scheduler observeScheduler, final StringManager stringManager, final NetworkService networkService,
+                              final TemplatePreferences templatePreferences) {
         this.subscribeScheduler = subscribeScheduler;
         this.observeScheduler = observeScheduler;
         this.stringManager = stringManager;
         this.networkService = networkService;
+        this.templatePreferences = templatePreferences;
     }
 
     @Override
@@ -41,10 +45,10 @@ public class LoginPresenterImpl extends BasePresenter implements LoginPresenter 
     }
 
     private void onLoginSuccess(final UserInformation userInformation) {
+
         Timber.e(userInformation.token);
         if (view != null) {
             view.goToHomeScreen();
         }
     }
-
 }
