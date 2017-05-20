@@ -51,7 +51,7 @@ func main() {
 	}
 	defer db.Close()
 	db.LogMode(true)
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{}, &m.Timetable{})
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{}, &m.Timetable{}, &m.ActionNotif{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -176,6 +176,19 @@ func main() {
 
 			r.Route("/push", func(r2 chi.Router) {
 				r2.Get("/", e.PushAction)
+			})
+
+			r.Route("/notifications", func(r2 chi.Router) {
+				r2.Get("/", e.ListActionNotifsByAction)
+				r2.Post("/", e.CreateActionNotif)
+
+				r2.Route("/:actionNotifId", func(r3 chi.Router) {
+					r3.Use(e.ActionNotifCtx)
+					r3.Get("/", e.GetActionNotif)
+					r3.Put("/", e.UpdateActionNotif)
+					r3.Delete("/", e.DeleteActionNotif)
+				})
+
 			})
 		})
 	})

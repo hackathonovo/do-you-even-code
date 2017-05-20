@@ -13,19 +13,20 @@ import (
 
 type Action struct {
 	DBModel
-	TimeReported   time.Time  `json:"time_reported"`
-	TimeMeeting    time.Time  `json:"time_meeting"`
-	MeetingAddress string     `json:"meeting_address"`
-	TimeFrom       time.Time  `json:"time_from"`
-	TimeTo         time.Time  `json:"time_to"`
-	Type           string     `json:"type"`
-	Data           string     `json:"data"`
-	Injury         string     `json:"injury"`
-	Address        string     `json:"address"`
-	Urgency        string     `json:"urgency"`
-	Suicidal       bool       `json:"suicidal"`
-	Points         []*Point   `gorm:"-" json:"-"`
-	Polygons       []*Polygon `gorm:"-" json:"-"`
+	TimeReported   time.Time      `json:"time_reported"`
+	TimeMeeting    time.Time      `json:"time_meeting"`
+	MeetingAddress string         `json:"meeting_address"`
+	TimeFrom       time.Time      `json:"time_from"`
+	TimeTo         time.Time      `json:"time_to"`
+	Type           string         `json:"type"`
+	Data           string         `json:"data"`
+	Injury         string         `json:"injury"`
+	Address        string         `json:"address"`
+	Urgency        string         `json:"urgency"`
+	Suicidal       bool           `json:"suicidal"`
+	Points         []*Point       `gorm:"-" json:"-"`
+	Polygons       []*Polygon     `gorm:"-" json:"-"`
+	ActionNotifs   []ActionNotif  `json:"-"`
 }
 
 type ActionRequest struct {
@@ -50,7 +51,7 @@ func (rd *ActionResponse) Render(w http.ResponseWriter, r *http.Request) error {
 
 func (e *Env) ListActions(rw http.ResponseWriter, req *http.Request) {
 	var Actions = []*Action{}
-	e.DB.Find(&Actions)
+	e.DB.Preload("ActionNotifs").Find(&Actions)
 
 	if err := render.RenderList(rw, req, e.NewActionListResponse(Actions)); err != nil {
 		render.Render(rw, req, h.ErrRender(err))
@@ -233,7 +234,7 @@ func (e *Env) PushAction(w http.ResponseWriter, r *http.Request) {
 		tokens = append(tokens, user.Fcm)
 	}
 
-	go e.PushPointNotification(*action, tokens)
+	go e.PushActionNotification(*action, tokens)
 
 	render.Status(r, http.StatusCreated)
 	render.Render(w, r, h.SucDone)
@@ -267,7 +268,7 @@ func (e *Env) ActionCtx(next http.Handler) http.Handler {
 		}
 
 		Action := Action{}
-		if err := e.DB.First(&Action, ActionId).Error; err != nil {
+		if err := e.DB.Preload("ActionNotifs").First(&Action, ActionId).Error; err != nil {
 			render.Render(w, r, h.ErrNotFound)
 			return
 		}

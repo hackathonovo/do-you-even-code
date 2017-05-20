@@ -43,6 +43,7 @@ type PointResponse struct {
 	*Point
 	Lat float64 `json:"lat"`
 	Lng float64 `json:"lng"`
+	*UserRespose
 }
 
 func (rd *PointResponse) Render(w http.ResponseWriter, r *http.Request) error {
@@ -69,6 +70,8 @@ func (e *Env) ListPoints(rw http.ResponseWriter, req *http.Request) {
 		}
 		points = append(points, &p)
 	}
+
+
 
 	if err := render.RenderList(rw, req, e.NewPointListResponse(points)); err != nil {
 		render.Render(rw, req, h.ErrRender(err))

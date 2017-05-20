@@ -332,8 +332,35 @@ func (e *Env) RegisterFCM(rw http.ResponseWriter, req *http.Request) {
 	render.Render(rw, req, h.SucCreate)
 }
 
-func (e *Env) PushPointNotification(action Action, ids []string) {
+func (e *Env) PushActionNotification(action Action, ids []string) {
 	data := map[string]interface{}{"msg": "Akcija započela", "meeting_address": action.MeetingAddress, "urgency": action.Urgency}
+	gmsg := gcm.NewMessage(data, ids...)
+
+	// Create a Sender to send the message.
+	sender := &gcm.Sender{ApiKey: API_KEY}
+
+	// Send the message and receive the response after at most two retries.
+	response, err := sender.Send(gmsg, 2)
+	if err != nil {
+		fmt.Println("Failed to send message:", err)
+		return
+	}
+
+	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
+}
+
+
+func (e *Env) PushActionUserNotification(actionNotif ActionNotif, userId int) {
+	var users = []User{}
+	e.DB.Where("action_id = ? and user != ?", actionNotif.ActionID, userId).Find(&users)
+
+	var ids []string
+	for _, user := range users {
+		ids = append(ids, user.Fcm)
+	}
+
+
+	data := map[string]interface{}{"msg": "Nova poruka", "title": actionNotif.Title, "content": actionNotif.Content}
 	gmsg := gcm.NewMessage(data, ids...)
 
 	// Create a Sender to send the message.
