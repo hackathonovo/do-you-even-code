@@ -62,8 +62,8 @@ export class UserService {
       .catch(UserService.handleError);
   }
 
-  listByAction(actionId: number): Observable<User[]> {
-    return this.http.get(this.baseUrl+'/users/action/'+actionId, {headers: this.headers})
+  listByAction(actionId: number, params = []): Observable<User[]> {
+    return this.http.get(this.baseUrl+'/actions/'+actionId+'/users', {headers: this.headers})
       .map(UserService.extractData)
       .catch(UserService.handleError);
   }

@@ -7,4 +7,5 @@ export class Point {
   data: string;
   draggable: boolean = true;
   action_id: number;
+  user_id: number;
 }

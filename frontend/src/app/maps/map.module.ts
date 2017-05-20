@@ -7,6 +7,7 @@ import {MapViewComponent} from "./view/map-view.component";
 import {HeaderModule} from "app/header/header.module";
 import {MapAreasEditComponent} from "app/maps/areas-edit/map-areas-edit.component";
 import {MapUsersEditComponent} from "app/maps/users-edit/map-users-edit.component";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {MapUsersEditComponent} from "app/maps/users-edit/map-users-edit.componen
     AgmCoreModule.forRoot({
       apiKey: KeyChain.google
     }),
-    HeaderModule
+    HeaderModule,
+    FormsModule
   ],
   providers: [],
 })
