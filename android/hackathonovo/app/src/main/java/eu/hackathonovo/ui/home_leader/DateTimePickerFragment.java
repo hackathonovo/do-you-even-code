@@ -92,7 +92,8 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
         );
         datePickerDialog.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_2);
-        datePickerDialog.setMinDate(calendar);
+        datePickerDialog.setTitle("Odaberite datum nesreće");
+       // datePickerDialog.setMinDate(calendar);
         //datePickerDialog.setOnCancelListener(this);
 
         TimePickerDialog tpd = TimePickerDialog.newInstance(
@@ -103,6 +104,7 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
         );
         tpd.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
-        datePickerDialog.setMinDate(calendar);
+        datePickerDialog.setTitle("Odaberite vrijeme nesreće");
+        //datePickerDialog.setMinDate(calendar);
     }
 }

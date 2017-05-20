@@ -5,15 +5,24 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 
 public class FilterFragment extends BaseFragment implements FilterView {
+    @BindView(R.id.et_name_surname)
+    TextView et_name_surname;
+
+    @BindView(R.id.et_radius)
+    TextView et_radius;
+
 
     @Inject
     FilterPresenter presenter;
@@ -43,4 +52,18 @@ public class FilterFragment extends BaseFragment implements FilterView {
 
         presenter.setView(this);
     }
+
+    @OnClick(R.id.pripravnik_btn)
+    public void pripravnikClicked() {
+        addType();
+    }
+
+
+
+    @OnClick(R.id.spasavatelj_btn)
+    public void spasavateljClicked() {
+        addType();
+    }
+
+    private void addType() {}
 }

@@ -37,23 +37,35 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.photo.PhotoDetailsActivity">
-        </activity>
-        <activity android:name=".ui.login.HGSSLoginActivity">
-        </activity>
-        <activity android:name=".ui.home_leader.HomeLeaderActivity">
-        </activity>
-        <activity
-            android:name=".ui.map.MapActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ui.photo.PhotoDetailsActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
             >
         </activity>
-        <activity android:name=".ui.home_rescuer.HomeRescuerActivity">
+        <activity android:name=".ui.login.HGSSLoginActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
-        <activity android:name=".ui.actions.EditActionsActivity">
+        <activity android:name=".ui.home_leader.HomeLeaderActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
-        <activity android:name=".ui.filter.FilterActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ui.map.MapActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".ui.home_rescuer.HomeRescuerActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
+        <activity android:name=".ui.actions.EditActionsActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
+            >
         </activity>
     </application>
 
