@@ -66,6 +66,11 @@ public class MapFragment extends BaseFragment implements FilterView {
     }
 
     @Override
+    public void renderView(final List<FilterUsers> filterUserses) {
+
+    }
+
+    @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);
     }
