@@ -49,7 +49,7 @@ func main() {
 	}
 	defer db.Close()
 	db.LogMode(true)
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{})
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{}, &m.Timetable{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -87,6 +87,10 @@ func main() {
 			r2.Route("/location", func(r3 chi.Router) {
 				r2.Get("/", e.GetUser)
 			})
+
+			r2.Route("/timetable", func(r3 chi.Router) {
+				r3.Get("/", e.ListUserTimetables)
+			})
 		})
 
 	})
@@ -101,6 +105,19 @@ func main() {
 			r.Get("/", e.GetPoint)
 			r.Put("/", e.UpdatePoint)
 			r.Delete("/", e.DeletePoint)
+		})
+	})
+
+	router.Route("/timetables", func(router chi.Router) {
+		router.Get("/", e.ListTimetables)
+		//router.Options("/", Dummy)
+		router.Post("/", e.CreateTimetable)
+
+		router.Route("/:timetableId", func(r chi.Router) {
+			r.Use(e.TimetableCtx)
+			r.Get("/", e.GetTimetable)
+			r.Put("/", e.UpdateTimetable)
+			r.Delete("/", e.CreateTimetable)
 		})
 	})
 
