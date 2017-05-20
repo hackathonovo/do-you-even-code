@@ -34,8 +34,8 @@ type NewUserRequest struct {
 
 type UserRespose struct {
 	*User
-	Polygons []PolygonResponse `json:"polygons"`
-	Points []PointResponse `json:"points"`
+	Polygons []*PolygonResponse `json:"polygons"`
+	Points []*PointResponse `json:"points"`
 }
 
 func (u *NewUserRequest) Bind(r *http.Request) error {
@@ -86,22 +86,21 @@ func (e *Env) ListUsers(rw http.ResponseWriter, req *http.Request) {
 	var users = []*User{}
 	e.DB.Find(&users)
 
-	if err := render.RenderList(rw, req, NewUserListReponse(users)); err != nil {
+	if err := render.RenderList(rw, req, e.NewUserListReponse(users)); err != nil {
 		render.Render(rw, req, h.ErrServer)
 		return
 	}
 }
 
-func NewUserListReponse(users []*User) []render.Renderer {
+func (e *Env) NewUserListReponse(users []*User) []render.Renderer {
 	list := []render.Renderer{}
 	for _, user := range users {
-		list = append(list, &UserRespose{User: user})
+		list = append(list, &UserRespose{User: user, Points: e.GetRelatedPointList(user.ID)})
 	}
 	return list
 }
 
 func (rd *UserRespose) Render(w http.ResponseWriter, r *http.Request) error {
-	// Pre-processing before a response is marshalled and sent across the wire
 	return nil
 }
 

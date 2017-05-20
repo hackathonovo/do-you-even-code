@@ -176,14 +176,8 @@ func (e *Env) GoogleCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
-	render.Render(w, r, &LoginResponse{Token: token.AccessToken,
-		Expiry: token.Expiry,
-		RefreshToken: token.RefreshToken,
-		TokenType: token.TokenType,
-	})
+	render.Render(w, r, &LoginResponse{Token: token.AccessToken})
 }
-
 func (e *Env) GOAuthLogin(w http.ResponseWriter, r *http.Request) {
 	data := &LoginRequest{}
 
@@ -226,24 +220,16 @@ func (e *Env) GOAuthLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session := &Session{
-		Token:        data.Token,
-		Expiry:       data.Expiry,
-		RefreshToken: data.RefreshToken,
-		TokenType:    data.TokenType,
-		LastUsedAt:   time.Now().UnixNano(),
-		UserID:       user.ID,
+		Token:      data.Token,
+		LastUsedAt: time.Now().UnixNano(),
+		UserID:     user.ID,
 	}
 
 	if err := e.DB.Create(&session).Error; err != nil {
 		render.Render(w, r, h.ErrRender(err))
 		return
 	}
-	//
-	//render.Status(r, http.StatusCreated)
-	//render.Render(w, r, &LoginResponse{
-	//	Token: session.Token,
-	//	TokenType: session.TokenType,
-	//	RefreshToken: session.RefreshToken,
-	//	Expiry: session.Expiry,
-	//})
+
+	render.Status(r, http.StatusCreated)
+	render.Render(w, r, &LoginResponse{Token: session.Token})
 }

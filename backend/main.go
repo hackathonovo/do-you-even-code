@@ -105,6 +105,10 @@ func main() {
 
 	router.Post("/login", e.LoginUser)
 
+	router.Get("/googleLogin", e.GoogleLogin)
+	router.Get("/oauth2", e.GoogleCallback)
+	router.Post("/glogin", e.GOAuthLogin)
+
 	if *genRoutes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
 		fmt.Println(docgen.MarkdownRoutesDoc(router, docgen.MarkdownOpts{

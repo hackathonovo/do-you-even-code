@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+	"log"
 )
 
 type Point struct {
@@ -25,6 +26,7 @@ type PointRequest struct {
 	*Point
 	Lat float64 `json:"lat"`
 	Lng float64 `json:"lng"`
+	UserId uint `json:"user_id"`
 }
 
 func (p *PointRequest) Bind(r *http.Request) error {
@@ -77,19 +79,32 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	user, ok := req.Context().Value("user").(*User)
-	fmt.Printf("Current user: %s %s\n", user, ok)
-	if ok != true {
-		render.Render(rw, req, h.ErrServer)
-		return
-	}
+	//user, ok := req.Context().Value("user").(*User)
+	//fmt.Printf("Current user: %s %s\n", user, ok)
+	//if ok != true {
+	//	render.Render(rw, req, h.ErrServer)
+	//	return
+	//}
 
 	data.Geo = geo.Point{data.Lng, data.Lat}
 	fmt.Printf("Point WKT: %s\n", data.Geo.ToWKT())
-	sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
-	if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Error; err != nil {
-		render.Render(rw, req, h.ErrRender(err))
-		return
+	var pointId uint
+
+	//sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
+	//if err := e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Error; err != nil {
+	//	render.Render(rw, req, h.ErrRender(err))
+	//	return
+	//}
+	//
+	sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326)) RETURNING id"
+	e.DB.Exec(sql, time.Now(), time.Now(), data.Type, data.Data, data.Label, data.Draggable, data.Geo.ToWKT()).Scan(&pointId)
+
+	if data.UserId != 0 {
+		sql2 := "insert into user_points values(default, ?, ?)"
+		if err := e.DB.Exec(sql2, data.UserId, pointId).Error; err != nil {
+			render.Render(rw, req, h.ErrRender(err))
+			return
+		}
 	}
 
 	render.Status(req, http.StatusCreated)
@@ -176,8 +191,41 @@ func NewPointListResponse(points []*Point) []render.Renderer {
 	return list
 }
 
+
+func (e *Env) GetRelatedPointList(entityId uint) []*PointResponse {
+	var points = []*Point{}
+
+	sql := "select id, created_at, updated_at, type, data, label, draggable, ST_AsBinary(geom) " +
+		"from points where deleted_at IS NULL and id = (select points_id from user_points WHERE user_id = ?);"
+	rows, err := e.DB.Raw(sql, entityId).Rows()
+	if err != nil {
+		log.Printf(err.Error())
+		return nil
+	}
+
+	for rows.Next() {
+		p := Point{}
+		rows.Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt, &p.Type, &p.Data, &p.Label, &p.Draggable, &p.Geo)
+
+		if rows.Err() != nil {
+			log.Printf(err.Error())
+			return nil
+		}
+		points = append(points, &p)
+	}
+
+
+	list := []*PointResponse{}
+	for _, point := range points {
+		list = append(list, NewPointResponse(point))
+	}
+
+	return list
+}
+
 func NewPointResponse(p *Point) *PointResponse {
 	resp := &PointResponse{Point: p, Lat: p.Geo.Lat(), Lng: p.Geo.Lng()}
 	fmt.Printf("%s", p.Geo.ToWKT())
 	return resp
 }
+
