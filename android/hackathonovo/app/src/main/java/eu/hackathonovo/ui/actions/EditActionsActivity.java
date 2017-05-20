@@ -46,10 +46,10 @@ public class EditActionsActivity extends BaseActivity implements EditActionView{
         SearchDetailsData searchDetailsData;
         for (int i = 0; i < 10; i++) {
             searchDetailsData = new SearchDetailsData();
-            searchDetailsData.setVrijemeSastanka("");
-            searchDetailsData.setMjestoSastanka("");
-            searchDetailsData.setVrijemeNestanka("");
-            searchDetailsData.setHitnost("");
+            searchDetailsData.setVrijemeSastanka("dsadas");
+            searchDetailsData.setMjestoSastanka("fsdf");
+            searchDetailsData.setVrijemeNestanka("dfssfd");
+            searchDetailsData.setHitnost("dsfsdf");
             searchDetailsData.setSuicidalnost(true);
             searchDetailsDatas.add(searchDetailsData);
         }

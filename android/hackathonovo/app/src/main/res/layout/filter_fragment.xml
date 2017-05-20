@@ -1,7 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_name_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_radius"
+        android:layout_marginLeft="@dimen/_30dp"
+        android:layout_marginRight="@dimen/_30dp"
+        android:background="@drawable/border_for_layouts"
+
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8">
+
+            <ImageView
+                android:id="@+id/iv_name_surname"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:src="@drawable/ic_location_on_black_24dp"/>
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_name_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_weight="0.2"
+
+            android:background="@android:color/transparent"
+            android:contentDescription="Šifra"
+            android:hint="Filtrirajte preko imena ili prezimena"
+
+            android:inputType="text"
+            android:textColor="@color/main_color_black"
+
+            android:textSize="@dimen/_12sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/ll_filter_btns"
+        android:layout_marginLeft="@dimen/_30dp"
+        android:layout_marginRight="@dimen/_30dp"
+        android:background="@drawable/border_for_layouts"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8">
+
+            <ImageView
+                android:id="@+id/ivPassword"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:src="@drawable/ic_location_on_black_24dp"/>
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_radius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_weight="0.2"
+
+            android:background="@android:color/transparent"
+            android:contentDescription="Šifra"
+            android:hint="Unesite radius pretrage"
+
+            android:inputType="text"
+            android:textColor="@color/main_color_black"
+
+            android:textSize="@dimen/_12sp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_filter_btns"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/pripravnik_btn"
+            android:layout_weight="1"
+            android:background="@color/main_color_blue"
+            fancy:paddingEnd="@dimen/_20dp"
+            android:text="Da"
+            android:layout_margin="@dimen/_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/main_color_blue"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Pripravnik"
+            fancy:fb_textColor="#FFFFFF"/>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/spasavatelj_btn"
+            android:background="@color/main_color_blue"
+            android:layout_margin="@dimen/_20dp"
+            android:layout_weight="1"
+            android:text="Ne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/main_color_blue"
+
+
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Spašavatelj"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>

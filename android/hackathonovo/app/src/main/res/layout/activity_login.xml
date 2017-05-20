@@ -15,7 +15,6 @@
         android:layout_width="@dimen/_150dp"
         android:layout_height="@dimen/_150dp"
         android:scaleType="fitXY"
-        android:background="@drawable/gss_logo"
         android:layout_centerHorizontal="true"/>
 
     <ImageButton

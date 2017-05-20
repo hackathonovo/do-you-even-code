@@ -1,37 +1,73 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="eu.hackathonovo.ui.home_leader.IsSuicidalFragment">
-
+    <ImageView
+        android:background="@drawable/action_bg"
+        android:alpha="0.1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/tv_injury_description"
         android:text="Da li se je osoba suicidalna? "
         android:gravity="center"
+        android:layout_above="@+id/ll_buttnons"
+        android:textColor="@color/main_color_black"
+        android:textSize="@dimen/_20sp"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/ll_buttnons"
-        android:layout_below="@+id/tv_injury_description"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
-        <Button
+        <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/suicidal_yes_btn"
             android:layout_weight="1"
             android:text="Da"
+            android:layout_margin="@dimen/_20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/main_color_blue"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Da"
+            fancy:fb_textColor="#FFFFFF"
+            />
 
-        <Button
+        <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/suicidal_no_btn"
             android:layout_weight="1"
-            android:text="Ne"
+            android:text="Da"
+            android:layout_margin="@dimen/_20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/main_color_blue"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Ne"
+            fancy:fb_textColor="#FFFFFF"
+            />
     </LinearLayout>
 
 </RelativeLayout>
