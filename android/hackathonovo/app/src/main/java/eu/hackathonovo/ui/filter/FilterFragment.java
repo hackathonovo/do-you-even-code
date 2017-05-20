@@ -25,7 +25,7 @@ import eu.hackathonovo.ui.base.fragments.BaseFragment;
 import eu.hackathonovo.ui.filter.rv_adapter.ChildItem;
 import eu.hackathonovo.ui.filter.rv_adapter.FilterAdapter;
 
-public class FilterFragment extends BaseFragment implements FilterView {
+public class FilterFragment extends BaseFragment implements FilterView, FilterAdapter.Listener {
 
     private RecyclerView mRecyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -42,6 +42,11 @@ public class FilterFragment extends BaseFragment implements FilterView {
 
     public static FilterFragment newInstance() {
         return new FilterFragment();
+    }
+
+    @Override
+    public void getPlanIdAtPosition(final long userId) {
+        presenter.updateUser((int)userId);
     }
 
     @Override

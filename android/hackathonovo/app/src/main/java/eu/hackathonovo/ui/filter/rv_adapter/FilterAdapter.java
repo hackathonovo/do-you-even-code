@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.hackathonovo.R;
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 
 public class FilterAdapter extends RecyclerView.Adapter<Holder>{
     private final List<Item> mItemList = new ArrayList<>();
@@ -28,6 +29,7 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
         mItemList.add(item);
         notifyDataSetChanged();
     }
+
 
 
 
@@ -64,8 +66,18 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
     private void bindGridItem(final Holder holder, final int position) {
         View container = holder.itemView;
         ChildItem item = (ChildItem) mItemList.get(position);
+
         TextView tv = (TextView) container.findViewById(R.id.tv_name);
-        //tv.setText(item.getFilterUsers());
+        tv.setText(item.getFilterUsers().name);
+
+        container.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(final View v) {
+                int userID= item.getFilterUsers().id;
+                listener.getPlanIdAtPosition(userID);
+            }
+        });
     }
 
     @Override
@@ -76,5 +88,34 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
     @Override
     public int getItemCount() {
         return mItemList.size();
+    }
+
+    public void refreashAdapter(final List<FilterUsers> filterUserses){
+        mItemList.clear();
+        for (int i = 0; i < filterUserses.size(); i++) {
+            mItemList.add(new ChildItem(filterUserses.get(i)));
+        }
+        notifyDataSetChanged();
+    }
+
+    private static final class EmptyListener implements Listener {
+
+        @Override
+        public void getPlanIdAtPosition(long userId) {
+            //NO OP
+        }
+    }
+
+    public interface Listener {
+
+        Listener EMPTY = new EmptyListener();
+
+        void getPlanIdAtPosition(long userId);
+    }
+
+    private Listener listener = Listener.EMPTY;
+
+    public void setListener(final Listener listener) {
+        this.listener = listener != null ? listener : Listener.EMPTY;
     }
 }

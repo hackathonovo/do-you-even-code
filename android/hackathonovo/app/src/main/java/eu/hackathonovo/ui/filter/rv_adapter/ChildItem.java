@@ -14,7 +14,7 @@ public class ChildItem extends Item implements Serializable{
 
 
 
-    FilterUsers filterUsers;
+    private FilterUsers filterUsers;
     public ChildItem(FilterUsers obj) {
 
         this.filterUsers = obj;
