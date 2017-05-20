@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 
@@ -60,5 +63,10 @@ public class FilterActivity extends BaseActivity implements FilterView {
         super.onResume();
 
         presenter.setView(this);
+    }
+
+    @Override
+    public void renderView(final List<FilterUsers> filterUserses) {
+
     }
 }

@@ -16,6 +16,7 @@ public interface APIConstants {
     String PATH_SEND_DETAILS = "/actions";
     String PATH_GET_DETAILS = "/actions/{id}";
     String PATH_SEND_RESCUER_LOCATION = "/points";
+    String PATH_SEARCH = "users/search";
 
 
     String CONTENT_TYPE_OCTET_STREAM = "Content-Type: application/octet-stream";

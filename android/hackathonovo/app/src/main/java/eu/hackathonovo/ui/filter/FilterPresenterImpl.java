@@ -1,10 +1,14 @@
 package eu.hackathonovo.ui.filter;
 
+import java.util.List;
+
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.data.service.NetworkService;
 import eu.hackathonovo.data.storage.TemplatePreferences;
 import eu.hackathonovo.manager.StringManager;
 import eu.hackathonovo.ui.base.presenters.BasePresenter;
 import io.reactivex.Scheduler;
+import timber.log.Timber;
 
 public class FilterPresenterImpl extends BasePresenter implements FilterPresenter {
 
@@ -28,5 +32,23 @@ public class FilterPresenterImpl extends BasePresenter implements FilterPresente
     @Override
     public void setView(final FilterView view) {
         this.view = view;
+    }
+
+    @Override
+    public void filterData(final String name, final int buffer) {
+        addDisposable(networkService.filterUsers(name, buffer, templatePreferences.getActionId())
+                                    .subscribeOn(subscribeScheduler)
+                                    .observeOn(observeScheduler)
+                                    .subscribe(this::onGetUsersSuccess, this::onGetUsersFailure));
+    }
+
+    private void onGetUsersSuccess(final List<FilterUsers> filterUserses) {
+        if (view != null) {
+            view.renderView(filterUserses);
+        }
+    }
+
+    private void onGetUsersFailure(final Throwable throwable) {
+        Timber.e(throwable);
     }
 }

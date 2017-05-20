@@ -2,6 +2,8 @@ package eu.hackathonovo.data.service;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import eu.hackathonovo.data.api.APIConstants;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
@@ -9,6 +11,7 @@ import eu.hackathonovo.data.api.models.request.ScanImage;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.api.models.response.ActionResponse;
+import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import eu.hackathonovo.data.api.models.response.UserInformationResponse;
 import io.reactivex.Single;
@@ -57,5 +60,10 @@ public final class NetworkServiceImpl implements NetworkService {
     @Override
     public Single<SearchDetailsData> getActions(final int id) {
         return Single.defer(() -> templateAPI.getActions(id));
+    }
+
+    @Override
+    public Single<List<FilterUsers>> filterUsers(final String name, final int id, final int buffer) {
+        return Single.defer(() -> templateAPI.filterUsers(name, buffer, id));
     }
 }
