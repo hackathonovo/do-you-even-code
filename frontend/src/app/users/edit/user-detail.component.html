@@ -5,8 +5,20 @@
         <h4>User {{model.id}}</h4>
         <div><label>ID: </label>{{model.id}}</div>
         <div>
-          <input type="number" [(ngModel)]="model.lng" placeholder="longitude"/>
-          <input type="number" [(ngModel)]="model.lat" placeholder="latitude"/>
+          <label>Korisničko ime</label>
+          <input type="text" [(ngModel)]="model.username" placeholder="Korisničko ime"/>
+          <label>Ime</label>
+          <input type="text" [(ngModel)]="model.name" placeholder="Ime"/>
+          <label>Prezime</label>
+          <input type="text" [(ngModel)]="model.surname" placeholder="Prezime"/>
+          <label>Uloga</label>
+          <input type="text" [(ngModel)]="model.role" placeholder="Uloga"/>
+          <label>Razno</label>
+          <textarea class="materialize-textarea" [(ngModel)]="model.data" placeholder="Razno"></textarea>
+          <label>Adresa</label>
+          <input type="text" [(ngModel)]="model.address" placeholder="Adresa"/>
+          <label>Telefon</label>
+          <input type="text" [(ngModel)]="model.phone" placeholder="Telefon"/>
         </div>
         <button class="btn waves-effect waves-light" (click)="save()">Spremi <i class="material-icons right">edit</i></button>
       </div>

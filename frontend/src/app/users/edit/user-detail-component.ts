@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import '../../rxjs-operators';
@@ -14,6 +14,8 @@ import {user} from "../../session";
   styleUrls: ['user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
+  //@ViewChild('roleSelect') selectedRole: ElementRef;
+
   @Input()
   model: User;
 
@@ -43,8 +45,18 @@ export class UserDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.userService.update(this.model)
-      .then(() => this.goBack());
+    //this.model.role = this.selectedRole.nativeElement.options[this.selectedRole.nativeElement.selectedIndex].value;
+
+    if(!this.model.role) {
+      return;
+    }
+
+    try {
+      this.userService.update(this.model)
+        .then(() => this.goBack());
+    } catch(e) {
+      return;
+    }
   }
 
   goBack(): void {

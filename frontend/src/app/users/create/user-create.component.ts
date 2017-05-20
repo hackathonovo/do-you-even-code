@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Location }                 from '@angular/common';
 import '../../rxjs-operators';
 import { UserService } from '../../services/user.service';
@@ -13,6 +13,8 @@ import {user} from "app/session";
   styleUrls: ['user-create.component.css']
 })
 export class UserCreateComponent implements OnInit {
+  //@ViewChild('roleSelect') selectedRole: ElementRef;
+
   private model: User;
 
   constructor(
@@ -35,8 +37,18 @@ export class UserCreateComponent implements OnInit {
   }
 
   save(): void {
-    this.userService.create(this.model)
-      .then(() => this.goBack());
+    //this.model.role = this.selectedRole.nativeElement.options[this.selectedRole.nativeElement.selectedIndex].value;
+
+    if(!this.model.role) {
+      return;
+    }
+
+    try {
+      this.userService.create(this.model)
+        .then(() => this.goBack());
+    } catch(e) {
+      return;
+    }
   }
 
   goBack(): void {

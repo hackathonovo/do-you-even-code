@@ -16,7 +16,7 @@ export class AuthenticationService {
     const url = this.baseUrl+'/login';
 
     return this.http
-      .post(url, JSON.stringify({"username": user.username, "password": user.password}), {headers: this.headers})
+      .post(url, JSON.stringify({"username": "voditelj", "password": "1234"}), {headers: this.headers})
       .map(AuthenticationService.extractData)
       .catch(AuthenticationService.handleError);
   }
