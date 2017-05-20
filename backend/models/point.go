@@ -113,7 +113,7 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 		}
 
 		sql2 = "update users set location_point_id = ? where id = ?"
-		if err := e.DB.Exec(sql2, data.ID, data.UserId, time.Now()).Error; err != nil {
+		if err := e.DB.Exec(sql2, data.ID, data.UserId).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
 		}
