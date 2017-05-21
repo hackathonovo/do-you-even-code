@@ -124,6 +124,8 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 			render.Render(rw, req, h.ErrRender(err))
 			return
 		}
+
+		go e.PushPositionNotification(data.ActionId, data.UserId)
 	}
 
 	if data.ActionId != 0 {

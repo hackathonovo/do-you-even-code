@@ -188,7 +188,6 @@ func main() {
 					r3.Put("/", e.UpdateActionNotif)
 					r3.Delete("/", e.DeleteActionNotif)
 				})
-
 			})
 		})
 	})
