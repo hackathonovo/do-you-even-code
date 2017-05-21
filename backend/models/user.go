@@ -351,7 +351,7 @@ func (e *Env) RegisterFCM(rw http.ResponseWriter, req *http.Request) {
 }
 
 func (e *Env) PushActionNotification(action Action, ids []string) {
-	data := map[string]interface{}{"title": "Akcija započela", "text": action.MeetingAddress}
+	data := map[string]interface{}{"title": "Akcija započela", "text": action.MeetingAddress, "actionId": action.ID}
 	gmsg := gcm.NewMessage(data, ids...)
 
 	// Create a Sender to send the message.
@@ -399,7 +399,7 @@ func (e *Env) PushPositionNotification(actionid, userId uint) {
 	var action = Action{}
 	e.DB.Where("id = ?", actionid).First(&action)
 
-	data := map[string]interface{}{"title": "Nova lokacija", "text": "Poziv na akciju spašavanja!"}
+	data := map[string]interface{}{"title": "Nova lokacija", "text": "Poziv na akciju spašavanja!", "actionId": action.ID}
 	gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
 
 	sender := &gcm.Sender{ApiKey: API_KEY}
