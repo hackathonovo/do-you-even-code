@@ -207,9 +207,9 @@ public class EditActionsActivity extends BaseActivity implements EditActionView,
         tpd.show(getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         if (whichTime == 1) {
-            datePickerDialog.setTitle("Odaberite vrijeme nesreće");
+            tpd.setTitle("Odaberite vrijeme nesreće");
         } else {
-            datePickerDialog.setTitle("Odaberite vrijeme sastanka");
+            tpd.setTitle("Odaberite vrijeme sastanka");
         }
         //datePickerDialog.setMinDate(calendar);
     }

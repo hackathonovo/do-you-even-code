@@ -58,6 +58,14 @@
 
     </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_1"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -84,9 +92,18 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch"/>
+            android:text="Da/Ne  "/>
 
     </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_2"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -140,6 +157,14 @@
 
     </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_3"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -162,14 +187,24 @@
 
         <Switch
             android:id="@+id/switch2"
-            android:layout_toRightOf="@+id/tv_edit4"
             android:layout_marginLeft="@dimen/_30dp"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch"/>
+            android:text="Da/Ne  "
+            android:layout_alignTop="@+id/tv_edit4"
+            android:layout_toEndOf="@+id/tv_edit4"
+            android:layout_marginStart="31dp"/>
 
     </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_4"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -192,14 +227,24 @@
 
         <Switch
             android:id="@+id/switch3"
-            android:layout_toRightOf="@+id/tv_edit5"
             android:layout_marginLeft="@dimen/_30dp"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch"/>
+            android:text="Da/Ne  "
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/tv_edit5"
+            android:layout_marginStart="30dp"/>
 
     </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_5"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -257,6 +302,14 @@
 
     </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_6"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <RelativeLayout
         android:layout_marginTop="20dp"
@@ -300,6 +353,15 @@
             />
 
     </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rv_7"
+            android:layout_marginLeft="@dimen/_20dp"
+            android:layout_marginRight="@dimen/_20dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@drawable/shadow"></View>
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/change_time3_btn"

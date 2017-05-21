@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -27,7 +29,7 @@ import eu.hackathonovo.ui.filter.FilterViewAdapter;
 import timber.log.Timber;
 
 public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView {
-
+    public static final String Notification = "Notification";
     @Inject
     HomeRescuerPresenter presenter;
 
@@ -66,6 +68,20 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
         ButterKnife.bind(this);
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras != null) {
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .title("Hitan poziv za HGSS akciju")
+                        .content("Da li se odazivate akciji")
+                        .negativeText("Ne prihvaćam")
+                        .positiveText("Prihvacam")
+                        .show();
+            }
+        }
+
+
     }
 
     @Override
