@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+	"os/user"
 )
 
 type Point struct {
@@ -113,10 +114,17 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 			return
 		}
 
+		var users = User{}
+		e.DB.Where("id = ?", data.UserId).First(&users)
+		if users.ActionId != 0 {
+			data.ActionId = users.ActionId
+		}
+
 		sql2 = "insert into user_points values(default, ?, ?, ?)"
 		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
+
 		}
 
 		sql2 = "update users set location_point_id = ? where id = ?"
