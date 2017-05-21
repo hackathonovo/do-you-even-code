@@ -105,7 +105,6 @@ public class DateTimePickerFragment extends Fragment implements TimePickerDialog
         tpd.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         datePickerDialog.setTitle("Odaberite vrijeme nesreće");
-        //calendar.setTime();
         datePickerDialog.setMinDate(calendar);
     }
 }
