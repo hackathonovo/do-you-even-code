@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +17,15 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
+
+import static com.facebook.FacebookSdk.getCacheDir;
 
 public class SelectedPhotoFragment extends Fragment {
 
@@ -56,7 +59,7 @@ public class SelectedPhotoFragment extends Fragment {
 
     public interface SendPhotoInterface {
 
-        public void sendPhoto(final String photo);
+        public void sendPhoto(final File photo);
         void takeAnotherPhoto();
     }
 
@@ -131,11 +134,24 @@ public class SelectedPhotoFragment extends Fragment {
 //                Bitmap canvasImage = ((BitmapDrawable) selectedImage.getDrawable()).getBitmap();
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
             canvasImage.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, bs);
-            byte[] bytes = bs.toByteArray();
 
-            String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-            sendPhotoInterface.sendPhoto(encodedImage);
-            Log.d("Signature", encodedImage);
+            //String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+            //sendPhotoInterface.sendPhoto(encodedImage);
+
+            final File file = new File(getCacheDir(), "slika");
+            try {
+                file.createNewFile();
+                byte[] bytes = bs.toByteArray();
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bytes);
+                fos.flush();
+                fos.close();
+                sendPhotoInterface.sendPhoto(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+//            Log.d("Signature", encodedImage);
             //todo here call request and open new activity with image info on another screen
         });
 

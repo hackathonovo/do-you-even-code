@@ -72,4 +72,9 @@ public final class NetworkServiceImpl implements NetworkService {
     public Single<JSONObject> updateUser(final int id, final AddUsers addUsers) {
         return Single.defer(() -> templateAPI.updateUser(id, addUsers));
     }
+
+    @Override
+    public Single<JSONObject> updateAction(final int id, final SearchDetailsData addUsers) {
+        return Single.defer(() -> templateAPI.updateAction(id, addUsers));
+    }
 }

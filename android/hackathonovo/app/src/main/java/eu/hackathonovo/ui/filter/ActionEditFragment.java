@@ -1,10 +1,12 @@
-package eu.hackathonovo.ui.actions;
+package eu.hackathonovo.ui.filter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
 
@@ -22,10 +24,12 @@ import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.injection.component.ActivityComponent;
-import eu.hackathonovo.ui.base.activities.BaseActivity;
+import eu.hackathonovo.ui.actions.EditActionPresenter;
+import eu.hackathonovo.ui.actions.EditActionView;
+import eu.hackathonovo.ui.base.fragments.BaseFragment;
 import eu.hackathonovo.ui.home_leader.adapter.ActionParametersAdapter;
 
-public class EditActionsActivity extends BaseActivity implements EditActionView, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+public class ActionEditFragment extends BaseFragment implements EditActionView, TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     @Inject
     EditActionPresenter presenter;
@@ -46,8 +50,8 @@ public class EditActionsActivity extends BaseActivity implements EditActionView,
     @BindView(R.id.tv_meeting_place) EditText et1;
     @BindView(R.id.tv_meeting_place2) EditText et2;
 
-    public static Intent createIntent(final Context context) {
-        return new Intent(context, EditActionsActivity.class);
+    public static ActionEditFragment newInstance() {
+        return new ActionEditFragment();
     }
 
     @Override
@@ -91,17 +95,18 @@ public class EditActionsActivity extends BaseActivity implements EditActionView,
         activityComponent.inject(this);
     }
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_action_parameters);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+        final View v = inflater.inflate(R.layout.activity_edit_action_parameters, container, false);
 
-        ButterKnife.bind(this);
+        ButterKnife.bind(this, v);
+
+        return v;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
 
         presenter.setView(this);
@@ -158,37 +163,22 @@ public class EditActionsActivity extends BaseActivity implements EditActionView,
         if (!et2.getText().equals("")) {
             searchDetailsData.setMjestoSastanka(et2.getText().toString());
         }
-        searchDetailsData.ozlijeden = String.valueOf(aSwitch1.isChecked());
-        searchDetailsData.hitnost = String.valueOf(aSwitch2.isChecked());
-        searchDetailsData.suicidalnost = aSwitch3.isChecked();
-
-        presenter.updateData(searchDetailsData);
     }
 
     @Override
     public void renderView(final SearchDetailsData searchDetailsData) {
-        et1.setText(searchDetailsData.getLokacija());
-        et2.setText(searchDetailsData.getMjestoSastanka());
-        if (searchDetailsData.ozlijeden.equals("true")) {
-            aSwitch1.setChecked(true);
-        }
-        if (searchDetailsData.hitnost.equals("true")) {
-            aSwitch2.setChecked(true);
-        }
-        aSwitch3.setChecked(true);
-
         this.searchDetailsData = searchDetailsData;
     }
 
     private void setDateTimePicker() {
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
-                EditActionsActivity.this,
+                this,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
-        datePickerDialog.show(getFragmentManager(), DATE_PICKER_DIALOG_TAG);
+        datePickerDialog.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_2);
         if (whichTime == 1) {
             datePickerDialog.setTitle("Odaberite datum nesreće");
@@ -199,12 +189,12 @@ public class EditActionsActivity extends BaseActivity implements EditActionView,
         //datePickerDialog.setOnCancelListener(this);
 
         TimePickerDialog tpd = TimePickerDialog.newInstance(
-                EditActionsActivity.this,
+                this,
                 calendar.get(Calendar.HOUR),
                 calendar.get(Calendar.MINUTE),
                 true
         );
-        tpd.show(getFragmentManager(), DATE_PICKER_DIALOG_TAG);
+        tpd.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
         if (whichTime == 1) {
             datePickerDialog.setTitle("Odaberite vrijeme nesreće");

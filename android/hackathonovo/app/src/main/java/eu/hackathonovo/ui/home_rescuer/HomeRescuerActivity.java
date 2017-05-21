@@ -9,16 +9,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
+import eu.hackathonovo.ui.filter.FilterViewAdapter;
 import timber.log.Timber;
 
 public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView {
@@ -26,16 +31,39 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
     @Inject
     HomeRescuerPresenter presenter;
 
+    @BindView(R.id.home_activity_tabs)
+    protected TabLayout tabs;
+
+    @BindView(R.id.home_activity_viewpager)
+    protected ViewPager viewPager;
+
+    FilterViewAdapter filterViewAdapter;
+
     private LocationManager locationManager;
 
     public static Intent createIntent(final Context context) {
         return new Intent(context, HomeRescuerActivity.class);
     }
 
+    private void setupViewPager(final ViewPager viewPager) {
+        filterViewAdapter.addFragment(DetaljiFragment.newInstance(), "Detalji potrage");
+        filterViewAdapter.addFragment(RescuerMapFragment.newInstance(), "karta");
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(filterViewAdapter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_rescuer);
+        setContentView(R.layout.rescuer_activity_pager);
+
+        filterViewAdapter = new FilterViewAdapter(getSupportFragmentManager());
+
+        ButterKnife.bind(this);
+        setupViewPager(viewPager);
+        tabs.setupWithViewPager(viewPager);
+
+        ButterKnife.bind(this);
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
     }
@@ -56,7 +84,7 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
                     @Override
                     public void onLocationChanged(final Location location) {
 
-                        presenter.sendRescuersLocation(new RescuerLocation((float)location.getLatitude(), (float)location.getLongitude(),0, false,
+                        presenter.sendRescuersLocation(new RescuerLocation((float) location.getLatitude(), (float) location.getLongitude(), 0, false,
                                                                            "last", ""));
                         Timber.e(String.valueOf(location.getLatitude()));
                         Timber.e(String.valueOf(location.getLongitude()));

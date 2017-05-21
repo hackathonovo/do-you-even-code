@@ -1,4 +1,4 @@
-package eu.hackathonovo.ui.filter;
+package eu.hackathonovo.ui.home_rescuer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,23 +10,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
-import eu.hackathonovo.data.api.models.response.FilterUsers;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
+import eu.hackathonovo.ui.filter.MapFragment;
 
-import static eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl.ACTION_ID;
-
-public class MapFragment extends BaseFragment implements FilterView {
-
-    @Inject
-    FilterPresenter presenter;
+public class RescuerMapFragment extends BaseFragment {
 
     @BindView(R.id.WebView)
     WebView webView;
@@ -57,7 +48,6 @@ public class MapFragment extends BaseFragment implements FilterView {
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.setView(this);
         setWebView();
     }
 
@@ -71,10 +61,6 @@ public class MapFragment extends BaseFragment implements FilterView {
         super.onPause();
     }
 
-    @Override
-    public void renderView(final List<FilterUsers> filterUserses) {
-
-    }
 
     @Override
     protected void inject(final ActivityComponent activityComponent) {
@@ -87,6 +73,6 @@ public class MapFragment extends BaseFragment implements FilterView {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.requestFocus();
-        webView.loadUrl("http://46.101.148.24/webviews/map/areas-edit/" + ACTION_ID);
+        webView.loadUrl("http://46.101.148.24/webviews/map/view/" + 1);
     }
 }

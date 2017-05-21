@@ -56,6 +56,9 @@ public interface TemplateAPI {
     @PUT(PATH_UPDATE_USER)
     Single<JSONObject> updateUser(@Path("id") int id, @Body AddUsers addUsers);
 
+    @PUT(PATH_UPDATE_USER)
+    Single<JSONObject> updateAction(@Path("id") int id, @Body SearchDetailsData data);
+
     @GET(PATH_SEARCH)
     Single<List<FilterUsers>> filterUsers(@Query("name") String name, @Query("buffer") int buffer, @Query("actionId") int id);
 }

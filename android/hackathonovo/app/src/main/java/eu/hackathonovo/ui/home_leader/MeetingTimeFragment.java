@@ -75,6 +75,7 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
         datePickerDialog.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         datePickerDialog.setVersion(DatePickerDialog.Version.VERSION_2);
         datePickerDialog.setMinDate(calendar);
+        datePickerDialog.setTitle("Odaberite datum sastajanja");
         //datePickerDialog.setOnCancelListener(this);
 
         TimePickerDialog tpd = TimePickerDialog.newInstance(
@@ -85,6 +86,7 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
         );
         tpd.show(getActivity().getFragmentManager(), DATE_PICKER_DIALOG_TAG);
         tpd.setVersion(TimePickerDialog.Version.VERSION_2);
+        tpd.setTitle("Odaberite vrijeme sastajanja");
         datePickerDialog.setMinDate(calendar);
     }
 

@@ -19,7 +19,9 @@ public interface APIConstants {
     String PATH_SEARCH = "users/search";
 
 
+
     String PATH_UPDATE_USER = "users/{id}";
+    String PATH_UPDATE_ACTIONS = "actions/{id}";
 
 
 

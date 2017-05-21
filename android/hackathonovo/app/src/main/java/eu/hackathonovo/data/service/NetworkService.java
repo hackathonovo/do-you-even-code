@@ -34,5 +34,8 @@ public interface NetworkService {
     Single<SearchDetailsData> getActions(int id);
 
     Single<List<FilterUsers>> filterUsers(String name, int id, int buffer);
+
     Single<JSONObject> updateUser(int id, AddUsers addUsers);
+
+    Single<JSONObject> updateAction(int id, SearchDetailsData data);
 }

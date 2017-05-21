@@ -1,6 +1,6 @@
 package eu.hackathonovo.ui.actions;
 
-import java.util.List;
+import org.json.JSONObject;
 
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.service.NetworkService;
@@ -47,8 +47,24 @@ public class EditActionPresenterImpl extends BasePresenter implements EditAction
     }
 
     private void onGetActionSuccess(final SearchDetailsData searchDetailsDatas) {
-        if (view != null){
+        if (view != null) {
             view.renderView(searchDetailsDatas);
         }
+    }
+
+    @Override
+    public void updateData(final SearchDetailsData searchDetailsData) {
+        addDisposable(networkService.updateAction(templatePreferences.getActionId(), searchDetailsData)
+                                    .subscribeOn(subscribeScheduler)
+                                    .observeOn(observeScheduler)
+                                    .subscribe(this::onUpdateSuccess, this::onUpdateFailure));
+    }
+
+    private void onUpdateSuccess(final JSONObject jsonObject) {
+
+    }
+
+    private void onUpdateFailure(final Throwable throwable) {
+        Timber.e(throwable);
     }
 }

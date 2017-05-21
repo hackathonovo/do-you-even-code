@@ -49,6 +49,9 @@ public class FilterActivity extends BaseActivity implements FilterView {
     private void setupViewPager(final ViewPager viewPager) {
         filterViewAdapter.addFragment(MapFragment.newInstance(), "karta");
         filterViewAdapter.addFragment(FilterFragment.newInstance(), "filter");
+        filterViewAdapter.addFragment(UsersMapFragment.newInstance(), "pregled");
+        filterViewAdapter.addFragment(ActionEditFragment.newInstance(), "ažuriraj");
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(filterViewAdapter);
     }
 

@@ -48,7 +48,11 @@ public class HGSSLoginPresenterImpl extends BasePresenter implements HGSSLoginPr
     private void onLoginHGSSSuccess(final UserInformationResponse userInformation) {
         templatePreferences.setUserId(userInformation.id);
         if (view != null) {
-            view.goToSaverHome();
+            if (!userInformation.role.toLowerCase().equals("voditelj")) {
+                view.goToSaverHome2();
+            } else {
+                view.goToSaverHome();
+            }
         }
     }
 }

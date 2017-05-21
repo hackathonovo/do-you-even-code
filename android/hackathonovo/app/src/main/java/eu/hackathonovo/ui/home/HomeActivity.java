@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 
@@ -15,6 +16,7 @@ import java.util.TimerTask;
 import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
+import eu.hackathonovo.ui.photo.TakeOrPickAPhotoActivity;
 import timber.log.Timber;
 
 public class HomeActivity extends BaseActivity implements HomeView, SensorEventListener {
@@ -45,6 +47,8 @@ public class HomeActivity extends BaseActivity implements HomeView, SensorEventL
         if (isAquired) {
             wakeLock.release();
         }
+
+        startActivity(TakeOrPickAPhotoActivity.createIntent(this));
     }
 
     @Override
@@ -90,10 +94,11 @@ public class HomeActivity extends BaseActivity implements HomeView, SensorEventL
                                 public void run() {
                                     final long startTime = System.currentTimeMillis();
                                     while (true) {
-                                        if ((System.currentTimeMillis() -startTime) >= 5000) {
+                                        if ((System.currentTimeMillis() -startTime) >= 3000) {
                                             //postavi varijablu
                                             Timber.e("proslo je 5 s");
                                             isKnocked = false;
+                                            startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:0977940915")));
                                             break;
                                         }
                                         if (vector != 10) {

@@ -30,7 +30,7 @@
             android:textSize="@dimen/_20sp"
             android:layout_centerVertical="true"
             android:textColor="@color/main_color_black"
-            android:text="Promijenite vrijeme nastale nesreće: "
+            android:text="Vrijeme nastale nesreće: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"
            />
@@ -102,7 +102,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
-            android:text="Promjenite mjesto ozljede: "
+            android:text="Mjesto potrage: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"/>
 
@@ -216,7 +216,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
-            android:text="Promjenite mjesto ozljede: "
+            android:text="Mjesto ozljede: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"/>
 
@@ -272,7 +272,7 @@
             android:id="@+id/tv_edit7"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
-            android:text="Promijenite vrijeme sastanka tima: "
+            android:text="Vrijeme sastanka tima: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"
             />
@@ -301,29 +301,6 @@
 
     </RelativeLayout>
 
-    <mehdi.sakout.fancybuttons.FancyButton
-        android:id="@+id/change_time3_btn"
-        android:layout_below="@+id/rv_7"
-        android:layout_marginTop="@dimen/_20dp"
-        android:layout_centerVertical="true"
-        android:text="Da"
-        android:clickable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        fancy:fb_borderColor="#FFFFFF"
-        fancy:fb_borderWidth="1dp"
-        fancy:fb_defaultColor="#FF0000"
-        fancy:fb_iconPosition="left"
-        fancy:fb_radius="30dp"
-        fancy:fb_text="Ažuriraj"
-        fancy:fb_textColor="#FFFFFF"
-        />
     </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
