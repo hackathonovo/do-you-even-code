@@ -153,7 +153,7 @@ func main() {
 			r.Use(e.ActionCtx)
 			r.Get("/", e.GetAction)
 			r.Put("/", e.UpdateAction)
-			r.Delete("/", e.DeletePoint)
+			r.Delete("/", e.DeleteAction)
 
 			r.Route("/polygons", func(r2 chi.Router) {
 				r2.Get("/", e.GetActionPolygonList)
