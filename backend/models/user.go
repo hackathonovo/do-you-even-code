@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
-	"github.com/mattermost/gcm"
+	"github.com/kikinteractive/go-gcm"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/render"
 	"log"
@@ -333,82 +333,91 @@ func (e *Env) RegisterFCM(rw http.ResponseWriter, req *http.Request) {
 }
 
 func (e *Env) PushActionNotification(action Action, ids []string) {
-	data := map[string]interface{}{"msg": "Akcija započela", "meeting_address": action.MeetingAddress, "urgency": action.Urgency}
-	gmsg := gcm.NewMessage(data, ids...)
-
-	// Create a Sender to send the message.
-	sender := &gcm.Sender{ApiKey: API_KEY}
-
-	// Send the message and receive the response after at most two retries.
-	response, err := sender.Send(gmsg, 2)
-	if err != nil {
-		fmt.Println("Failed to send message:", err)
-		return
-	}
-
-	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
+	//data := map[string]interface{}{"msg": "Akcija započela", "meeting_address": action.MeetingAddress, "urgency": action.Urgency}
+	//gmsg := gcm.NewMessage(data, ids...)
+	//
+	//// Create a Sender to send the message.
+	//sender := &gcm.Sender{ApiKey: API_KEY}
+	//
+	//// Send the message and receive the response after at most two retries.
+	//response, err := sender.Send(gmsg, 2)
+	//if err != nil {
+	//	fmt.Println("Failed to send message:", err)
+	//	return
+	//}
+	//
+	//fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
 
 
 func (e *Env) PushActionUserNotification(actionNotif ActionNotif, userId int) {
-	var users = []User{}
-	e.DB.Where("action_id = ? and user != ?", actionNotif.ActionID, userId).Find(&users)
-
-	var ids []string
-	for _, user := range users {
-		ids = append(ids, user.Fcm)
-	}
-
-	data := map[string]interface{}{"msg": "Nova poruka", "title": actionNotif.Title, "content": actionNotif.Content}
-	gmsg := gcm.NewMessage(data, ids...)
-
-	// Create a Sender to send the message.
-	sender := &gcm.Sender{ApiKey: API_KEY}
-
-	// Send the message and receive the response after at most two retries.
-	response, err := sender.Send(gmsg, 2)
-	if err != nil {
-		fmt.Println("Failed to send message:", err)
-		return
-	}
-
-	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
+	//var users = []User{}
+	//e.DB.Where("action_id = ? and user != ?", actionNotif.ActionID, userId).Find(&users)
+	//
+	//var ids []string
+	//for _, user := range users {
+	//	ids = append(ids, user.Fcm)
+	//}
+	//
+	//data := map[string]interface{}{"msg": "Nova poruka", "title": actionNotif.Title, "content": actionNotif.Content}
+	//gmsg := gcm.NewMessage(data, ids...)
+	//
+	//// Create a Sender to send the message.
+	//sender := &gcm.Sender{ApiKey: API_KEY}
+	//
+	//// Send the message and receive the response after at most two retries.
+	//response, err := sender.Send(gmsg, 2)
+	//if err != nil {
+	//	fmt.Println("Failed to send message:", err)
+	//	return
+	//}
+	//
+	//fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
 
 func (e *Env) PushPositionNotification(actionid, userId uint) {
-	var users = User{}
-	e.DB.Where("id = ?",userId).First(&users)
-
-	data := map[string]interface{}{"msg": "Nova lokacija", "action_id": actionid}
-	gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
-
-	sender := &gcm.Sender{ApiKey: API_KEY}
-
-	// Send the message and receive the response after at most two retries.
-	response, err := sender.Send(gmsg, 2)
-	if err != nil {
-		fmt.Println("Failed to send message:", err)
-		return
-	}
-
-	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
+	//var users = User{}
+	//e.DB.Where("id = ?",userId).First(&users)
+	//
+	//data := map[string]interface{}{"msg": "Nova lokacija", "action_id": actionid}
+	//gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
+	//
+	//sender := &gcm.Sender{ApiKey: API_KEY}
+	//
+	//// Send the message and receive the response after at most two retries.
+	//response, err := sender.Send(gmsg, 2)
+	//if err != nil {
+	//	fmt.Println("Failed to send message:", err)
+	//	return
+	//}
+	//
+	//fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
 
 func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
-	var users = User{}
+	var users= User{}
 	e.DB.Where("id = ?", 1).First(&users)
 
-	data := map[string]interface{}{"msg": "Nova lokacija", "action_id": 0}
-	gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
+	config := gcm.Config{APIKey: FCM_KEY, SenderID: SENDER_ID}
 
-	sender := &gcm.Sender{ApiKey: API_KEY}
+	c, err := gcm.NewClient(&config, func(cm gcm.CCSMessage) error {
+		return nil
+	})
 
-	// Send the message and receive the response after at most two retries.
-	response, err := sender.Send(gmsg, 4)
+	regIDs := []string{users.Fcm}
+
+	response, err := c.SendHTTP(gcm.HTTPMessage{
+		RegistrationIDs: regIDs,
+		Notification:    &gcm.Notification{Title: "message", Body: "message body"},
+	})
+
 	if err != nil {
-		fmt.Println("Failed to send message:", err)
-		return
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println("Response ", response.Success)
+		fmt.Println("MessageID ", response.MessageID)
+		fmt.Println("Failure ", response.Failure)
+		fmt.Println("Error ", response.Error)
+		fmt.Println("Results ", response.Results)
 	}
-
-	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
