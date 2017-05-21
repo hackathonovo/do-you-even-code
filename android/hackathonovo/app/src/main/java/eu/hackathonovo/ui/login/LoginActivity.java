@@ -2,16 +2,10 @@ package eu.hackathonovo.ui.login;
 
 import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -20,7 +14,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 
@@ -31,7 +24,6 @@ import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.injection.component.ActivityComponent;
-
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 import eu.hackathonovo.ui.home.HomeActivity;
 import timber.log.Timber;
@@ -49,7 +41,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     private static final String CLIENT_ID = "1046962736770-02go8vpf211hjehb949ljq8umtb67tsj.apps.googleusercontent.com";
     private BroadcastReceiver broadcastReceiver;
-    private CallbackManager callbackManager;
+   // private CallbackManager callbackManager;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -63,7 +55,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackManager = CallbackManager.Factory.create();
+     //   callbackManager = CallbackManager.Factory.create();
 /*
         if (presenter.checkIfLoggedIn() != 0) {
             startActivity(HomeActivity.createIntent(this));
@@ -71,7 +63,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
+    //    FacebookSdk.sdkInitialize(getApplicationContext());
         //facebookButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         //facebookButton.registerCallback(callbackManager, mCallback);
 
@@ -144,7 +136,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
+ /*   private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
 
         @Override
         public void onSuccess(final LoginResult loginResult) {
@@ -164,7 +156,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             request.setParameters(parameters);
             request.executeAsync();*/
 
-            if (accessToken.getToken() == null) {
+    /*        if (accessToken.getToken() == null) {
                 Timber.e("Neuspješna prijava");
             } else {/*
                 NetworkService networkService = new NetworkService();
@@ -189,10 +181,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
                         Log.i("TAG", "Neuspješno povezivanje sa serverom");
                     }
                 });*/
-            }
-        }
+    /*        }
+        }*/
 
-        @Override
+/*        @Override
         public void onCancel() {
 
         }
@@ -201,13 +193,13 @@ public class LoginActivity extends BaseActivity implements LoginView {
         public void onError(FacebookException error) {
             Timber.e("Neuspješna prijava");
         }
-    };
+    };*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+      //  callbackManager.onActivityResult(requestCode, resultCode, data);
         String mEmail;
 
         if (requestCode == RC_SIGN_IN) {

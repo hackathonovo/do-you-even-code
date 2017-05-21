@@ -8,12 +8,14 @@ import eu.hackathonovo.data.api.APIConstants;
 import eu.hackathonovo.data.api.models.request.AddUsers;
 import eu.hackathonovo.data.api.models.request.FirebasePojo;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
+import eu.hackathonovo.data.api.models.request.LostPerson;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.api.models.response.ActionResponse;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
+import eu.hackathonovo.data.api.models.response.ImageResponse;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import eu.hackathonovo.data.api.models.response.UserInformationResponse;
 import io.reactivex.Single;
@@ -40,7 +42,7 @@ public final class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public Single<JSONObject> scanImage(final MultipartBody.Part file) {
+    public Single<ImageResponse> scanImage(final MultipartBody.Part file) {
         return Single.defer(() -> templateAPI.uploadImage(file));
     }
 
@@ -84,5 +86,11 @@ public final class NetworkServiceImpl implements NetworkService {
     @Override
     public Single<JSONObject> updateAction(final int id, final SearchDetailsData addUsers) {
         return Single.defer(() -> templateAPI.updateAction(id, addUsers));
+    }
+
+
+    @Override
+    public Single<JSONObject> lostPerson(LostPerson lostPerson) {
+        return Single.defer(() -> templateAPI.lostPerson(lostPerson));
     }
 }

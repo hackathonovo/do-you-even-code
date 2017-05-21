@@ -25,7 +25,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.hackathonovo.R;
 
-import static com.facebook.FacebookSdk.getCacheDir;
 
 public class SelectedPhotoFragment extends Fragment {
 
@@ -133,13 +132,13 @@ public class SelectedPhotoFragment extends Fragment {
         sendAPhoto.setOnClickListener(view -> {
 //                Bitmap canvasImage = ((BitmapDrawable) selectedImage.getDrawable()).getBitmap();
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
-            canvasImage.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, bs);
+            canvasImage.compress(Bitmap.CompressFormat.JPEG, 50, bs);
 
             //String encodedImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             //sendPhotoInterface.sendPhoto(encodedImage);
-
-            final File file = new File(getCacheDir(), "slika");
             try {
+            final File file = new File(getActivity().getCacheDir(), "slika");
+
                 file.createNewFile();
                 byte[] bytes = bs.toByteArray();
                 FileOutputStream fos = new FileOutputStream(file);

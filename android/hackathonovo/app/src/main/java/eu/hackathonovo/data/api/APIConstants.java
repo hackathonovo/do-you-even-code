@@ -11,7 +11,7 @@ public interface APIConstants {
     String PREDICTION_KEY = "f26374bf1fdd4206af544f4477cfd312";
 
     String PATH_ADMIN_LOGIN = "login";
-    String PATH_IMAGES = "imgs";
+    String PATH_IMAGES = "images";
 
     String PATH_SEND_DETAILS = "/actions";
     String PATH_GET_DETAILS = "/actions/{id}";
@@ -23,6 +23,8 @@ public interface APIConstants {
 
     String PATH_UPDATE_USER = "users/{id}";
     String PATH_UPDATE_ACTIONS = "actions/{id}";
+
+    String PATH_LOST_PERSON = "danger";
 
 
 

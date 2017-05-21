@@ -13,4 +13,6 @@ public interface TakeOrPickAPhotoPresenter {
     void dispose();
 
     void scanImage(File file);
+
+
 }

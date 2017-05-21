@@ -6,12 +6,14 @@ import java.util.List;
 
 import eu.hackathonovo.data.api.models.request.AddUsers;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
+import eu.hackathonovo.data.api.models.request.LostPerson;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.data.api.models.response.ActionResponse;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
+import eu.hackathonovo.data.api.models.response.ImageResponse;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import eu.hackathonovo.data.api.models.response.UserInformationResponse;
 import io.reactivex.Single;
@@ -23,7 +25,7 @@ public interface NetworkService {
 
     Single<UserInformationResponse> loginHGSS(HGSSUserInformation userInformation);
 
-    Single<JSONObject> scanImage(MultipartBody.Part file);
+    Single<ImageResponse> scanImage(MultipartBody.Part file);
 
     Single<ScanImageResponse> scanImageCustom(ScanImage url);
 
@@ -40,4 +42,6 @@ public interface NetworkService {
     Single<JSONObject> sendToken(int id, String token);
 
     Single<JSONObject> updateAction(int id, SearchDetailsData data);
+
+    Single<JSONObject> lostPerson(LostPerson data);
 }

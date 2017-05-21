@@ -93,8 +93,8 @@ public class TakeOrPickAPhotoActivity extends BaseActivity implements TakeOrPick
     }
 
     @Override
-    public void sendPhoto(final String photo) {
-        //presenter.uploadImage(photo);
+    public void sendPhoto(final File photo) {
+        presenter.scanImage(photo);
     }
 
     @Override

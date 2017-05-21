@@ -2,8 +2,6 @@ package eu.hackathonovo.ui.photo;
 
 import android.app.Activity;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +11,7 @@ import javax.inject.Named;
 
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.ScanImage;
+import eu.hackathonovo.data.api.models.response.ImageResponse;
 import eu.hackathonovo.data.api.models.response.ScanImageResponse;
 import eu.hackathonovo.data.service.NetworkService;
 import eu.hackathonovo.data.storage.TemplatePreferences;
@@ -93,8 +92,8 @@ public class TakeOrPickAPhotoPresenterImpl extends BasePresenter implements Take
                                     .subscribe(this::onScanImageSuccess, this::onScanImageFailure));
     }
 
-    private void onScanImageSuccess(final JSONObject scanImageResponse) {
-        addDisposable(networkService.scanImageCustom(new ScanImage("http://46.101.106.208:3000/imgs/slika"))
+    private void onScanImageSuccess(final ImageResponse scanImageResponse) {
+        addDisposable(networkService.scanImageCustom(new ScanImage(scanImageResponse.path))
                                     .observeOn(observeScheduler)
                                     .subscribeOn(subscribeScheduler)
                                     .subscribe(this::onCustomVisionSuccess, this::onCustomVisionFailure));
@@ -118,6 +117,8 @@ public class TakeOrPickAPhotoPresenterImpl extends BasePresenter implements Take
     private void onScanImageFailure(final Throwable throwable) {
         Timber.e(throwable);
     }
+
+
 }
 
 

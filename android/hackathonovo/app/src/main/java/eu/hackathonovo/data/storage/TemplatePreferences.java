@@ -41,4 +41,6 @@ public final class TemplatePreferences implements PreferenceRepository {
     public int getActionId() {
         return secureDelegate.getInt(KEY_ACTION_ID, EMPTY_ACTION_ID);
     }
+
+
 }

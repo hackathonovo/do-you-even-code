@@ -13,6 +13,8 @@ import android.os.PowerManager;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
@@ -20,6 +22,9 @@ import eu.hackathonovo.ui.photo.TakeOrPickAPhotoActivity;
 import timber.log.Timber;
 
 public class HomeActivity extends BaseActivity implements HomeView, SensorEventListener {
+
+    @Inject
+    HomePresenter presenter;
 
     private SensorManager senSensorManager;
     private Sensor senAccelerometer;
@@ -96,8 +101,9 @@ public class HomeActivity extends BaseActivity implements HomeView, SensorEventL
                                     while (true) {
                                         if ((System.currentTimeMillis() -startTime) >= 3000) {
                                             //postavi varijablu
-                                            Timber.e("proslo je 5 s");
+                                            Timber.e("proslo je 3 s");
                                             isKnocked = false;
+                                            presenter.lostPerson();
                                             startActivity(new Intent(Intent.ACTION_CALL).setData(Uri.parse("tel:0977940915")));
                                             break;
                                         }
