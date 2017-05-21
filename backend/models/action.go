@@ -87,6 +87,66 @@ func (e *Env) GetAction(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (e *Env) SearchActions(w http.ResponseWriter, r *http.Request) {
+	urgency := r.URL.Query().Get("urgency")
+	injury := r.URL.Query().Get("injury")
+	suicidal := r.URL.Query().Get("suicidal")
+
+	query := ""
+	if urgency != "" {
+		query += " urgency ilike '%" + urgency + "%' "
+	}
+
+	if injury != "" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " actions.injury ILIKE '%" + injury + "%' "
+	}
+
+	if suicidal == "true" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " actions.suicidal IS TRUE "
+	}
+
+
+	if suicidal == "false" {
+		if query != "" {
+			query += " AND "
+		}
+
+		query += " actions.suicidal IS NOT TRUE "
+	}
+
+
+	actions := []Action{}
+	if err := e.DB.Where(query).Find(&actions).Error; err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+
+	polygons := []*Polygon{}
+	ids := []uint{}
+	for _, a := range actions {
+		ids = append(ids, a.ID)
+	}
+
+	for _, n := range ids {
+		pols := e.GetRelatedPolygonList(n, "action")
+		polygons = append(polygons, pols...)
+	}
+
+
+	if err := render.RenderList(w, r, e.NewListPolygonResponse(polygons)); err != nil {
+		render.Render(w, r, h.ErrRender(err))
+		return
+	}
+}
+
 func (e *Env) GetActionPolygonList(w http.ResponseWriter, r *http.Request) {
 	action := r.Context().Value("action").(*Action)
 

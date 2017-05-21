@@ -146,6 +146,7 @@ func main() {
 		router.Get("/", e.ListActions)
 		//router.Options("/", Dummy)
 		router.Post("/", e.CreateAction)
+		router.Get("/search", e.SearchActions)
 
 		router.Route("/:actionId", func(r chi.Router) {
 			r.Use(e.ActionCtx)

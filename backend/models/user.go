@@ -8,7 +8,7 @@ import (
 	h "github.com/hackathonovo/do-you-even-code/backend/helpers"
 	//"github.com/mattermost/gcm"
 	"github.com/pressly/chi"
-	"github.com/google/go-gcm"
+	"github.com/kikinteractive/go-gcm"
 	"github.com/pressly/chi/render"
 	"log"
 	"net/http"
@@ -399,19 +399,24 @@ func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
 	var users = User{}
 	e.DB.Where("id = ?", 1).First(&users)
 
-	var msg gcm.HttpMessage
+	config := gcm.Config{APIKey: API_KEY}
 
-	data := map[string]interface{}{"msg": "Nova lokacija", "action_id": 0}
+	c, err := gcm.NewClient(&config, func(cm gcm.CCSMessage) error {
+		return nil
+	})
+
 	regIDs := []string{users.Fcm}
 
-	msg.RegistrationIds = regIDs
-	msg.Data = data
-	response, err := gcm.SendHttp(API_KEY, msg)
+	response, err := c.SendHTTP(gcm.HTTPMessage{
+		RegistrationIDs: regIDs,
+		Notification: &gcm.Notification{Title: "message", Body: "message body"},
+	})
+
 	if err != nil {
 		fmt.Println(err.Error())
 	}else{
 		fmt.Println("Response ",response.Success)
-		fmt.Println("MessageID ",response.MessageId)
+		fmt.Println("MessageID ",response.MessageID)
 		fmt.Println("Failure ",response.Failure)
 		fmt.Println("Error ",response.Error)
 		fmt.Println("Results ",response.Results)
