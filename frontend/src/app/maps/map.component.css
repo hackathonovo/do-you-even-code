@@ -1,0 +1,99 @@
+body {
+  overflow: hidden;
+}
+
+.sebm-google-map-container {
+  width: 100%;
+  height: 100%;
+  position:absolute;
+  z-index:777;
+  color:#fff;
+}
+
+.map-toolbox {
+  z-index: 778;
+}
+
+.marker-info {
+  color: #000000;
+}
+
+.temp-polyline,
+.temp-point {
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  color: #000000;
+}
+
+.toolbar {
+  z-index: 778;
+  position: absolute;
+  left: 20px;
+  top: 80px;
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.status-live {
+  font-weight: 700;
+  color: #fff;
+  background: #4caf50;
+  border-radius: 15px;
+  padding: 5px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.blink {
+  animation: blink-animation 2s steps(5, start) infinite;
+  -webkit-animation: blink-animation 2s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.fa-search {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.switch {
+  float: left;
+  margin-bottom: 15px;
+}
+
+.switch label {
+  color: #fff;
+  text-shadow: 0 0 5px #000;
+}
+
+.users-available .green {
+  background: #4caf50 !important;
+}
+
+.users-available .red {
+  background: #d32f2f !important;
+}
+
+.users-available {
+  z-index: 778;
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+}

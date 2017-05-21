@@ -1,0 +1,21 @@
+.nav-wrapper {
+  background: #263238 !important;
+}
+
+.brand-logo {
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.brand-logo img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  margin-right: 20px;
+}
+
+.brand-logo div {
+  margin: -8px 0 0 0;
+}
