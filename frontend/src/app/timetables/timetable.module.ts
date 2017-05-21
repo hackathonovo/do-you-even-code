@@ -7,18 +7,20 @@ import {FormsModule} from "@angular/forms";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {HeaderModule} from "app/header/header.module";
+import {CalendarModule} from "ap-angular2-fullcalendar";
 
 @NgModule({
   imports: [
     FormsModule,
     BrowserModule,
     RouterModule,
-    HeaderModule
+    HeaderModule,
+    //CalendarModule
   ],
   declarations: [
     TimeTableDetailComponent,
     TimeTableCreateComponent,
-    TimeTableComponent,
+    TimeTableComponent
   ],
 })
 

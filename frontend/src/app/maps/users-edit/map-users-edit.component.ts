@@ -56,12 +56,12 @@ export class MapUsersEditComponent implements OnDestroy{
       .subscribe(user => {
         this.model = user as Action;
         this.getMapData(this.model.id);
-        //this.setAutoRefresh();
+        this.setAutoRefresh();
       });
   }
 
   ngOnDestroy(): void {
-    //this.autoRefresh.unsubscribe();
+    this.autoRefresh.unsubscribe();
   }
 
   search(): void {
