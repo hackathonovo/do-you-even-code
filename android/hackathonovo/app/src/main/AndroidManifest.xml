@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    android.permission.READ_EXTERNAL_STORAGE
+
     <application
         android:name=".application.HackathonovoApplication"
         android:allowBackup="true"

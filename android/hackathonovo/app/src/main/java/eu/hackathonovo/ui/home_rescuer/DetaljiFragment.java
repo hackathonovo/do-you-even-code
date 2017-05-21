@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -24,12 +25,13 @@ public class DetaljiFragment extends BaseFragment implements EditActionView {
     @Inject
     EditActionPresenter presenter;
 
-    @BindView(R.id.switch1) Switch aSwitch1;
-    @BindView(R.id.switch2) Switch aSwitch2;
-    @BindView(R.id.switch3) Switch aSwitch3;
-
-    @BindView(R.id.tv_meeting_place) EditText et1;
-    @BindView(R.id.tv_meeting_place2) EditText et2;
+    @BindView(R.id.tv_time) TextView tv_time;
+    @BindView(R.id.tv_injury) TextView tv_injury;
+    @BindView(R.id.tv_meeting_place) TextView tv_meeting_place;
+    @BindView(R.id.tv_emergancy) TextView tv_emergancy;
+    @BindView(R.id.tv_suic) TextView tv_suic;
+    @BindView(R.id.tv_meeting_place2) TextView tv_meeting_place2;
+    @BindView(R.id.tv_time2) TextView tv_time2;
 
     public static DetaljiFragment newInstance() {
         return new DetaljiFragment();
@@ -37,15 +39,13 @@ public class DetaljiFragment extends BaseFragment implements EditActionView {
 
     @Override
     public void renderView(final SearchDetailsData searchDetailsData) {
-        et1.setText(searchDetailsData.getLokacija());
-        et2.setText(searchDetailsData.getMjestoSastanka());
-        if (searchDetailsData.ozlijeden.equals("true")) {
-            aSwitch1.setChecked(true);
-        }
-        if (searchDetailsData.hitnost.equals("true")) {
-            aSwitch2.setChecked(true);
-        }
-        aSwitch3.setChecked(true);
+        tv_time.setText(searchDetailsData.getVrijemeNestanka());
+        tv_injury.setText(searchDetailsData.isOzlijeden());
+        tv_meeting_place.setText(searchDetailsData.getLokacija());
+        tv_emergancy.setText(searchDetailsData.getHitnost());
+        tv_suic.setText(String.valueOf(searchDetailsData.getSuicidalnost()));
+        tv_meeting_place2.setText(searchDetailsData.getMjestoSastanka());
+        tv_time2.setText(searchDetailsData.getVrijemeSastanka());
     }
 
     @Override
@@ -68,6 +68,7 @@ public class DetaljiFragment extends BaseFragment implements EditActionView {
         super.onResume();
 
         presenter.setView(this);
+        presenter.getAction();
     }
 
     @Override

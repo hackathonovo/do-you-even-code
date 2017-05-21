@@ -15,6 +15,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import eu.hackathonovo.R;
+import eu.hackathonovo.ui.home_rescuer.HomeRescuerActivity;
 import eu.hackathonovo.ui.map.MapActivity2;
 
 public class HackatonovoFirebaseMessagingService extends FirebaseMessagingService {
@@ -26,6 +27,8 @@ public class HackatonovoFirebaseMessagingService extends FirebaseMessagingServic
     public static final String TITLE_EXTRA = "TITLE";
 
     public static final String SURVEY_EXTRA = "SURVEY";
+
+    public static final String Notification = "Notification";
 
     Random rand = new Random();
 
@@ -63,7 +66,7 @@ public class HackatonovoFirebaseMessagingService extends FirebaseMessagingServic
     private void sendNotification(String body, String title, String survey) {
         int randomNum = rand.nextInt((9999999 - 1) + 1) + 1;
 
-        Intent intent = new Intent(this, MapActivity2.class).putExtra(TEXT_EXTRA, body).putExtra(TITLE_EXTRA, title).putExtra(SURVEY_EXTRA, survey);
+        Intent intent = new Intent(this, HomeRescuerActivity.class).putExtra(TEXT_EXTRA, body).putExtra(TITLE_EXTRA, title).putExtra(SURVEY_EXTRA, survey).putExtra(Notification,"da");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, randomNum, intent, PendingIntent.FLAG_UPDATE_CURRENT);
