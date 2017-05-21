@@ -4,6 +4,10 @@
              android:layout_height="match_parent"
              tools:context="eu.hackathonovo.ui.home_leader.DateTimePickerFragment">
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.1"
+        android:background="@drawable/action_bg"/>
 
 </FrameLayout>

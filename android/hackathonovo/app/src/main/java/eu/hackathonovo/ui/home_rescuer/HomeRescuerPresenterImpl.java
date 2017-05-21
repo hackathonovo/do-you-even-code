@@ -50,4 +50,9 @@ public class HomeRescuerPresenterImpl extends BasePresenter implements HomeRescu
     private void onSendRescuerLocationFailure(final Throwable throwable) {
         Timber.e(throwable);
     }
+
+    @Override
+    public void setActivityId(final String id) {
+        templatePreferences.setActionId(Integer.valueOf(id));
+    }
 }

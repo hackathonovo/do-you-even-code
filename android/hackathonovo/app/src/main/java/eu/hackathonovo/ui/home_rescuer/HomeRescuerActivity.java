@@ -26,9 +26,11 @@ import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 import eu.hackathonovo.ui.filter.FilterViewAdapter;
+import eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl;
 import timber.log.Timber;
 
 public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView {
+
     public static final String Notification = "Notification";
     @Inject
     HomeRescuerPresenter presenter;
@@ -71,7 +73,14 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras != null) {
+            if (getIntent().getStringExtra("TITLE") != null) {
+                String activityId = getIntent().getStringExtra("TITLE").substring(getIntent().getStringExtra("TITLE").lastIndexOf(" ") + 1,
+                                                                                  getIntent().getStringExtra("TITLE").length());
+                presenter.setActivityId(activityId);
+                HomeLeaderPresenterImpl.ACTION_ID = Integer.valueOf(activityId);
+            }
+
+            if (extras != null) {
                 MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title("Hitan poziv za HGSS akciju")
                         .content("Da li se odazivate akciji")
@@ -80,8 +89,6 @@ public class HomeRescuerActivity extends BaseActivity implements HomeRescuerView
                         .show();
             }
         }
-
-
     }
 
     @Override

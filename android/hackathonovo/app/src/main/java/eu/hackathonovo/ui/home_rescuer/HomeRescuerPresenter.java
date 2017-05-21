@@ -7,4 +7,6 @@ public interface HomeRescuerPresenter {
     void setView(HomeRescuerView view);
 
     void sendRescuersLocation(RescuerLocation rescuerLocation);
+
+    void setActivityId(String id);
 }

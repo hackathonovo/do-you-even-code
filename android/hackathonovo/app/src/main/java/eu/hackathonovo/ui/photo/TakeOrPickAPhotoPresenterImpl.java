@@ -112,6 +112,8 @@ public class TakeOrPickAPhotoPresenterImpl extends BasePresenter implements Take
         if (predictionsMap.get("gljiva") > 0.5){
             Timber.e("Ovo je gljiva");
         }
+
+        view.showDialog(predictionsMap);
     }
 
     private void onScanImageFailure(final Throwable throwable) {

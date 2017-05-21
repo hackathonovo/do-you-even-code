@@ -16,6 +16,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
 import eu.hackathonovo.ui.filter.MapFragment;
+import eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl;
 
 public class RescuerMapFragment extends BaseFragment {
 
@@ -24,8 +25,8 @@ public class RescuerMapFragment extends BaseFragment {
 
     private LinearLayoutManager linearLayoutManager;
 
-    public static MapFragment newInstance() {
-        return new MapFragment();
+    public static RescuerMapFragment newInstance() {
+        return new RescuerMapFragment();
     }
 
     @Override
@@ -61,7 +62,6 @@ public class RescuerMapFragment extends BaseFragment {
         super.onPause();
     }
 
-
     @Override
     protected void inject(final ActivityComponent activityComponent) {
         activityComponent.inject(this);
@@ -73,6 +73,6 @@ public class RescuerMapFragment extends BaseFragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.requestFocus();
-        webView.loadUrl("http://46.101.148.24/webviews/map/view/" + 1);
+        webView.loadUrl("http://46.101.148.24/webviews/map/view/" + HomeLeaderPresenterImpl.ACTION_ID);
     }
 }

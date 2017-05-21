@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -91,8 +93,6 @@ public class TakeOrPickAPhotoActivity extends BaseActivity implements TakeOrPick
                                  WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }*/
     }
-
-
 
     @Override
     public void sendPhoto(final File photo) {
@@ -173,6 +173,22 @@ public class TakeOrPickAPhotoActivity extends BaseActivity implements TakeOrPick
     }
 
     @Override
+    public void showDialog(final Map<String, Double> map) {
+        String vrsta = "";
+        if (map.get("vrganj") > map.get("muhara")) {
+            vrsta = "Ovo je jestiva gljiva Vrganj";
+        } else {
+            vrsta = "Ovo je otrovna gljiva Muhara";
+        }
+
+        new MaterialDialog.Builder(this)
+                .title("Gljiva")
+                .content(vrsta)
+                .positiveText("Shvaćam")
+                .show();
+    }
+
+    @Override
     public void onClicked(final int position) {
         positionInList = position;
         imageViewPager.setCurrentItem(position);
@@ -246,7 +262,6 @@ public class TakeOrPickAPhotoActivity extends BaseActivity implements TakeOrPick
             }
         }
     }
-
 
     @Override
     public void goToPhotoDetails(final String url) {
