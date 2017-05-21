@@ -1,0 +1,33 @@
+<section class="toolbar">
+  STATUS: <span class="status-live blink">LIVE</span>
+</section>
+<agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="true"
+  [styles]="mapStyle"
+  [zoomControl]="false">
+
+  <agm-polygon *ngFor="let area of areas"
+    [paths]="area.polygon"
+    [editable]="false"
+    [polyDraggable]="false"
+    [fillColor]="area.color"
+    [strokeColor]="area.color">
+  </agm-polygon>
+
+  <agm-marker
+      *ngFor="let m of markers"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [iconUrl]="m.label"
+      [markerDraggable]="false">
+
+    <i class="{{m.label}}"></i>
+    <agm-info-window *ngIf="!!m.data">
+      <strong class="marker-info">{{m.data}}</strong>
+    </agm-info-window>
+  </agm-marker>
+
+</agm-map>
