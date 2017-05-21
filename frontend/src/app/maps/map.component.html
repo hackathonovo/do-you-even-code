@@ -1,6 +1,39 @@
 <my-header></my-header>
 <section class="toolbar">
   STATUS: <span class="status-live blink">LIVE</span>
+  <i *ngIf="!isSearchVisible && !selectedUser" (click)="isSearchVisible=!isSearchVisible" class="fa fa-search"></i>
+
+  <section *ngIf="isSearchVisible" class="filter-search">
+    <div class="input-group">
+      <div class="switch">
+        <label>
+          <input [(ngModel)]="searchParams.injury" type="checkbox">
+          <span class="lever"></span>
+          Ozljeda
+        </label>
+      </div>
+      <div class="switch">
+        <label>
+          <input [(ngModel)]="searchParams.urgency" type="checkbox">
+          <span class="lever"></span>
+          Hitnost
+        </label>
+      </div>
+      <div class="switch">
+        <label>
+          <input [(ngModel)]="searchParams.suicidal" type="checkbox">
+          <span class="lever"></span>
+          Suicidalanost
+        </label>
+      </div>
+
+      <div class="clearfix"></div>
+      <span class="input-group-btn">
+          <button (click)="search()" class="btn btn-default big-search-btn" type="button">TRAŽI</button>
+          <button (click)="cancel()" class="btn btn-default big-search-btn" type="button">ODUSTANI</button>
+      </span>
+    </div>
+  </section>
 </section>
 <div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
   <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">

@@ -14,14 +14,20 @@ export class PolygonService {
     }
   }
 
-  list(params = []): Observable<Polygon[]> {
+  list(): Observable<Polygon[]> {
+    return this.http.get(this.baseUrl+'/polygons', {headers: this.headers})
+      .map(PolygonService.extractData)
+      .catch(PolygonService.handleError);
+  }
+
+  listWithFilters(params = []): Observable<Polygon[]> {
     let search = new URLSearchParams();
 
     for (let param in params) {
       search.set(param, params[param]);
     }
 
-    return this.http.get(this.baseUrl+'/polygons', {headers: this.headers, search: search})
+    return this.http.get(this.baseUrl+'/actions/search', {headers: this.headers, search: search})
       .map(PolygonService.extractData)
       .catch(PolygonService.handleError);
   }

@@ -15,20 +15,34 @@
           <input type="text" [(ngModel)]="model.type" placeholder="Uloga"/>
           <label>Razno</label>
           <textarea class="materialize-textarea" [(ngModel)]="model.data" placeholder="Razno"></textarea>
-          <label>Ozljeda</label>
-          <input type="text" [(ngModel)]="model.injury" placeholder="Ozljeda"/>
           <label>Adresa</label>
           <input type="text" [(ngModel)]="model.address" placeholder="Adresa"/>
+          <label>Ozljeda</label>
+          <p *ngIf="model.injury === 'true'">
+            <input type="checkbox" checked="checked" />
+            <label>DA</label>
+          </p>
+          <p *ngIf="model.injury === 'false'">
+            <input type="checkbox" />
+            <label>NE</label>
+          </p>
           <label>Hitnost</label>
-          <input type="text" [(ngModel)]="model.urgency" placeholder="Telefon"/>
+          <p *ngIf="model.urgency === 'true'">
+            <input type="checkbox" checked="checked" />
+            <label>DA</label>
+          </p>
+          <p *ngIf="model.urgency === 'false'">
+            <input type="checkbox" />
+            <label>NE</label>
+          </p>
           <label>Suicidalna osoba</label>
           <p *ngIf="model.suicidal">
-            <input type="checkbox" id="test6" checked="checked" />
-            <label for="test6">DA</label>
+            <input type="checkbox" checked="checked" />
+            <label>DA</label>
           </p>
           <p *ngIf="!model.suicidal">
-            <input type="checkbox" id="test7" checked="checked" disabled="disabled" />
-            <label for="test7">NE</label>
+            <input type="checkbox" />
+            <label>NE</label>
           </p>
         </div>
         <button class="btn waves-effect waves-light" (click)="save()">Spremi <i class="material-icons right">edit</i></button>

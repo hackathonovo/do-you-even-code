@@ -60,3 +60,22 @@ body {
     visibility: hidden;
   }
 }
+
+.fa-search {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.switch {
+  float: left;
+  margin-bottom: 15px;
+}
+
+.switch label {
+  color: #fff;
+  text-shadow: 0 0 5px #000;
+}

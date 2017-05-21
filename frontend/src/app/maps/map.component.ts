@@ -3,8 +3,6 @@ import {PointService} from "../services/point.service";
 import {PolygonService} from "../services/polygon.service";
 import {Polygon} from "../models/polygon";
 import {Point} from "../models/point";
-import {user} from "../session";
-import {AuthenticationService} from "../services/authentication.service";
 import {LatLngLiteral} from "@agm/core";
 import {Observable} from "rxjs/Rx";
 import {Subscription} from "rxjs/Subscription";
@@ -35,29 +33,27 @@ export class MapComponent implements OnDestroy{
   tempPoints: Array<LatLngLiteral> = [];
   isFABVisible: boolean = false;
   autoRefresh: Subscription;
+  searchParams: any = {
+    injury: true,
+    urgency: true,
+    suicidal: true
+  };
+  isSearchVisible: boolean = false;
 
   constructor(private application: ApplicationRef,
               private pointService: PointService,
-              private polygonService: PolygonService,
-              private authService: AuthenticationService) {
+              private polygonService: PolygonService) {
 
-    if(!user.token) {
-      this.authService.handshake()
-        .subscribe(auth => {
-          user.authenticate(auth);
-          this.polygonService.headers.append('Authorization', user.token);
-          this.pointService.headers.append('Authorization', user.token);
-          this.getMapData();
-          //this.setAutoRefresh();
-        });
-    } else {
-      this.getMapData();
-      //this.setAutoRefresh();
-    }
+    this.getMapData();
+    this.setAutoRefresh();
   }
 
   ngOnDestroy(): void {
-    //this.autoRefresh.unsubscribe()
+    this.autoRefresh.unsubscribe()
+  }
+
+  cancel(): void {
+    this.isSearchVisible = false;
   }
 
   private setAutoRefresh(): void {
@@ -78,14 +74,32 @@ export class MapComponent implements OnDestroy{
     );
 
     //get areas
-    this.polygonService.list().subscribe(
-      list => {
-        if(JSON.stringify(this.areas) != JSON.stringify(list)) {
-          this.areas = list;
-        }
-      },
-      error =>  this.errorMessage = <any>error
-    );
+    if(this.isSearchVisible) {
+      let params = [];
+      params['injury'] = this.searchParams.injury;
+      params['urgency'] = this.searchParams.urgency;
+      params['suicidal'] = this.searchParams.suicidal;
+
+      console.debug(this.searchParams);
+
+      this.polygonService.listWithFilters(params).subscribe(
+        list => {
+          if(JSON.stringify(this.areas) != JSON.stringify(list)) {
+            this.areas = list;
+          }
+        },
+        error =>  this.errorMessage = <any>error
+      );
+    } else {
+      this.polygonService.list().subscribe(
+        list => {
+          if(JSON.stringify(this.areas) != JSON.stringify(list)) {
+            this.areas = list;
+          }
+        },
+        error =>  this.errorMessage = <any>error
+      );
+    }
   }
 
   clickedMarker(marker: Point) {
