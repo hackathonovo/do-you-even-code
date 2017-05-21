@@ -109,6 +109,7 @@
     <Button
         android:id="@+id/button_spremi"
         android:text="spremi"
+        android:inputType="number"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ll_radius"
         android:layout_width="wrap_content"

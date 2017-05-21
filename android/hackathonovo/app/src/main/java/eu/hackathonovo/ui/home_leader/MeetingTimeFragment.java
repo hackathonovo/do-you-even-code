@@ -21,8 +21,8 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.BundleConstants;
-import eu.hackathonovo.ui.actions.EditActionsActivity;
 import eu.hackathonovo.ui.base.fragments.BaseFragment;
+import eu.hackathonovo.ui.filter.FilterActivity;
 
 public class MeetingTimeFragment extends BaseFragment implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, HomeLeaderView {
 
@@ -127,6 +127,6 @@ public class MeetingTimeFragment extends BaseFragment implements TimePickerDialo
 
     @Override
     public void goToEditScreen() {
-        startActivity(EditActionsActivity.createIntent(getActivity()));
+        startActivity(FilterActivity.createIntent(getActivity()));
     }
 }

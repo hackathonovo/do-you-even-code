@@ -12,14 +12,13 @@ import butterknife.ButterKnife;
 import eu.hackathonovo.R;
 import eu.hackathonovo.injection.component.ActivityComponent;
 import eu.hackathonovo.ui.base.activities.BaseActivity;
-import timber.log.Timber;
 
 import static eu.hackathonovo.ui.home_leader.HomeLeaderPresenterImpl.ACTION_ID;
 
-public class MapActivity extends BaseActivity {
+public class MapActivity2 extends BaseActivity {
 
     public static Intent createIntent(final Context context) {
-        return new Intent(context, MapActivity.class);
+        return new Intent(context, MapActivity2.class);
     }
 
     @BindView(R.id.WebView)
@@ -51,7 +50,6 @@ public class MapActivity extends BaseActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.requestFocus();
-        Timber.e(String.valueOf(ACTION_ID));
-        webView.loadUrl("http://46.101.148.24/webviews/map/users-edit/" + ACTION_ID);
+        webView.loadUrl("http://46.101.148.24/webviews/map/view/" + ACTION_ID);
     }
 }

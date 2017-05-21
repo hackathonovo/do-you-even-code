@@ -87,7 +87,7 @@ public class FilterFragment extends BaseFragment implements FilterView, FilterAd
 
     private void addRecyclerItems(final List<FilterUsers> filterUserses) {
 
-
+            filterAdapter.mItemList.clear();
         for (int i = 0; i < filterUserses.size(); i++) {
             filterAdapter.addItem(new ChildItem(filterUserses.get(i)));
         }
@@ -109,6 +109,8 @@ public class FilterFragment extends BaseFragment implements FilterView, FilterAd
         checkBox2.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
         });*/
+
+       filterAdapter.setListener(this);
 
         et_name_surname.addTextChangedListener(new TextWatcher() {
 

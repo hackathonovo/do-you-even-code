@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="Dodaj korisnika u akciu  "/>
+            android:text="Dodaj korisnika u akciju  "/>
 
         </RelativeLayout>
 

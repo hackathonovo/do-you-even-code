@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.response.FilterUsers;
 
 public class FilterAdapter extends RecyclerView.Adapter<Holder>{
-    private final List<Item> mItemList = new ArrayList<>();
+    public final List<Item> mItemList = new ArrayList<>();
 
     public FilterAdapter(final GridLayoutManager gridLayoutManager) {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -69,13 +71,15 @@ public class FilterAdapter extends RecyclerView.Adapter<Holder>{
 
         TextView tv = (TextView) container.findViewById(R.id.tv_name);
         tv.setText(item.getFilterUsers().name);
-
-        container.setOnClickListener(new View.OnClickListener() {
+        Switch sw = (Switch)container.findViewById(R.id.sw_add);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
-            public void onClick(final View v) {
-                int userID= item.getFilterUsers().id;
-                listener.getPlanIdAtPosition(userID);
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
+                if (isChecked){
+                    int userID= item.getFilterUsers().id;
+                    listener.getPlanIdAtPosition(userID);
+                }
             }
         });
     }

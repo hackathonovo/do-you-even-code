@@ -39,7 +39,7 @@ public class FilterPresenterImpl extends BasePresenter implements FilterPresente
 
     @Override
     public void filterData(final String name, final int buffer) {
-        addDisposable(networkService.filterUsers(name, buffer, templatePreferences.getActionId())
+        addDisposable(networkService.filterUsers(name, templatePreferences.getActionId(), buffer)
                                     .subscribeOn(subscribeScheduler)
                                     .observeOn(observeScheduler)
                                     .subscribe(this::onGetUsersSuccess, this::onGetUsersFailure));
