@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"os/user"
 )
 
 type Point struct {
