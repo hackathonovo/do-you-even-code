@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "231569270566",
+    "firebase_url": "https://do-you-even-code.firebaseio.com",
+    "project_id": "do-you-even-code",
+    "storage_bucket": "do-you-even-code.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231569270566:android:ef88abe8aa95753e",
+        "android_client_info": {
+          "package_name": "eu.hackathonovo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231569270566-62ngls7v3q44ihe0j5ucfdenmbab2jhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrBGQUwli0nT8DpRvwE5Q5teZaVgGQIg4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

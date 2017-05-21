@@ -17,6 +17,7 @@ public interface APIConstants {
     String PATH_GET_DETAILS = "/actions/{id}";
     String PATH_SEND_RESCUER_LOCATION = "/points";
     String PATH_SEARCH = "users/search";
+    String PATH_FCM_REG = "users/{id}/fcm";
 
 
     String PATH_UPDATE_USER = "users/{id}";

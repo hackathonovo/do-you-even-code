@@ -1,5 +1,9 @@
 package eu.hackathonovo.ui.login;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.json.JSONObject;
+
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.response.UserInformationResponse;
 import eu.hackathonovo.data.service.NetworkService;
@@ -47,8 +51,23 @@ public class HGSSLoginPresenterImpl extends BasePresenter implements HGSSLoginPr
 
     private void onLoginHGSSSuccess(final UserInformationResponse userInformation) {
         templatePreferences.setUserId(userInformation.id);
+
+        addDisposable(networkService.sendToken((int) userInformation.id, FirebaseInstanceId.getInstance().getToken())
+                                    .subscribeOn(subscribeScheduler)
+                                    .observeOn(observeScheduler)
+                                    .subscribe(this::onFirebaseSuccess, this::onFirebaseFailure));
+
+
         if (view != null) {
             view.goToSaverHome();
         }
+    }
+
+    private void onFirebaseSuccess(final JSONObject jsonObject) {
+
+    }
+
+    private void onFirebaseFailure(final Throwable throwable) {
+        Timber.e(throwable);
     }
 }

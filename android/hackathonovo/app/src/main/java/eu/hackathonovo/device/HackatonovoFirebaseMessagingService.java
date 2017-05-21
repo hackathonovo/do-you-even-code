@@ -33,10 +33,27 @@ public class HackatonovoFirebaseMessagingService extends FirebaseMessagingServic
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.d(TAG, "FROM:" + remoteMessage.getFrom());
+        if (remoteMessage.getNotification() != null) {
+            Log.e(TAG, "Notification Body: " + remoteMessage.getNotification().getBody());
+            try {
+                //JSONObject json = new JSONObject(recivedMsg); //.replace("\\", ""));
+
+                sendNotification(remoteMessage.getData().get("text"), remoteMessage.getData().get("title"), remoteMessage.getData().get("survey"));
+            } catch (Exception e) {
+                Log.e(TAG, "Exception: " + e.getMessage());
+            }
+        }
 
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data: " + remoteMessage.getData());
-            sendNotification(remoteMessage.getData().get("text"), remoteMessage.getData().get("title"), remoteMessage.getData().get("survey"));
+            try {
+                //JSONObject json = new JSONObject(recivedMsg); //.replace("\\", ""));
+
+                sendNotification(remoteMessage.getData().get("text"), remoteMessage.getData().get("title"), remoteMessage.getData().get("survey"));
+            } catch (Exception e) {
+                Log.e(TAG, "Exception: " + e.getMessage());
+            }
+
         }
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import eu.hackathonovo.data.api.APIConstants;
 import eu.hackathonovo.data.api.models.request.AddUsers;
+import eu.hackathonovo.data.api.models.request.FirebasePojo;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.ScanImage;
@@ -72,4 +73,11 @@ public final class NetworkServiceImpl implements NetworkService {
     public Single<JSONObject> updateUser(final int id, final AddUsers addUsers) {
         return Single.defer(() -> templateAPI.updateUser(id, addUsers));
     }
+
+
+    @Override
+    public Single<JSONObject> sendToken(final int id, final String token) {
+        return Single.defer(() -> templateAPI.senGcmRegistration(new FirebasePojo(token),id));
+    }
+
 }

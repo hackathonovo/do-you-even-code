@@ -1,6 +1,8 @@
 package eu.hackathonovo.ui.login;
 
 import android.accounts.AccountManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 
@@ -28,6 +31,7 @@ import butterknife.OnClick;
 import eu.hackathonovo.R;
 import eu.hackathonovo.data.api.models.request.UserInformation;
 import eu.hackathonovo.injection.component.ActivityComponent;
+
 import eu.hackathonovo.ui.base.activities.BaseActivity;
 import eu.hackathonovo.ui.filter.FilterActivity;
 import timber.log.Timber;
@@ -44,7 +48,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private static final int AUDIO_PERMISSION_CODE = 10;
 
     private static final String CLIENT_ID = "1046962736770-02go8vpf211hjehb949ljq8umtb67tsj.apps.googleusercontent.com";
-
+    private BroadcastReceiver broadcastReceiver;
     private CallbackManager callbackManager;
 
     private GoogleApiClient mGoogleApiClient;
@@ -76,6 +80,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+
     }
 
     @Override
