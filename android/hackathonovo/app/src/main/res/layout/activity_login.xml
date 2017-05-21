@@ -80,14 +80,15 @@
         android:gravity="center"
         android:layout_height="@dimen/_40dp"/>
 
-    <Button
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/google_button"
         android:layout_below="@+id/tv_user"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_55dp"
         android:layout_marginRight="@dimen/_20dp"
         android:layout_marginLeft="@dimen/_20dp"
-        android:background="@drawable/button"/>
+
+        />
 
 
 
