@@ -79,3 +79,21 @@ button {
   color: #fff;
   text-shadow: 0 0 5px #000;
 }
+
+.users-available .green {
+  background: #4caf50 !important;
+}
+
+.users-available .red {
+  background: #d32f2f !important;
+}
+
+.users-available {
+  z-index: 778;
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+}

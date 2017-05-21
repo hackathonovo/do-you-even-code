@@ -34,6 +34,13 @@ export class UserService {
       .catch(UserService.handleError);
   }
 
+
+  countAvailable(): Observable<any> {
+    return this.http.get(this.baseUrl+'/users/available', {headers: this.headers})
+      .map(UserService.extractData)
+      .catch(UserService.handleError);
+  }
+
   create(model: User): any {
     const url = this.baseUrl+'/users';
 

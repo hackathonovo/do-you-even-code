@@ -7,6 +7,9 @@ import {LatLngLiteral} from "@agm/core";
 import {Observable} from "rxjs/Rx";
 import {Subscription} from "rxjs/Subscription";
 import '../rxjs-operators';
+import {UserService} from "../services/user.service";
+import {User} from "../models/user";
+import {LogService} from "../services/log.service";
 declare let $:any;
 const ICON_SIZE = 40;
 const REFRESH_INTERVAL = 1000; // in ms
@@ -39,10 +42,14 @@ export class MapComponent implements OnDestroy{
     suicidal: true
   };
   isSearchVisible: boolean = false;
+  users: User[];
+  availableCount: number;
 
   constructor(private application: ApplicationRef,
               private pointService: PointService,
-              private polygonService: PolygonService) {
+              private polygonService: PolygonService,
+              private userService: UserService,
+              private logService: LogService) {
 
     this.getMapData();
     this.setAutoRefresh();
@@ -100,6 +107,56 @@ export class MapComponent implements OnDestroy{
         error =>  this.errorMessage = <any>error
       );
     }
+
+    //get users
+    this.userService.list().subscribe(
+      list => {
+        if(JSON.stringify(this.users) != JSON.stringify(list)) {
+          this.users = list;
+
+
+          this.userService.countAvailable().subscribe(
+            list => {
+              if(JSON.stringify(this.areas) != JSON.stringify(list)) {
+                this.availableCount = list.count;
+              }
+            },
+            error =>  this.errorMessage = <any>error
+          );
+        }
+      },
+      error =>  this.errorMessage = <any>error
+    );
+
+    //help
+    this.logService.helpMe().subscribe(
+      data => {
+        if(confirm("Osoba unutar nadležne zone HGSS-a je u opasnosti!!")) {
+          let canvas = document.createElement("canvas");
+          canvas.width = ICON_SIZE;
+          canvas.height = ICON_SIZE;
+          let ctx = canvas.getContext("2d");
+          ctx.fillStyle = "white";
+          ctx.font = ICON_SIZE + "px FontAwesome";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("\uf06a", ICON_SIZE/2, ICON_SIZE/2);
+
+          let marker = new Point();
+
+          marker.lat = data.lat;
+          marker.lng = data.lng;
+          marker.label = canvas.toDataURL('image/png');
+
+          this.markers.push(marker);
+          this.pointService.create(marker);
+
+          this.lat = data.lat;
+          this.lng = data.lng;
+        }
+      },
+      error =>  this.errorMessage = <any>error
+    );
   }
 
   clickedMarker(marker: Point) {

@@ -35,6 +35,9 @@
     </div>
   </section>
 </section>
+<section class="users-available" *ngIf="availableCount">
+  <i class="fa fa-user"></i> Aktivno korisnika: <span class="status-live">{{availableCount}} / {{users.length}}</span>
+</section>
 <div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
   <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
     <i class="fa fa-times"></i>
@@ -94,8 +97,9 @@
       (dragEnd)="markerDragEnd(m, $event)">
 
     <i class="{{m.label}}"></i>
-    <agm-info-window *ngIf="!!m.data">
-      <strong class="marker-info">{{m.data}}</strong>
+    <agm-info-window>
+      <strong *ngIf="!!m.data" class="marker-info">{{m.data}}</strong>
+      <strong class="marker-info">({{m.lat}}, {{m.lng}})</strong>
     </agm-info-window>
   </agm-marker>
 

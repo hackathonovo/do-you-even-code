@@ -74,8 +74,9 @@
     (dragEnd)="markerDragEnd(m, $event)">
 
     <i class="{{m.label}}"></i>
-    <agm-info-window *ngIf="!!m.data">
-      <strong class="marker-info">{{m.data}}</strong>
+    <agm-info-window>
+      <strong *ngIf="!!m.data" class="marker-info">{{m.data}}</strong>
+      <strong class="marker-info">({{m.lat}}, {{m.lng}})</strong>
     </agm-info-window>
   </agm-marker>
 

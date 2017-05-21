@@ -34,6 +34,12 @@ export class LogService {
       .catch(LogService.handleError);
   }
 
+  helpMe(): Observable<any> {
+    return this.http.get(this.baseUrl+'/helpme', {headers: this.headers})
+      .map(LogService.extractData)
+      .catch(LogService.handleError);
+  }
+
   create(model: Log): any {
     const url = this.baseUrl+'/logger';
 
