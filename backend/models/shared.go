@@ -22,6 +22,14 @@ type BorderPoint struct {
 	Lng float64 `json:"lng"`
 }
 
+func (BorderPoint) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
+
+func (BorderPoint) Bind(r *http.Request) error {
+	return nil
+}
+
 func (e *Env) MakePointOnAddress(address string, actionId uint) {
 
 	var Url *url.URL

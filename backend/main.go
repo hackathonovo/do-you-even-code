@@ -236,6 +236,8 @@ func main() {
 	router.Post("/glogin", e.GOAuthLogin)
 
 	router.Get("/push", e.PushSimpleToken)
+	router.Post("/danger", e.RegisterDanger)
+	router.Get("/helpme", e.GetDanger)
 
 	workDir, _ := os.Getwd()
 	filesDir := filepath.Join(workDir, "imgs")

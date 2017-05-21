@@ -7,6 +7,7 @@ import (
 
 type Env struct {
 	DB *gorm.DB
+	Help BorderPoint
 }
 
 var (

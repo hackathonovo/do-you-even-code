@@ -430,3 +430,23 @@ func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
 
 	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
+
+
+func (e *Env) RegisterDanger(w http.ResponseWriter, r *http.Request) {
+	dang := BorderPoint{}
+	if err := render.Bind(r, &dang); err != nil {
+		render.Render(w, r, h.ErrInvalidRequest(err))
+		return
+	}
+
+	e.Help = dang;
+
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, h.SucCreate)
+}
+
+func (e *Env) GetDanger(w http.ResponseWriter, r *http.Request) {
+
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, e.Help)
+}
