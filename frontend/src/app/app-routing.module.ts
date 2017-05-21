@@ -19,9 +19,10 @@ import {TimeTableCreateComponent} from "./timetables/create/timetable-create.com
 import {MapViewComponent} from "./maps/view/map-view.component";
 import {MapUsersEditComponent} from "./maps/users-edit/map-users-edit.component";
 import {MapAreasEditComponent} from "./maps/areas-edit/map-areas-edit.component";
+import {StatisticsComponent} from "./statistics/statistics.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/points', pathMatch: 'full' },
+  { path: '', redirectTo: '/map', pathMatch: 'full' },
   { path: 'points/detail/:id', component: PointDetailComponent },
   { path: 'points/create', component: PointCreateComponent },
   { path: 'points',     component: PointComponent },
@@ -46,6 +47,8 @@ const routes: Routes = [
   { path: 'timetables/detail/:id', component: TimeTableDetailComponent },
   { path: 'timetables/create/:userId', component: TimeTableCreateComponent },
   { path: 'timetables',     component: TimeTableComponent },
+
+  { path: 'statistics',     component: StatisticsComponent },
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

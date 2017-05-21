@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@agm/core": "^1.0.0-beta.0",
     "@angular/common": "~2.4.10",
     "@angular/compiler": "~2.4.1",
     "@angular/compiler-cli": "~2.4.1",
@@ -31,8 +32,7 @@
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.40",
     "web-animations-js": "^2.2.5",
-    "zone.js": "^0.6.26",
-    "@agm/core": "^1.0.0-beta.0"
+    "zone.js": "^0.6.26"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.3",

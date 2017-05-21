@@ -1,5 +1,5 @@
 import { Injectable }     from '@angular/core';
-import {Http, Response, Headers} from '@angular/http';
+import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import { Polygon }           from '../models/polygon';
 import { Observable }     from 'rxjs/Observable';
 import {user} from "../session";
@@ -14,8 +14,14 @@ export class PolygonService {
     }
   }
 
-  list(): Observable<Polygon[]> {
-    return this.http.get(this.baseUrl+'/polygons', {headers: this.headers})
+  list(params = []): Observable<Polygon[]> {
+    let search = new URLSearchParams();
+
+    for (let param in params) {
+      search.set(param, params[param]);
+    }
+
+    return this.http.get(this.baseUrl+'/polygons', {headers: this.headers, search: search})
       .map(PolygonService.extractData)
       .catch(PolygonService.handleError);
   }

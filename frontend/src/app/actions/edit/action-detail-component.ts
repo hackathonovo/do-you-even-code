@@ -6,6 +6,7 @@ import { ActionService } from '../../services/action.service';
 import {Action} from "../../models/action";
 import {AuthenticationService} from "../../services/authentication.service";
 import {user} from "../../session";
+import {DomSanitizer, SafeResourceUrl, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   moduleId: module.id,
@@ -21,7 +22,8 @@ export class ActionDetailComponent implements OnInit {
     private actionService: ActionService,
     private route: ActivatedRoute,
     private location: Location,
-    private authService: AuthenticationService) {}
+    private authService: AuthenticationService,
+    private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     if(!user.token) {
@@ -39,7 +41,13 @@ export class ActionDetailComponent implements OnInit {
   private getEntity(): void {
     this.route.params
       .switchMap((params: Params) => this.actionService.get(+params['id']))
-      .subscribe(action => this.model = action as Action);
+      .subscribe(action => {
+        this.model = action as Action;
+      });
+  }
+
+  get url(): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl("/webviews/map/users-edit/" + this.model.id);
   }
 
   save(): void {

@@ -18,6 +18,7 @@ import {UserModule} from "./users/user.module";
 import {ActionModule} from "./actions/action.module";
 import {TimeTableModule} from "./timetables/timetable.module";
 import {LogModule} from "./logs/log.module";
+import {StatisticsModule} from "./statistics/statistics.module";
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {LogModule} from "./logs/log.module";
     UserModule,
     ActionModule,
     TimeTableModule,
-    LogModule
+    LogModule,
+    StatisticsModule
   ],
   declarations: [
     AppComponent
