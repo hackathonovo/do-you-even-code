@@ -1,4 +1,4 @@
-# Team do-you-even-code
+# Team do-you-even-code (mašrumko)
 
 Contestant repository for [Hackathonovo by IN2](http://hackathonovo.in2.hr/) competition
 
