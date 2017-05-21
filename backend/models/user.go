@@ -393,3 +393,22 @@ func (e *Env) PushPositionNotification(actionid, userId uint) {
 
 	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
+
+func (e *Env) PushSimpleToken() {
+	var users = User{}
+	e.DB.Where("id = ?", 1).First(&users)
+
+	data := map[string]interface{}{"msg": "Nova lokacija", "action_id": 0}
+	gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
+
+	sender := &gcm.Sender{ApiKey: API_KEY}
+
+	// Send the message and receive the response after at most two retries.
+	response, err := sender.Send(gmsg, 2)
+	if err != nil {
+		fmt.Println("Failed to send message:", err)
+		return
+	}
+
+	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
+}
