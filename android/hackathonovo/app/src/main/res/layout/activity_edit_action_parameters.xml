@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     tools:context="eu.hackathonovo.ui.actions.EditActionsActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
     <RelativeLayout
         android:layout_marginTop="@dimen/_20dp"
         android:layout_marginLeft="@dimen/_15dp"
@@ -17,14 +27,13 @@
 
         <TextView
             android:id="@+id/tv_edit1"
-            android:paddingTop="10dp"
             android:textSize="@dimen/_20sp"
+            android:layout_centerVertical="true"
             android:textColor="@color/main_color_black"
             android:text="Promijenite vrijeme nastale nesreće: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/change_time1_btn"
-            android:layout_alignParentStart="true"/>
+           />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/change_time1_btn"
@@ -51,6 +60,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_2"
         android:layout_marginLeft="@dimen/_15dp"
         android:orientation="horizontal"
@@ -60,7 +70,6 @@
 
         <TextView
             android:id="@+id/tv_edit2"
-            android:paddingTop="10dp"
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
@@ -80,6 +89,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_3"
         android:layout_marginLeft="@dimen/_15dp"
         android:orientation="horizontal"
@@ -89,7 +99,6 @@
 
         <TextView
             android:id="@+id/tv_edit3"
-            android:paddingTop="10dp"
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
@@ -133,6 +142,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_4"
         android:layout_marginLeft="@dimen/_15dp"
         android:orientation="horizontal"
@@ -142,7 +152,7 @@
 
         <TextView
             android:id="@+id/tv_edit4"
-            android:paddingTop="10dp"
+
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
@@ -162,6 +172,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_5"
         android:layout_marginLeft="@dimen/_15dp"
         android:orientation="horizontal"
@@ -171,7 +182,7 @@
 
         <TextView
             android:id="@+id/tv_edit5"
-            android:paddingTop="10dp"
+
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
@@ -191,6 +202,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/rv_6"
         android:layout_marginLeft="@dimen/_15dp"
         android:orientation="horizontal"
@@ -200,7 +212,7 @@
 
         <TextView
             android:id="@+id/tv_edit6"
-            android:paddingTop="10dp"
+
             android:layout_centerVertical="true"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
@@ -258,14 +270,12 @@
 
         <TextView
             android:id="@+id/tv_edit7"
-            android:paddingTop="10dp"
             android:textSize="@dimen/_20sp"
             android:textColor="@color/main_color_black"
             android:text="Promijenite vrijeme sastanka tima: "
             android:layout_width="@dimen/_200dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/change_time2_btn"
-            android:layout_alignParentStart="true"/>
+            />
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/change_time2_btn"
@@ -295,7 +305,6 @@
         android:id="@+id/change_time3_btn"
         android:layout_below="@+id/rv_7"
         android:layout_marginTop="@dimen/_20dp"
-        android:layout_marginRight="@dimen/_20dp"
         android:layout_centerVertical="true"
         android:text="Da"
         android:layout_centerHorizontal="true"
@@ -304,6 +313,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:gravity="center"
         android:paddingTop="10dp"
         fancy:fb_borderColor="#FFFFFF"
         fancy:fb_borderWidth="1dp"
@@ -313,6 +323,7 @@
         fancy:fb_text="Ažuriraj"
         fancy:fb_textColor="#FFFFFF"
         />
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
 
