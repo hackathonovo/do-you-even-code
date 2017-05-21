@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'logs',     component: LogComponent },
 
   { path: 'timetables/detail/:id', component: TimeTableDetailComponent },
-  { path: 'timetables/create', component: TimeTableCreateComponent },
+  { path: 'timetables/create/:userId', component: TimeTableCreateComponent },
   { path: 'timetables',     component: TimeTableComponent },
 ];
 @NgModule({

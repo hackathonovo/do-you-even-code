@@ -60,3 +60,15 @@
 .timetables .badge-delete:hover {
   font-weight: 700;
 }
+
+.status-available {
+  font-weight: 700;
+  color: #fff;
+  background: dodgerblue;
+  border-radius: 15px;
+  padding: 5px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-left: 15px;
+}

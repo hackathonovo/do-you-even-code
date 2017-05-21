@@ -60,3 +60,27 @@
 .users .badge-delete:hover {
   font-weight: 700;
 }
+
+.status-ready {
+  font-weight: 700;
+  color: #fff;
+  background: #4caf50;
+  border-radius: 15px;
+  padding: 5px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-left: 15px;
+}
+
+.status-busy {
+  font-weight: 700;
+  color: #fff;
+  background: #aa1133;
+  border-radius: 15px;
+  padding: 5px 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-left: 15px;
+}

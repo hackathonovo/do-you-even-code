@@ -45,7 +45,7 @@ export class TimeTableComponent implements OnInit {
   }
 
   remove(id: number): void {
-    if(confirm("Are you sure you wish to delete this TimeTable?")) {
+    if(confirm("Želite poništiti ovu dostupnost?")) {
       this.timetableService.remove(id)
         .then(() => {
           this.getList();

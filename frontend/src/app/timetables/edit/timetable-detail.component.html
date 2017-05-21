@@ -2,8 +2,17 @@
   <div class="row">
     <div class="col s12">
       <div *ngIf="model">
-        <h4>Kalendar rada {{model.id}}</h4>
-        <!--<angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>-->
+        <h4>Uredi dostupnost za korisnika {{user.name}} {{user.surname}}</h4>
+        <div><label>id: </label>New</div>
+        <div>
+          <label>Dostupan od</label>
+          <input type="date" class="datepicker" [(ngModel)]="model.from" placeholder="Dostupan od"/>
+          <label>Dostupan do</label>
+          <input type="date" class="datepicker" [(ngModel)]="model.to" placeholder="Dostupan do"/>
+          <label>Napomena</label>
+          <input type="text" [(ngModel)]="model.type" placeholder="Napomena"/>
+        </div>
+        <button class="btn waves-effect waves-light" (click)="save()">Spremi <i class="material-icons right">edit</i></button>
       </div>
     </div>
   </div>
