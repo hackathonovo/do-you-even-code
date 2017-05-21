@@ -82,7 +82,7 @@ type ImageRequest struct {
 }
 
 func (ImageRequest) Bind(r *http.Request) error {
-	panic("implement me")
+	return nil
 }
 
 func (e *Env) ListImages(w http.ResponseWriter, r *http.Request) {

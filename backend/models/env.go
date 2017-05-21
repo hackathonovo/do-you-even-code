@@ -11,7 +11,7 @@ type Env struct {
 
 var (
 	SERVER_IP = "46.101.106.208"
-	API_KEY   = " AIzaSyA7OumbS43G5QPJuUjgr11pfMZiP8GO2z4"
+	API_KEY   = "AIzaSyAIREfXCIPuaM4uvt8ash1qJBMgYOdhTGE"
 	FCM_KEY = "AAAANeqapyY:APA91bGmPqLnmXaaHxXD1K55QE28r-QSKE8xcXPuHmIcjQ-9KeEl3qUbkPSzj3ojplxbgpQm-yvPWaltDMC9CTNxyVh3jjwNkelCJLRWwLhD3labFxsjt6EVF7lbT94skKnnIgK-jze8"
 	SENDER_ID = "AAAANeqapyY:APA91bGmPqLnmXaaHxXD1K55QE28r-QSKE8xcXPuHmIcjQ-9KeEl3qUbkPSzj3ojplxbgpQm-yvPWaltDMC9CTNxyVh3jjwNkelCJLRWwLhD3labFxsjt6EVF7lbT94skKnnIgK-jze8"
 )
