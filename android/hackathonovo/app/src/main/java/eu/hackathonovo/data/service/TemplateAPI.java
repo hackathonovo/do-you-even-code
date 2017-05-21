@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import eu.hackathonovo.data.api.models.request.AddUsers;
+import eu.hackathonovo.data.api.models.request.FirebasePojo;
 import eu.hackathonovo.data.api.models.request.HGSSUserInformation;
 import eu.hackathonovo.data.api.models.request.RescuerLocation;
 import eu.hackathonovo.data.api.models.request.SearchDetailsData;
@@ -17,6 +18,7 @@ import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -24,6 +26,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import static eu.hackathonovo.data.api.APIConstants.PATH_ADMIN_LOGIN;
+import static eu.hackathonovo.data.api.APIConstants.PATH_FCM_REG;
 import static eu.hackathonovo.data.api.APIConstants.PATH_GET_DETAILS;
 import static eu.hackathonovo.data.api.APIConstants.PATH_IMAGES;
 import static eu.hackathonovo.data.api.APIConstants.PATH_LOGIN;
@@ -61,4 +64,7 @@ public interface TemplateAPI {
 
     @GET(PATH_SEARCH)
     Single<List<FilterUsers>> filterUsers(@Query("name") String name, @Query("buffer") int buffer, @Query("actionId") int id);
+
+    @POST(PATH_FCM_REG)
+    Single<JSONObject> senGcmRegistration(@Body FirebasePojo fcm, @Path("id") int id);
 }

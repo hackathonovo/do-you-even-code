@@ -37,5 +37,7 @@ public interface NetworkService {
 
     Single<JSONObject> updateUser(int id, AddUsers addUsers);
 
+    Single<JSONObject> sendToken(int id, String token);
+
     Single<JSONObject> updateAction(int id, SearchDetailsData data);
 }
