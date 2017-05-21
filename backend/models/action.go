@@ -99,7 +99,7 @@ func (e *Env) SearchActions(w http.ResponseWriter, r *http.Request) {
 
 	if injury != "" {
 		if query != "" {
-			query += " AND "
+			query += " OR "
 		}
 
 		query += " actions.injury ILIKE '%" + injury + "%' "
@@ -107,7 +107,7 @@ func (e *Env) SearchActions(w http.ResponseWriter, r *http.Request) {
 
 	if suicidal == "true" {
 		if query != "" {
-			query += " AND "
+			query += " OR "
 		}
 
 		query += " actions.suicidal IS TRUE "
@@ -116,7 +116,7 @@ func (e *Env) SearchActions(w http.ResponseWriter, r *http.Request) {
 
 	if suicidal == "false" {
 		if query != "" {
-			query += " AND "
+			query += " OR "
 		}
 
 		query += " actions.suicidal IS NOT TRUE "

@@ -406,10 +406,12 @@ func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
 
 	regIDs := []string{users.Fcm}
 
-	response, err := c.SendHTTP(gcm.HTTPMessage{
+	msg := gcm.HTTPMessage{
 		RegistrationIDs: regIDs,
 		Notification:    &gcm.Notification{Title: "message", Body: "message body"},
-	})
+	}
+
+	response, err := c.SendHTTP(msg)
 
 	if err != nil {
 		fmt.Println(err.Error())

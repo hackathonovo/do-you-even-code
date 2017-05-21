@@ -51,7 +51,7 @@ func main() {
 	}
 	defer db.Close()
 	db.LogMode(true)
-	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{}, &m.Timetable{}, &m.ActionNotif{})
+	db.AutoMigrate(&m.Point{}, &m.User{}, &m.Polygon{}, &m.Session{}, &m.Action{}, &m.Log{}, &m.Timetable{}, &m.ActionNotif{}, &m.Image{})
 
 	router := chi.NewRouter()
 	e := m.NewEnviroment(db)
@@ -222,6 +222,12 @@ func main() {
 		log.Println(resp.Body)
 	})
 
+	router.Route("/images", func(r chi.Router) {
+		r.Post("/", e.ImageUpload)
+		r.Get("/", e.ListImages)
+	})
+
+
 	router.Post("/login", e.LoginUser)
 
 	router.Get("/googleLogin", e.GoogleLogin)
@@ -231,8 +237,12 @@ func main() {
 	router.Get("/push", e.PushSimpleToken)
 
 	workDir, _ := os.Getwd()
+	filesDir := filepath.Join(workDir, "imgs")
+	router.FileServer("/imgs", http.Dir(filesDir))
+
 	logDir := filepath.Join(workDir, "logs")
 	router.FileServer("/logs", http.Dir(logDir))
+
 
 	if *genRoutes {
 		// fmt.Println(docgen.JSONRoutesDoc(r))
