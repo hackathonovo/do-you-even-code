@@ -72,7 +72,7 @@ func (e *Env) CreateAction(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	go e.MakePointOnAddress(data.Address, data.Action.ID)
+	go e.MakePointOnAddress(data.Address, data.Action.ID, "action")
 
 	render.Status(req, http.StatusCreated)
 	render.Render(rw, req, e.NewActionResponse(data.Action))

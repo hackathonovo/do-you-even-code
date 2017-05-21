@@ -30,7 +30,7 @@ func (BorderPoint) Bind(r *http.Request) error {
 	return nil
 }
 
-func (e *Env) MakePointOnAddress(address string, actionId uint) {
+func (e *Env) MakePointOnAddress(address string, actionId uint, table string) {
 
 	var Url *url.URL
 	Url, err := url.Parse("https://maps.googleapis.com/maps/api/geocode/json")
@@ -53,7 +53,13 @@ func (e *Env) MakePointOnAddress(address string, actionId uint) {
 	defer resp.Body.Close()
 
 	if len(t.Results) != 0 {
-		point := &Point{Type: "base", Geo: geo.Point{t.Results[0].Geometry.Location.Lng, t.Results[0].Geometry.Location.Lat}}
+		point := &Point{Geo: geo.Point{t.Results[0].Geometry.Location.Lng, t.Results[0].Geometry.Location.Lat}}
+		if table == "action" {
+			point.Type = "base"
+		} else {
+			point.Type = "last"
+		}
+
 		sql := "insert into points values(default, ?, ?, null, ?, ?, ?, ?, ST_GeomFromText(?, 4326))"
 		if err := e.DB.Exec(sql, time.Now(), time.Now(), point.Type, point.Data, point.Label, point.Draggable, point.Geo.ToWKT()).Error; err != nil {
 			log.Println(err.Error())
@@ -72,7 +78,14 @@ func (e *Env) MakePointOnAddress(address string, actionId uint) {
 			rows.Scan(&point.ID)
 		}
 
-		sql2 := "insert into action_points values(default, ?, ?, ?)"
+		sql2 := ""
+		if table == "action" {
+			sql2 = "insert into action_points values(default, ?, ?, ?)"
+		} else {
+			sql2 = "insert into user_points values(default, ?, ?, ?)"
+
+		}
+
 		if err := e.DB.Exec(sql2, actionId, point.ID, time.Now()).Error; err != nil {
 			log.Println(err.Error())
 			return

@@ -450,7 +450,7 @@ func (e *Env) GetDanger(w http.ResponseWriter, r *http.Request) {
 	render.Status(r, http.StatusOK)
 
 	if e.Help == nil {
-		render.Render(w, r, &BorderPoint{})
+		render.Render(w, r, h.ErrNotFound)
 		return
 	}
 	render.Render(w, r, e.Help)
