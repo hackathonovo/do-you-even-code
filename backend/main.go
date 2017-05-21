@@ -229,7 +229,6 @@ func main() {
 
 	router.Get("/push", e.PushSimpleToken)
 
-
 	workDir, _ := os.Getwd()
 	logDir := filepath.Join(workDir, "logs")
 	router.FileServer("/logs", http.Dir(logDir))

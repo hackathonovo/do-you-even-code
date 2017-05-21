@@ -394,7 +394,7 @@ func (e *Env) PushPositionNotification(actionid, userId uint) {
 	fmt.Printf("Success: %d, Failure: %d", response.Results[0].RegistrationID, response.Results[0].Error)
 }
 
-func (e *Env) PushSimpleToken() {
+func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
 	var users = User{}
 	e.DB.Where("id = ?", 1).First(&users)
 
