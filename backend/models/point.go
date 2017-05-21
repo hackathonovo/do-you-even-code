@@ -71,8 +71,6 @@ func (e *Env) ListPoints(rw http.ResponseWriter, req *http.Request) {
 		points = append(points, &p)
 	}
 
-
-
 	if err := render.RenderList(rw, req, e.NewPointListResponse(points)); err != nil {
 		render.Render(rw, req, h.ErrRender(err))
 		return
@@ -109,7 +107,13 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if data.UserId != 0 {
-		sql2 := "insert into user_points values(default, ?, ?, ?)"
+		sql2 := "delete from user_points where user_id = ?"
+		if err := e.DB.Exec(sql2, data.UserId).Error; err != nil {
+			render.Render(rw, req, h.ErrRender(err))
+			return
+		}
+
+		sql2 = "insert into user_points values(default, ?, ?, ?)"
 		if err := e.DB.Exec(sql2, data.UserId, data.ID, time.Now()).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
