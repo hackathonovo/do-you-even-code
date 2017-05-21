@@ -454,5 +454,6 @@ func (e *Env) GetDanger(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	render.Render(w, r, e.Help)
+	e.Help = nil
 	return
 }
