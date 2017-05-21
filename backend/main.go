@@ -80,6 +80,7 @@ func main() {
 		r.Post("/", e.CreateUser)
 
 		r.Get("/search", e.SearchUsers)
+		r.Get("/available", e.CountAvailable)
 
 		r.Route("/:userId", func(r2 chi.Router) {
 			r2.Use(e.UserCtx)

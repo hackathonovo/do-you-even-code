@@ -49,8 +49,9 @@ func (UserRequest) Bind(r *http.Request) error {
 
 type UserRespose struct {
 	*User
-	Polygons []*PolygonResponse `json:"polygons"`
-	Points   []*PointResponse   `json:"points"`
+	Polygons []*PolygonResponse `json:"polygons,omitempty"`
+	Points   []*PointResponse   `json:"points,omitempty"`
+	Count int `json:"count,omitempty"`
 }
 
 type FCMRequest struct {
@@ -251,6 +252,23 @@ func (e *Env) SearchUsers(w http.ResponseWriter, r *http.Request) {
 	//}
 
 	if err := render.RenderList(w, r, e.NewUserListReponse(users)); err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+}
+
+func (e *Env) CountAvailable(w http.ResponseWriter, r *http.Request) {
+	resp := UserRespose{}
+	user := []User{}
+
+	if err := e.DB.Where("action_id = 0 OR action_id IS NULL").Find(&user).Error; err != nil {
+		render.Render(w, r, h.ErrServer)
+		return
+	}
+
+	resp.Count = len(user)
+
+	if err := render.Render(w, r, &resp); err != nil {
 		render.Render(w, r, h.ErrServer)
 		return
 	}
