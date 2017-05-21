@@ -399,7 +399,7 @@ func (e *Env) PushPositionNotification(actionid, userId uint) {
 	var action = Action{}
 	e.DB.Where("id = ?", actionid).First(&action)
 
-	data := map[string]interface{}{"title": "Nova lokacija", "text": "Poziv na akciju spašavanja!", "actionId": action.ID}
+	data := map[string]interface{}{"title": "Nova akcija " + strconv.Itoa(int(actionid)), "text": "Poziv na akciju spašavanja!", "actionId": action.ID}
 	gmsg := gcm.NewMessage(data, []string{users.Fcm}...)
 
 	sender := &gcm.Sender{ApiKey: API_KEY}
