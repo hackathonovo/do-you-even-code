@@ -178,6 +178,7 @@ export class MapUsersEditComponent implements OnDestroy{
 
   onColorPick(color): void {
     this.markerColor = color;
+    this.toggleFAB(false);
   }
 
   onResetTool(): void {

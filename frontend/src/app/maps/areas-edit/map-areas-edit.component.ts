@@ -156,6 +156,7 @@ export class MapAreasEditComponent implements OnDestroy{
     } else {
       this.markerColor = color;
     }
+    this.toggleFAB(false);
   }
 
   createPolygon(): void {

@@ -230,6 +230,7 @@ export class MapComponent implements OnDestroy{
     } else {
       this.markerColor = color;
     }
+    this.toggleFAB(false)
   }
 
   createPolygon(): void {
