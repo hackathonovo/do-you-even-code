@@ -16,7 +16,6 @@ import java.util.Random;
 
 import eu.hackathonovo.R;
 import eu.hackathonovo.ui.home_rescuer.HomeRescuerActivity;
-import eu.hackathonovo.ui.map.MapActivity2;
 
 public class HackatonovoFirebaseMessagingService extends FirebaseMessagingService {
 
