@@ -107,7 +107,7 @@ func (e *Env) CreatePoint(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if data.UserId != 0 {
-		sql2 := "delete from user_points where user_id = ?"
+		sql2 := "delete from points where id in (select points_id from user_points where user_id = ?)"
 		if err := e.DB.Exec(sql2, data.UserId).Error; err != nil {
 			render.Render(rw, req, h.ErrRender(err))
 			return
