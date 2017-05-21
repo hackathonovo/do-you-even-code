@@ -439,7 +439,7 @@ func (e *Env) RegisterDanger(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	e.Help = dang;
+	e.Help = &dang;
 
 	render.Status(r, http.StatusOK)
 	render.Render(w, r, h.SucCreate)
@@ -448,5 +448,11 @@ func (e *Env) RegisterDanger(w http.ResponseWriter, r *http.Request) {
 func (e *Env) GetDanger(w http.ResponseWriter, r *http.Request) {
 
 	render.Status(r, http.StatusOK)
+
+	if e.Help == nil {
+		render.Render(w, r, &BorderPoint{})
+		return
+	}
 	render.Render(w, r, e.Help)
+	return
 }
