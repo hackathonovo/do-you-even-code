@@ -11,7 +11,7 @@ type Env struct {
 
 var (
 	SERVER_IP = "46.101.106.208"
-	API_KEY   = "AIzaSyAIREfXCIPuaM4uvt8ash1qJBMgYOdhTGE"
+	API_KEY   = " AIzaSyA7OumbS43G5QPJuUjgr11pfMZiP8GO2z4 "
 )
 
 func NewEnviroment(db *gorm.DB) *Env {

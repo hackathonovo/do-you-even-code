@@ -404,7 +404,7 @@ func (e *Env) PushSimpleToken(rw http.ResponseWriter, req *http.Request) {
 	sender := &gcm.Sender{ApiKey: API_KEY}
 
 	// Send the message and receive the response after at most two retries.
-	response, err := sender.Send(gmsg, 2)
+	response, err := sender.Send(gmsg, 4)
 	if err != nil {
 		fmt.Println("Failed to send message:", err)
 		return
