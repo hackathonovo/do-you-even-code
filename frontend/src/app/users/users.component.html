@@ -9,12 +9,14 @@
         <li *ngFor="let model of list" class="collection-item">
           <span>
             {{model.name}} {{model.surname}} ({{model.username}}) {{model.type}}
-            <span class="status-ready" *ngIf="!!model.action_id">DOSTUPAN</span>
-            <span class="status-busy" *ngIf="!model.action_id">NIJE DOSTUPAN</span>
+            <span class="status-available " *ngIf="!!model.role">{{model.role}}</span>
           </span>
+
           <a (click)="remove(model.id)" class="secondary-content delete-link"><i class="small material-icons">delete</i></a>
           <a [routerLink]="['/timetables/create/' + model.id]" class="secondary-content"><i class="small material-icons">av_timer</i></a>
           <a [routerLink]="['/users/detail/' + model.id]" class="secondary-content"><i class="small material-icons">edit</i></a>
+          <a> <span class="status-ready secondary-content" *ngIf="!!model.action_id">DOSTUPAN</span></a>
+          <a><span class="status-busy secondary-content" *ngIf="!model.action_id">NIJE DOSTUPAN</span></a>
         </li>
       </ul>
     </div>
