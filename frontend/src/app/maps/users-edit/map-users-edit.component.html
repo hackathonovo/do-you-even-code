@@ -1,0 +1,83 @@
+<section class="toolbar">
+  STATUS: <span class="status-live blink">LIVE</span>
+  <i *ngIf="!isSearchVisible && !selectedUser" (click)="isSearchVisible=!isSearchVisible" class="fa fa-search"></i>
+
+  <section *ngIf="isSearchVisible" class="filter-search">
+    <div class="input-group">
+      <input (keyup)="search()" [(ngModel)]="searchParam" type="text" class="form-control big-search-bar" placeholder="Name, Surname..">
+      <span class="input-group-btn">
+          <button (click)="search()" class="btn btn-default big-search-btn" type="button">TRAŽI</button>
+          <button (click)="cancel()" class="btn btn-default big-search-btn" type="button">ODUSTANI</button>
+      </span>
+      <section class="users-chips">
+        <div *ngFor="let user of users" (mousedown)="selectUser(user)" class="chip">
+          {{user.name}} {{user.surname}}
+        </div>
+      </section>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <div class="clearfix"></div>
+  <div *ngIf="!!selectedUser" (mousedown)="selectUser(user)" class="chip selected-chip">
+    <i class="fa fa-check"></i> {{selectedUser.name}} {{selectedUser.surname}}
+  </div>
+</section>
+<div (click)="toggleFAB(true)" (mouseleave)="toggleFAB(false)" (mouseenter)="toggleFAB(true)" class="fixed-action-btn click-to-toggle vertical map-toolbox">
+  <a *ngIf="isToolActive" (click)="onResetTool()" class="btn-floating btn-medium red">
+    <i class="fa fa-times"></i>
+  </a>
+  <a class="btn-floating btn-large red">
+    <i *ngIf="!isToolActive" class="large material-icons">add</i>
+    <i *ngIf="isToolActive" class="fa {{customClassName}}"></i>
+  </a>
+  <ul *ngIf="!isToolActive">
+    <li (click)="onToolPick('\uf1b0', 'fa-paw')"><a class="btn-floating red"><i class="fa fa-paw"></i></a></li>
+    <li (click)="onToolPick('\uf007', 'fa-user')"><a class="btn-floating yellow darken-1"><i class="fa fa-user"></i></a></li>
+    <li (click)="onToolPick('\uf0fe', 'fa-plus-square')"><a class="btn-floating green"><i class="fa fa-plus-square"></i></a></li>
+    <li (click)="onToolPick('\uf0c0', 'fa-group')"><a class="btn-floating blue"><i class="fa fa-group"></i></a></li>
+    <li (click)="onToolPick('\uf041', 'fa-map-marker')"><a class="btn-floating purple"><i class="fa fa-map-marker"></i></a></li>
+    <li (click)="onToolPick('\uf12d', 'fa-eraser', 'DELETE')"><a class="btn-floating"><i class="fa fa-eraser"></i></a></li>
+  </ul>
+  <ul *ngIf="isToolActive">
+    <li (click)="onColorPick('red')"><a class="btn-floating red"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('green')"><a class="btn-floating green"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('yellow')"><a class="btn-floating yellow"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('blue')"><a class="btn-floating blue"><i class="fa fa-eyedropper"></i></a></li>
+    <li (click)="onColorPick('black')"><a class="btn-floating black"><i class="fa fa-eyedropper"></i></a></li>
+  </ul>
+</div>
+<agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [styles]="mapStyle"
+  [zoomControl]="false"
+  (mapClick)="mapClicked($event)">
+
+  <agm-polygon *ngFor="let area of areas"
+               [paths]="area.polygon"
+               [editable]="false"
+               [polyDraggable]="false"
+               (polyClick)="clickedPaths(area)"
+               [fillColor]="area.color"
+               [strokeColor]="area.color">
+  </agm-polygon>
+
+  <agm-marker
+    *ngFor="let m of markers"
+    (markerClick)="clickedMarker(m)"
+    [latitude]="m.lat"
+    [longitude]="m.lng"
+    [iconUrl]="m.label"
+    [markerDraggable]="m.draggable"
+    (dragEnd)="markerDragEnd(m, $event)">
+
+    <i class="{{m.label}}"></i>
+    <agm-info-window>
+      <strong *ngIf="!!m.data" class="marker-info">{{m.data}}</strong>
+      <strong class="marker-info">({{m.lat}}, {{m.lng}})</strong>
+    </agm-info-window>
+  </agm-marker>
+
+</agm-map>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="_10sp">14sp</dimen>
+    <dimen name="_16sp">25sp</dimen>
+    <dimen name="_18sp">25sp</dimen>
+    <dimen name="_12sp">17sp</dimen>
+    <dimen name="_15sp">25sp</dimen>
+    <dimen name="_20sp">28sp</dimen>
+    <dimen name="_23sp">32sp</dimen>
+    <dimen name="_30sp">50sp</dimen>
+    <dimen name="_45sp">75sp</dimen>
+
+    <dimen name="_15dp_menu">20dp</dimen>
+    <dimen name="_1dp">3dp</dimen>
+    <dimen name="_2dp">5dp</dimen>
+    <dimen name="_3dp">8dp</dimen>
+    <dimen name="_4dp">10dp</dimen>
+    <dimen name="_5dp">13dp</dimen>
+    <dimen name="_6dp">15dp</dimen>
+    <dimen name="_7dp">17dp</dimen>
+    <dimen name="_8dp">18dp</dimen>
+    <dimen name="_9dp">19dp</dimen>
+    <dimen name="_10dp">20dp</dimen>
+    <dimen name="_10dpLogo">70dp</dimen>
+    <dimen name="_15dp">25dp</dimen>
+    <dimen name="_20dp">30dp</dimen>
+    <dimen name="_25dp">35dp</dimen>
+    <dimen name="_25dpFace">40dp</dimen>
+    <dimen name="_30dp">40dp</dimen>
+    <dimen name="_35dpMenu">40dp</dimen>
+    <dimen name="_35dp">45dp</dimen>
+    <dimen name="_40dp">50dp</dimen>
+    <dimen name="_45dp">55dp</dimen>
+    <dimen name="_50dp">60dp</dimen>
+    <dimen name="_55dp">65dp</dimen>
+    <dimen name="_60dp">70dp</dimen>
+    <dimen name="_70dp">140dp</dimen>
+    <dimen name="_75dp">125dp</dimen>
+    <dimen name="_80dp">90dp</dimen>
+    <dimen name="_90dp">100dp</dimen>
+    <dimen name="_100dp">200dp</dimen>
+    <dimen name="_100dpLogo">160dp</dimen>
+    <dimen name="_110dp">170dp</dimen>
+    <dimen name="_120dp">200dp</dimen>
+    <dimen name="_130dp">180dp</dimen>
+    <dimen name="_140dp">240dp</dimen>
+    <dimen name="_140dp_logo">250dp</dimen>
+    <dimen name="_150dp">250dp</dimen>
+    <dimen name="_180dp">330dp</dimen>
+    <dimen name="_200dp">350dp</dimen>
+    <dimen name="_250dp">350dp</dimen>
+    <dimen name="_300dp">500dp</dimen>
+    <dimen name="_400dp">500dp</dimen>
+    <dimen name="_500dp">800dp</dimen>
+</resources>

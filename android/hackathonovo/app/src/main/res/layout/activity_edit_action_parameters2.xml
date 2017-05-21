@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eu.hackathonovo.ui.actions.EditActionsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rv_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit1"
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Vrijeme nastale nesreće: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit1"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_1"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_1"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit2"
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Da li se dogdila ozljeda: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_injury"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit2"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_injury"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_2"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_2"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit3"
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Mjesto potrage: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_meet_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit3"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_meeting_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_3"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_3"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit4"
+
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Da li je akcija hitna: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_semergancy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit4"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_emergancy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_4"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_4"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit5"
+
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Da li je osoba suicidalna: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_suic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit5"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_suic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_5"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rv_5"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit6"
+
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Mjesto ozljede: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_meet_place2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit6"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_meeting_place2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_6"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+            <RelativeLayout
+                android:id="@+id/rv_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/rv_6"
+                android:layout_marginLeft="@dimen/_15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_edit7"
+                    android:layout_width="@dimen/_200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Vrijeme sastanka tima: "
+                    android:textColor="@color/main_color_black"
+                    android:textSize="@dimen/_20sp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/ll_time2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:layout_toRightOf="@+id/tv_edit7"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_time2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_10dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:layout_weight="0.2"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="Šifra"
+
+                        android:inputType="text"
+                        android:textColor="@color/main_color_black"
+
+                        android:textSize="@dimen/_12sp"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/rv_7"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginRight="@dimen/_20dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/shadow"></View>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
+

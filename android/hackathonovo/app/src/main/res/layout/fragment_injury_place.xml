@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="eu.hackathonovo.ui.home_leader.InjuryPlaceFragment">
+
+    <ImageView
+        android:background="@drawable/action_bg"
+        android:alpha="0.1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_30dp"
+        android:layout_marginRight="@dimen/_30dp"
+        android:layout_above="@+id/injury_place_btn"
+        android:background="@drawable/border_for_layouts"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8">
+
+            <ImageView
+                android:id="@+id/ivPassword"
+                android:layout_width="@dimen/_30dp"
+                android:layout_height="@dimen/_40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:src="@drawable/ic_location_on_black_24dp" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/tv_injury_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_25dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_weight="0.2"
+
+            android:contentDescription="Šifra"
+            android:background="@android:color/transparent"
+            android:inputType="text"
+
+
+            android:hint="Unesite mjesto ozljede"
+            android:textColor="@color/main_color_black"
+
+            android:textSize="@dimen/_15sp"/>
+
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:layout_marginTop="@dimen/_10dp"
+        android:id="@+id/injury_place_btn"
+        android:layout_width="@dimen/_100dp"
+        android:layout_height="wrap_content"
+
+        android:text="Unesi"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/main_color_blue"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="30dp"
+        fancy:fb_text="Unesi"
+        fancy:fb_textColor="#FFFFFF"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<my-header></my-header><section class="container">
+  <div class="row">
+    <div class="col s12">
+      <div>
+        <h4>Action</h4>
+        <div><label>id: </label>New</div>
+        <div>
+          <input type="number" [(ngModel)]="model.lng" placeholder="longitude"/>
+          <input type="number" [(ngModel)]="model.lat" placeholder="latitude"/>
+        </div>
+        <button class="btn waves-effect waves-light" (click)="save()">Kreiraj <i class="material-icons right">add</i></button>
+      </div>
+    </div>
+  </div>
+</section>
